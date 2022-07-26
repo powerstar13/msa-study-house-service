@@ -19,4 +19,11 @@ public class ExceptionDTO {
     public void add(String key, Object value) {
         this.response.put(key, value);
     }
+
+    @Override
+    public String toString() {
+        return "{"
+            + "\"response\":" + response
+            + "}";
+    }
 }
