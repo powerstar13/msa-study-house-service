@@ -41,8 +41,8 @@ dependencies {
 
     // R2DBC & H2
     implementation 'org.springframework.boot:spring-boot-starter-data-r2dbc:2.7.0'
-    runtimeOnly 'com.h2database:h2'
-    runtimeOnly 'io.r2dbc:r2dbc-h2'
+    implementation 'com.h2database:h2'
+    implementation 'io.r2dbc:r2dbc-h2'
 
     // Rest Docs
     testImplementation 'org.springframework.restdocs:spring-restdocs-webtestclient:2.0.6.RELEASE'

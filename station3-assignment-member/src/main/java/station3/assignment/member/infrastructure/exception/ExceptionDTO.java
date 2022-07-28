@@ -13,7 +13,8 @@ import java.util.Map;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ExceptionDTO {
-    
+
+    @Builder.Default
     private Map<String, Object> response = new LinkedHashMap<>();
     
     public void add(String key, Object value) {
