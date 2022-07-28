@@ -5,6 +5,8 @@ import station3.assignment.member.application.member.dto.MemberCommand;
 import station3.assignment.member.domain.member.Member;
 import station3.assignment.member.domain.member.MemberType;
 import station3.assignment.member.domain.member.service.dto.MemberDTO;
+import station3.assignment.member.presentation.request.MemberRegisterRequest;
+import station3.assignment.member.presentation.response.MemberRegisterResponse;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -73,5 +75,28 @@ public class MemberTestFactory {
 
     public static Mono<MemberDTO.MemberTokenInfo> memberTokenInfoMono() {
         return Mono.just(memberTokenInfo());
+    }
+
+    /**
+     * 회원 가입 Request
+     */
+    public static MemberRegisterRequest memberRegisterRequest() {
+        return MemberRegisterRequest.builder()
+            .memberType(memberType)
+            .memberLoginId(memberLoginId)
+            .memberPassword(memberPassword)
+            .memberName(memberName)
+            .memberBirth(memberBirth)
+            .memberPhone(memberPhone)
+            .build();
+    }
+
+    /**
+     * 회원 가입 Response
+     */
+    public static MemberRegisterResponse memberRegisterResponse() {
+        return MemberRegisterResponse.builder()
+            .memberToken(memberToken)
+            .build();
     }
 }

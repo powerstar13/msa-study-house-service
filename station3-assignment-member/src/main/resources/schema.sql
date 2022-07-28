@@ -1,5 +1,3 @@
-DROP TABLE IF EXISTS member;
-
 CREATE TABLE IF NOT EXISTS member
 (
     `memberId`        INT                         NOT NULL    AUTO_INCREMENT COMMENT '회원 고유번호',
@@ -15,8 +13,6 @@ CREATE TABLE IF NOT EXISTS member
     PRIMARY KEY (memberId)
 );
 
-DROP TABLE IF EXISTS house;
-
 CREATE TABLE IF NOT EXISTS house
 (
     `houseId`       INT                          NOT NULL    AUTO_INCREMENT COMMENT '방 고유번호',
@@ -26,14 +22,10 @@ CREATE TABLE IF NOT EXISTS house
     `houseType`     VARCHAR(45)                  NOT NULL    COMMENT '방 유형',
     `createdAt`     TIMESTAMP                    NOT NULL    DEFAULT CURRENT_TIMESTAMP COMMENT '생성일',
     `updatedAt`     TIMESTAMP                    NULL        DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '수정일',
-    PRIMARY KEY (houseId)
+    PRIMARY KEY (houseId),
+    CONSTRAINT FK_house_memberId_member_memberId FOREIGN KEY (memberId)
+        REFERENCES member (memberId) ON DELETE RESTRICT ON UPDATE RESTRICT
 );
-
-ALTER TABLE house
-    ADD CONSTRAINT FK_house_memberId_member_memberId FOREIGN KEY (memberId)
-        REFERENCES member (memberId) ON DELETE RESTRICT ON UPDATE RESTRICT;
-
-DROP TABLE IF EXISTS rental;
 
 CREATE TABLE IF NOT EXISTS rental
 (
@@ -44,12 +36,10 @@ CREATE TABLE IF NOT EXISTS rental
     `rent`        INT                          NULL        COMMENT '월세',
     `createdAt`   TIMESTAMP                    NOT NULL    DEFAULT CURRENT_TIMESTAMP COMMENT '생성일',
     `updatedAt`   TIMESTAMP                    NULL        DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '수정일',
-    PRIMARY KEY (rentalId)
+    PRIMARY KEY (rentalId),
+    CONSTRAINT FK_rental_houseId_house_houseId FOREIGN KEY (houseId)
+        REFERENCES house (houseId) ON DELETE RESTRICT ON UPDATE RESTRICT
 );
-
-ALTER TABLE rental
-    ADD CONSTRAINT FK_rental_houseId_house_houseId FOREIGN KEY (houseId)
-        REFERENCES house (houseId) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 INSERT INTO member (memberToken, memberType, memberLoginId, memberPassword, memberName, memberBirth, memberPhone)
 VALUES (UUID(), 'LESSOR', 'lessor@gmail.com', '$2a$10$oKmFs6UNvZhEoKhJYI5rxOmNU6/c8oUpkVYry.PBKcY1ZuHMToppa', '임대인이름', '19910101', '01012341234');
