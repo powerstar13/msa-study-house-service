@@ -4,6 +4,7 @@ import reactor.core.publisher.Mono;
 import station3.assignment.member.application.member.dto.MemberCommand;
 import station3.assignment.member.domain.member.Member;
 import station3.assignment.member.domain.member.MemberType;
+import station3.assignment.member.domain.member.service.dto.MemberDTO;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -18,6 +19,7 @@ public class MemberTestFactory {
     private static final String memberName = "이름";
     private static final LocalDate memberBirth = LocalDate.of(1991, 1, 1);
     private static final String memberPhone = "01012341234";
+    private static final String memberToken = UUID.randomUUID().toString();
 
     public static String getEncodedMemberPassword() {
         return encodedMemberPassword;
@@ -45,7 +47,7 @@ public class MemberTestFactory {
 
         return Member.builder()
             .memberId(1)
-            .memberToken(UUID.randomUUID().toString())
+            .memberToken(memberToken)
             .memberType(memberType)
             .memberLoginId(memberLoginId)
             .memberPassword(encodedMemberPassword)
@@ -58,5 +60,14 @@ public class MemberTestFactory {
 
     public static Mono<Member> memberMono() {
         return Mono.just(member());
+    }
+
+    /**
+     * 회원 대체 식별키 정보
+     */
+    public static MemberDTO.MemberTokenInfo memberTokenInfoMono() {
+        return MemberDTO.MemberTokenInfo.builder()
+            .memberToken(memberToken)
+            .build();
     }
 }
