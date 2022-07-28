@@ -65,9 +65,13 @@ public class MemberTestFactory {
     /**
      * 회원 대체 식별키 정보
      */
-    public static MemberDTO.MemberTokenInfo memberTokenInfoMono() {
+    public static MemberDTO.MemberTokenInfo memberTokenInfo() {
         return MemberDTO.MemberTokenInfo.builder()
             .memberToken(memberToken)
             .build();
+    }
+
+    public static Mono<MemberDTO.MemberTokenInfo> memberTokenInfoMono() {
+        return Mono.just(memberTokenInfo());
     }
 }

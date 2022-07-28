@@ -1,4 +1,4 @@
-package station3.assignment.member.domain.member.service;
+package station3.assignment.member.application.member;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -9,42 +9,34 @@ import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 import station3.assignment.member.application.member.dto.MemberCommand;
 import station3.assignment.member.domain.member.Member;
+import station3.assignment.member.domain.member.service.MemberService;
 import station3.assignment.member.domain.member.service.dto.MemberDTO;
-import station3.assignment.member.domain.member.service.dto.MemberDTOMapper;
 
-import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 import static station3.assignment.member.infrastructure.factory.MemberTestFactory.*;
 
 @SpringBootTest
-class MemberServiceTest {
+class MemberFacadeTest {
 
     @Autowired
+    private MemberFacade memberFacade;
+
+    @MockBean
     private MemberService memberService;
 
-    @MockBean
-    private MemberReader memberReader;
-    @MockBean
-    private MemberStore memberStore;
-    @MockBean
-    private MemberDTOMapper memberDTOMapper;
-
-    @DisplayName("회원 가입")
+    @DisplayName("회원 등록")
     @Test
     void memberRegister() {
         MemberCommand.MemberRegister command = memberRegisterCommand();
 
-        given(memberReader.memberExistCheck(any(MemberCommand.MemberRegister.class))).willReturn(Mono.empty());
-        given(memberStore.memberRegister(any(MemberCommand.MemberRegister.class))).willReturn(memberMono());
-        given(memberDTOMapper.of(any(Member.class))).willReturn(memberTokenInfo());
+        given(memberService.memberRegister(any(MemberCommand.MemberRegister.class))).willReturn(memberTokenInfoMono());
 
-        Mono<MemberDTO.MemberTokenInfo> memberTokenInfoMono = memberService.memberRegister(command);
+        Mono<MemberDTO.MemberTokenInfo> memberTokenInfoMono = memberFacade.memberRegister(command);
 
-        verify(memberReader).memberExistCheck(any(MemberCommand.MemberRegister.class));
-        verify(memberStore).memberRegister(any(MemberCommand.MemberRegister.class));
+        verify(memberService).memberRegister(any(MemberCommand.MemberRegister.class));
 
         StepVerifier.create(memberTokenInfoMono.log())
             .assertNext(memberTokenInfo -> assertAll(() -> assertNotNull(memberTokenInfo)))
