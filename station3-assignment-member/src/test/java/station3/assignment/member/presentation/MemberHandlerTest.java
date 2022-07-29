@@ -82,7 +82,9 @@ class MemberHandlerTest extends WebFluxSharedHandlerTest {
                 responseFields(
                     fieldWithPath("rt").type(JsonFieldType.NUMBER).description("결과 코드"),
                     fieldWithPath("rtMsg").type(JsonFieldType.STRING).description("결과 메시지"),
-                    fieldWithPath("memberToken").type(JsonFieldType.STRING).description("회원 대체 식별키")
+                    fieldWithPath("memberToken").type(JsonFieldType.STRING).description("회원 대체 식별키"),
+                    fieldWithPath("accessToken").type(JsonFieldType.STRING).description("JWT 액세스 토큰"),
+                    fieldWithPath("refreshToken").type(JsonFieldType.STRING).description("JWT 리프레시 토큰")
                 )
             ));
 

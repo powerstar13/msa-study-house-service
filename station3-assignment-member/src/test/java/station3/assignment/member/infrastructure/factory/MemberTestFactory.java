@@ -97,6 +97,8 @@ public class MemberTestFactory {
     public static MemberRegisterResponse memberRegisterResponse() {
         return MemberRegisterResponse.builder()
             .memberToken(memberToken)
+            .accessToken("accessToken")
+            .refreshToken("refreshToken")
             .build();
     }
 }

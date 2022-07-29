@@ -27,7 +27,7 @@ public class MemberHandler {
     /**
      * 회원 가입
      * @param serverRequest: 가입할 회원 정보
-     * @return ServerResponse: 회원 대체 식별키 정보
+     * @return ServerResponse: 회원 토큰 정보
      */
     public Mono<ServerResponse> memberRegister(ServerRequest serverRequest) {
 

@@ -21,12 +21,14 @@
     java -jar ./out/stattion3-assignment-house.jar
     ```
 
-## API Test
-http-test
 
 ## [API 문서](http://localhost:8080/docs/index.html)
 
 `jar 파일들을 모두 실행시킨 후 API 문서를 열어주시기 바랍니다.`
+
+## [API Test](./http-test/api.http)
+
+`API를 실행할 수 있는 http test 파일입니다.`
 
 ---
 

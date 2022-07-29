@@ -1,0 +1,28 @@
+# 회원 서비스
+
+### 회원 가입
+POST http://localhost:8080/auth/member-register
+Content-Type: application/json
+Accept: application/json
+
+{
+  "memberType": "LESSOR",
+  "memberLoginId": "test@gmail.com",
+  "memberPassword": "password123",
+  "memberName": "다방이",
+  "memberBirth": "1991-01-01",
+  "memberPhone": "01012341234"
+}
+
+> {% // response handler
+client.test("Request executed successfully", function() {
+    client.assert(response.status === 200, "Response status is not 200");
+    client.global.set("memberToken", response.body.memberToken);
+    client.log("memberToken >>> " + client.global.get("memberToken"));
+    client.global.set("accessToken", response.body.accessToken);
+    client.log("accessToken >>> " + client.global.get("accessToken"));
+    client.global.set("refreshToken", response.body.refreshToken);
+    client.log("refreshToken >>> " + client.global.get("refreshToken"));
+});
+%}
+

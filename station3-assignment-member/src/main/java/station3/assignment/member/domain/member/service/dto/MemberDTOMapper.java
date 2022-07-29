@@ -11,5 +11,9 @@ import station3.assignment.member.domain.member.Member;
 )
 public interface MemberDTOMapper {
 
+    @Mappings({
+        @Mapping(target = "accessToken", ignore = true),
+        @Mapping(target = "refreshToken", ignore = true)
+    })
     MemberDTO.MemberTokenInfo of(Member member);
 }
