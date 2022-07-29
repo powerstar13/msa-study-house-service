@@ -41,8 +41,8 @@ dependencies {
 
     // R2DBC & H2
     implementation 'org.springframework.boot:spring-boot-starter-data-r2dbc:2.7.0'
-    implementation 'com.h2database:h2'
-    implementation 'io.r2dbc:r2dbc-h2'
+    implementation 'com.h2database:h2:2.1.212'
+    implementation 'io.r2dbc:r2dbc-h2:0.9.1.RELEASE'
 
     // Rest Docs
     testImplementation 'org.springframework.restdocs:spring-restdocs-webtestclient:2.0.6.RELEASE'
@@ -74,6 +74,8 @@ dependencies {
 ext {
     set('snippetsDir', file("build/generated-snippets")) // 아래에서 사용할 변수 선언
     set('docsDir', file("src/main/resources/static/docs"))
+    set('buildJar', file("build/libs/station3-assignment-member.jar"))
+    set('outDir', file("./../out"))
 }
 
 test {
@@ -102,9 +104,16 @@ task copyDocument(type: Copy) {
     into docsDir
 }
 
+task copyJar(type: Copy) {
+    dependsOn copyDocument
+    from buildJar
+    into outDir
+}
+
 // build 의 의존작업 명시
 build {
     dependsOn copyDocument
+    dependsOn copyJar
 }
 
 /**
