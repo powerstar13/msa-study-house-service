@@ -8,6 +8,12 @@ import lombok.Getter;
 public enum ExceptionMessage {
 
     IsRequiredRequest("BadRequestException", "Request를 전달해주세요."),
+    IsRequiredMemberType("BadRequestException", "회원 유형을 전달해 주세요."),
+    IsRequiredMemberLoginId("BadRequestException", "회원 로그인 아이디를 입력해 주세요."),
+    IsRequiredMemberPassword("BadRequestException", "회원 비밀번호를 입력해 주세요."),
+    IsRequiredMemberName("BadRequestException", "회원 이름을 입력해 주세요."),
+    IsRequiredMemberBirth("BadRequestException", "회원 생년월일을 입력해 주세요."),
+    IsRequiredMemberPhone("BadRequestException", "회원 연락처을 입력해 주세요."),
     IsRequiredAuthorization("UnauthorizedException", "토큰을 전달해 주세요."),
 
     InvalidMemberLogin("UnauthorizedException", "아이디 또는 비밀번호가 틀렸습니다."),

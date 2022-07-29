@@ -6,14 +6,29 @@
 
 # ℹ️ 실행 방법
 
-1. API Gateway 실행
-2. 회원 서비스 실행
-3. 방 서비스 실행
+`out 폴더 경로의 각 jar 실행 명령을 입력 바랍니다.`
 
-## API Test
-http-test
+1. API Gateway 실행
+    ```
+    java -jar ./out/stattion3-assignment-gateway.jar
+    ```
+2. 회원 서비스 실행
+    ```
+    java -jar ./out/stattion3-assignment-member.jar
+    ```
+3. 방 서비스 실행
+    ```
+    java -jar ./out/stattion3-assignment-house.jar
+    ```
+
 
 ## [API 문서](http://localhost:8080/docs/index.html)
+
+`jar 파일들을 모두 실행시킨 후 API 문서를 열어주시기 바랍니다.`
+
+## [API Test](./http-test/api.http)
+
+`API를 실행할 수 있는 http test 파일입니다.`
 
 ---
 
