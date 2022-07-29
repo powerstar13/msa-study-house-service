@@ -20,6 +20,13 @@ repositories {
     mavenCentral()
 }
 
+ext {
+    set('snippetsDir', file("build/generated-snippets")) // 아래에서 사용할 변수 선언
+    set('docsDir', file("src/main/resources/static/docs"))
+    set('buildJar', file("build/libs/station3-assignment-member.jar"))
+    set('outDir', file("./../out"))
+}
+
 dependencies {
     // Security
     implementation 'org.springframework.boot:spring-boot-starter-security:2.7.0'
@@ -71,13 +78,6 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test:2.7.0'
 }
 
-ext {
-    set('snippetsDir', file("build/generated-snippets")) // 아래에서 사용할 변수 선언
-    set('docsDir', file("src/main/resources/static/docs"))
-    set('buildJar', file("build/libs/station3-assignment-member.jar"))
-    set('outDir', file("./../out"))
-}
-
 test {
     outputs.dir snippetsDir // 위에서 작성한 snippetsDir 디렉토리를 test의 output으로 구성하는 설정 -> 스니펫 조각들이 build/generated-snippets로 출력
     useJUnitPlatform()
@@ -95,6 +95,7 @@ asciidoctor {
 // static/docs 폴더 비우기
 asciidoctor.doFirst {
     delete docsDir
+    delete buildJar
 }
 
 // asciidoctor 작업 이후 생성된 HTML 파일을 static/docs 로 copy

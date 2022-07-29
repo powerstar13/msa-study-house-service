@@ -8,6 +8,8 @@
 
 `out 폴더 경로의 각 jar 실행 명령을 입력 바랍니다.`
 
+### java가 설치되어 있을 경우
+
 1. API Gateway 실행
     ```
     java -jar ./out/stattion3-assignment-gateway.jar
@@ -20,6 +22,12 @@
     ```
     java -jar ./out/stattion3-assignment-house.jar
     ```
+
+### intelliJ를 사용할 경우
+1. `./out/` 폴더 내의 jar 파일들을 우클릭 후 Run하여 모두 실행
+   1. API Gateway port: 8080
+   2. 회원 서비스 port: 8081
+   3. 방 서비스 port: 8082
 
 
 ## [API 문서](http://localhost:8080/docs/index.html)

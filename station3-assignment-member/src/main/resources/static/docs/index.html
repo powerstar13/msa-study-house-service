@@ -446,14 +446,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#common">공통 사항</a>
-<ul class="sectlevel2">
-<li><a href="#_도메인">도메인</a></li>
-<li><a href="#_method_규칙">Method 규칙</a></li>
-<li><a href="#_result_code">Result Code</a></li>
-</ul>
-</li>
-<li><a href="#_공통_사항_end">====== 공통 사항 END =====</a></li>
+<li><a href="#_뒤로가기">뒤로가기</a></li>
 <li><a href="#member-register">회원 가입</a>
 <ul class="sectlevel2">
 <li><a href="#_http">Http</a></li>
@@ -466,116 +459,9 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 <div id="content">
 <div class="sect1">
-<h2 id="common"><a class="link" href="#common">공통 사항</a></h2>
+<h2 id="_뒤로가기"><a class="link" href="#_뒤로가기"><a href="http://localhost:8080/docs/index.html">뒤로가기</a></a></h2>
 <div class="sectionbody">
-<div class="sect2">
-<h3 id="_도메인"><a class="link" href="#_도메인">도메인</a></h3>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">환경</th>
-<th class="tableblock halign-left valign-top">도메인 주소</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">API Gateway 로컬 서버</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="http://localhost:8080" class="bare">http://localhost:8080</a></p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="sect2">
-<h3 id="_method_규칙"><a class="link" href="#_method_규칙">Method 규칙</a></h3>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 25%;">
-<col style="width: 25%;">
-<col style="width: 25%;">
-<col style="width: 25%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">GET</th>
-<th class="tableblock halign-left valign-top">POST</th>
-<th class="tableblock halign-left valign-top">PUT</th>
-<th class="tableblock halign-left valign-top">DELETE</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">조회</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">생성, 확인</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">수정</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">삭제</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="sect2">
-<h3 id="_result_code"><a class="link" href="#_result_code">Result Code</a></h3>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 33.3333%;">
-<col style="width: 33.3333%;">
-<col style="width: 33.3334%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Code</th>
-<th class="tableblock halign-left valign-top">메시지</th>
-<th class="tableblock halign-left valign-top">설명</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">200</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">OK</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">API 요청 성공</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">201</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Created</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">데이터 생성 성공</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">400</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Bad request 상세 메시지</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Request 정보를 확인해 주세요.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">401</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Unauthorized 상세 메시지</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">인증 실패</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">404</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Not Found 상세 메시지</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">조회된 정보가 없음</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">409</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Conflict 상세 메시지</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">이미 존재하는 데이터입니다.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">500</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Internal Server Error 서버 에러 발생</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">알 수 없는 오류가 발생했습니다. 관리자에게 문의 바랍니다.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_공통_사항_end"><a class="link" href="#_공통_사항_end">====== 공통 사항 END =====</a></h2>
-<div class="sectionbody">
-<hr>
+
 </div>
 </div>
 <div class="sect1">
@@ -700,6 +586,20 @@ Host: localhost:8080
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">회원 대체 식별키</p></td>
 </tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">accessToken</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">JWT 액세스 토큰</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">refreshToken</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">JWT 리프레시 토큰</p></td>
+</tr>
 </tbody>
 </table>
 <div class="listingblock">
@@ -707,7 +607,9 @@ Host: localhost:8080
 <pre class="highlightjs highlight nowrap"><code class="language-none hljs">{
   "rt" : 201,
   "rtMsg" : "Created",
-  "memberToken" : "c193dd45-dcc8-4401-b441-b0e468aba9e5"
+  "memberToken" : "0d5739b2-33de-41bb-8fd4-3b79c967ae84",
+  "accessToken" : "accessToken",
+  "refreshToken" : "refreshToken"
 }</code></pre>
 </div>
 </div>
@@ -718,7 +620,7 @@ Host: localhost:8080
 <div id="footer">
 <div id="footer-text">
 Version <br>
-Last updated 2022-07-29 00:48:46 +0900
+Last updated 2022-07-29 22:21:08 +0900
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">

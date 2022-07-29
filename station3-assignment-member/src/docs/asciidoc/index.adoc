@@ -19,7 +19,7 @@ endif::[]
 [[title]]
 = 회원 Domain API 문서
 
-include::{docdir}/common.adoc[]
+== link:http://localhost:8080/docs/index.html[뒤로가기]
 
 [[member-register]]
 == 회원 가입
