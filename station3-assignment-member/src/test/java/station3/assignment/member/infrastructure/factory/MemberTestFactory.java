@@ -6,6 +6,7 @@ import station3.assignment.member.domain.Member;
 import station3.assignment.member.domain.MemberType;
 import station3.assignment.member.domain.service.dto.MemberDTO;
 import station3.assignment.member.presentation.request.MemberRegisterRequest;
+import station3.assignment.member.presentation.response.ExchangeMemberTokenResponse;
 import station3.assignment.member.presentation.response.MemberRegisterResponse;
 
 import java.time.LocalDate;
@@ -68,6 +69,7 @@ public class MemberTestFactory {
      * 회원 대체 식별키 정보
      */
     public static MemberDTO.MemberTokenInfo memberTokenInfo() {
+
         return MemberDTO.MemberTokenInfo.builder()
             .memberToken(memberToken)
             .build();
@@ -81,6 +83,7 @@ public class MemberTestFactory {
      * 회원 가입 Request
      */
     public static MemberRegisterRequest memberRegisterRequest() {
+
         return MemberRegisterRequest.builder()
             .memberType(memberType)
             .memberLoginId(memberLoginId)
@@ -95,10 +98,32 @@ public class MemberTestFactory {
      * 회원 가입 Response
      */
     public static MemberRegisterResponse memberRegisterResponse() {
+
         return MemberRegisterResponse.builder()
             .memberToken(memberToken)
             .accessToken("accessToken")
             .refreshToken("refreshToken")
+            .build();
+    }
+
+    /**
+     * 회원 고유번호 정보
+     */
+    public static MemberDTO.MemberIdInfo memberIdInfo() {
+
+        return MemberDTO.MemberIdInfo.builder()
+            .memberId(1)
+            .build();
+    }
+
+    public static Mono<MemberDTO.MemberIdInfo> memberIdInfoMono() {
+        return Mono.just(memberIdInfo());
+    }
+
+    public static ExchangeMemberTokenResponse exchangeMemberTokenResponse() {
+
+        return ExchangeMemberTokenResponse.builder()
+            .memberId(1)
             .build();
     }
 }

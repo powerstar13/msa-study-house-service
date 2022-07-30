@@ -9,18 +9,14 @@ import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 import station3.assignment.member.application.dto.MemberCommand;
 import station3.assignment.member.domain.Member;
-import station3.assignment.member.domain.service.MemberReader;
-import station3.assignment.member.domain.service.MemberService;
-import station3.assignment.member.domain.service.MemberStore;
 import station3.assignment.member.domain.service.dto.MemberDTO;
 import station3.assignment.member.domain.service.dto.MemberDTOMapper;
 import station3.assignment.member.infrastructure.jwt.factory.TokenStore;
 
-import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.verify;
 import static station3.assignment.member.infrastructure.factory.MemberTestFactory.*;
 
 @SpringBootTest
@@ -60,6 +56,21 @@ class MemberServiceTest {
                 assertNotNull(memberTokenInfo.getAccessToken());
                 assertNotNull(memberTokenInfo.getRefreshToken());
             }))
+            .verifyComplete();
+    }
+
+    @DisplayName("회원 고유번호 가져오기")
+    @Test
+    void exchangeMemberToken() {
+
+        given(memberReader.exchangeMemberToken(any(String.class))).willReturn(memberIdInfoMono());
+
+        Mono<MemberDTO.MemberIdInfo> memberIdInfoMono = memberService.exchangeMemberToken("memberToken");
+
+        verify(memberReader).exchangeMemberToken(any(String.class));
+
+        StepVerifier.create(memberIdInfoMono.log())
+            .assertNext(memberIdInfo -> assertTrue(memberIdInfo.getMemberId() > 0))
             .verifyComplete();
     }
 }

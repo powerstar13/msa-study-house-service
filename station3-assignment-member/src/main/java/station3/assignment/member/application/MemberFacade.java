@@ -21,4 +21,13 @@ public class MemberFacade {
     public Mono<MemberDTO.MemberTokenInfo> memberRegister(MemberCommand.MemberRegister command) {
         return memberService.memberRegister(command); // 회원 등록 처리
     }
+
+    /**
+     * 회원 고유번호 가져오기
+     * @param memberToken: 회원 대체 식별키
+     * @return MemberIdInfo: 회원 고유번호
+     */
+    public Mono<MemberDTO.MemberIdInfo> exchangeMemberToken(String memberToken) {
+        return memberService.exchangeMemberToken(memberToken); // 회원 고유번호 가져오기 처리
+    }
 }

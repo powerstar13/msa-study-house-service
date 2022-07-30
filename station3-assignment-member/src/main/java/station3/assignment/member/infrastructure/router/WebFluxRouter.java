@@ -37,6 +37,10 @@ public class WebFluxRouter implements WebFluxConfigurer {
                         .POST(RouterPathPattern.MEMBER_REGISTER.getPath2(), memberHandler::memberRegister) // 회원 가입
                 )
             )
+            .path(RouterPathPattern.EXCHANGE_MEMBER_TOKEN.getPath1(), memberBuilder ->
+                memberBuilder
+                    .GET(RouterPathPattern.EXCHANGE_MEMBER_TOKEN.getPath2(), memberHandler::exchangeMemberToken) // 회원 고유번호 가져오기
+            )
             .build();
     }
 }

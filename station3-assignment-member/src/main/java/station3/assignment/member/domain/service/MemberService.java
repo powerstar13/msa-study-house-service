@@ -7,4 +7,6 @@ import station3.assignment.member.domain.service.dto.MemberDTO;
 public interface MemberService {
 
     Mono<MemberDTO.MemberTokenInfo> memberRegister(MemberCommand.MemberRegister command);
+
+    Mono<MemberDTO.MemberIdInfo> exchangeMemberToken(String memberToken);
 }

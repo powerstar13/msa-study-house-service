@@ -13,4 +13,6 @@ import station3.assignment.member.domain.service.dto.MemberDTO;
 public interface MemberResponseMapper {
 
     MemberRegisterResponse of(MemberDTO.MemberTokenInfo memberTokenInfo);
+
+    ExchangeMemberTokenResponse of(MemberDTO.MemberIdInfo memberIdInfo);
 }

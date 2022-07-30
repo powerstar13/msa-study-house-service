@@ -17,6 +17,11 @@ public class MemberServiceImpl implements MemberService {
     private final MemberDTOMapper memberDTOMapper;
     private final TokenStore tokenStore;
 
+    /**
+     * 회원 등록 처리
+     * @param command: 등록할 회원 정보
+     * @return MemberTokenInfo: 회원 토큰 정보
+     */
     @Override
     public Mono<MemberDTO.MemberTokenInfo> memberRegister(MemberCommand.MemberRegister command) {
 
@@ -32,5 +37,16 @@ public class MemberServiceImpl implements MemberService {
                     return Mono.just(memberTokenInfo);
                 })
             );
+    }
+
+    /**
+     * 회원 고유번호 가져오기
+     * @param memberToken: 회원 대체 식별키
+     * @return MemberIdInfo: 회원 고유번호
+     */
+    @Override
+    public Mono<MemberDTO.MemberIdInfo> exchangeMemberToken(String memberToken) {
+
+        return memberReader.exchangeMemberToken(memberToken);
     }
 }

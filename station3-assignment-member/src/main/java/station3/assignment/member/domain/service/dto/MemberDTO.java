@@ -1,5 +1,6 @@
 package station3.assignment.member.domain.service.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -27,6 +28,21 @@ public class MemberDTO {
                 + "\"memberToken\":\"" + memberToken + "\""
                 + ", \"accessToken\":\"" + accessToken + "\""
                 + ", \"refreshToken\":\"" + refreshToken + "\""
+                + "}";
+        }
+    }
+
+    @Getter
+    @Builder
+    @AllArgsConstructor
+    public static class MemberIdInfo {
+
+        private int memberId; // 회원 고유번호
+
+        @Override
+        public String toString() {
+            return "{"
+                + "\"memberId\":" + memberId
                 + "}";
         }
     }

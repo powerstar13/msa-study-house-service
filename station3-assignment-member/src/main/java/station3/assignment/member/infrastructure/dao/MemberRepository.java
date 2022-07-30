@@ -10,4 +10,6 @@ import station3.assignment.member.domain.MemberType;
 public interface MemberRepository extends ReactiveCrudRepository<Member, Integer> {
     
     Mono<Member> findByMemberLoginIdAndMemberType(String memberLoginId, MemberType memberType);
+
+    Mono<Member> findByMemberToken(String memberToken);
 }
