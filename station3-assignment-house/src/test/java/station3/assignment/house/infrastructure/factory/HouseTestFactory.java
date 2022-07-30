@@ -1,11 +1,15 @@
 package station3.assignment.house.infrastructure.factory;
 
+import org.springframework.http.HttpStatus;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import station3.assignment.house.application.dto.HouseCommand;
 import station3.assignment.house.domain.House;
 import station3.assignment.house.domain.HouseType;
+import station3.assignment.house.domain.Rental;
 import station3.assignment.house.domain.RentalType;
 import station3.assignment.house.domain.service.dto.HouseDTO;
+import station3.assignment.house.infrastructure.webClient.response.ExchangeMemberTokenResponse;
 import station3.assignment.house.presentation.request.HouseRegisterRequest;
 import station3.assignment.house.presentation.request.dto.RentalRegisterRequest;
 import station3.assignment.house.presentation.response.HouseRegisterResponse;
@@ -43,9 +47,8 @@ public class HouseTestFactory {
     private static List<HouseCommand.RentalRegisterDTO> rentalRegisterDTOCommandList() {
 
         return Arrays.asList(
-            rentalRegisterDTOCommand(RentalType.JEONSE, 10000, null),
-            rentalRegisterDTOCommand(RentalType.MONTHLY, 2500, 25),
-            rentalRegisterDTOCommand(RentalType.MONTHLY, 1000, 55)
+            rentalRegisterDTOCommand(RentalType.JEONSE, 5000, null),
+            rentalRegisterDTOCommand(RentalType.MONTHLY, 1000, 50)
         );
     }
 
@@ -56,6 +59,19 @@ public class HouseTestFactory {
 
         return HouseCommand.HouseRegister.builder()
             .memberToken("memberToken")
+            .houseAddress(houseAddress)
+            .houseType(houseType)
+            .rentalRegisterDTOList(rentalRegisterDTOCommandList())
+            .build();
+    }
+
+    /**
+     * 회원 고유번호를 담을 방 등록 정보
+     */
+    public static HouseCommand.ExchangedHouseRegister exchangedHouseRegisterCommand() {
+
+        return HouseCommand.ExchangedHouseRegister.builder()
+            .memberId(1)
             .houseAddress(houseAddress)
             .houseType(houseType)
             .rentalRegisterDTOList(rentalRegisterDTOCommandList())
@@ -79,6 +95,35 @@ public class HouseTestFactory {
 
     public static Mono<House> houseMono() {
         return Mono.just(house());
+    }
+
+    /**
+     * 임대료 구성
+     * @param rentalId: 임대료 고유번호
+     * @param rentalToken: 임대료 대체 식별키
+     * @param houseId: 방 고유번호
+     * @param rentalType: 임대 유형
+     * @param deposit: 보증금
+     * @param rent: 월세
+     */
+    public static Rental rental(int rentalId, String rentalToken, int houseId, RentalType rentalType, Integer deposit, Integer rent) {
+
+        return Rental.builder()
+            .rentalId(rentalId)
+            .rentalToken(rentalToken)
+            .houseId(1)
+            .rentalType(RentalType.JEONSE)
+            .deposit(5000)
+            .rent(null)
+            .build();
+    }
+
+    public static Flux<Rental> rentalFlux() {
+
+        return Flux.just(
+            rental(1, UUID.randomUUID().toString(), 1, RentalType.JEONSE, 5000, null),
+            rental(2, UUID.randomUUID().toString(), 1, RentalType.MONTHLY, 1000, 50)
+        );
     }
 
     /**
@@ -116,8 +161,7 @@ public class HouseTestFactory {
 
         return Arrays.asList(
             rentalRegisterRequest(RentalType.JEONSE, 10000, null),
-            rentalRegisterRequest(RentalType.MONTHLY, 2500, 25),
-            rentalRegisterRequest(RentalType.MONTHLY, 1000, 55)
+            rentalRegisterRequest(RentalType.MONTHLY, 1000, 50)
         );
     }
 
@@ -125,6 +169,7 @@ public class HouseTestFactory {
      * 방 등록 Request
      */
     public static HouseRegisterRequest houseRegisterRequest() {
+
         return HouseRegisterRequest.builder()
             .memberToken(memberToken)
             .houseAddress(houseAddress)
@@ -137,8 +182,25 @@ public class HouseTestFactory {
      * 방 등록 Response
      */
     public static HouseRegisterResponse houseRegisterResponse() {
+
         return HouseRegisterResponse.builder()
             .houseToken(houseToken)
             .build();
+    }
+
+    /**
+     * 회원 고유번호 가져오기 통신 결과
+     */
+    public static ExchangeMemberTokenResponse exchangeMemberTokenResponse() {
+
+        return ExchangeMemberTokenResponse.builder()
+            .rt(HttpStatus.OK.value())
+            .rtMsg(HttpStatus.OK.getReasonPhrase())
+            .memberId(1)
+            .build();
+    }
+
+    public static Mono<ExchangeMemberTokenResponse> exchangeMemberTokenResponseMono() {
+        return Mono.just(exchangeMemberTokenResponse());
     }
 }

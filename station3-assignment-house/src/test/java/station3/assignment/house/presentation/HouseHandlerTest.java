@@ -12,7 +12,7 @@ import org.springframework.test.web.reactive.server.FluxExchangeResult;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import reactor.test.StepVerifier;
 import station3.assignment.house.application.dto.HouseCommand;
-import station3.assignment.house.application.dto.HouseFacade;
+import station3.assignment.house.application.HouseFacade;
 import station3.assignment.house.domain.service.dto.HouseDTO;
 import station3.assignment.house.infrastructure.exception.GlobalExceptionHandler;
 import station3.assignment.house.infrastructure.router.RouterPathPattern;

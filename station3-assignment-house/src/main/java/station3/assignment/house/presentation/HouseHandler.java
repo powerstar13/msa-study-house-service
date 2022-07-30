@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Mono;
-import station3.assignment.house.application.dto.HouseFacade;
+import station3.assignment.house.application.HouseFacade;
 import station3.assignment.house.infrastructure.exception.status.BadRequestException;
 import station3.assignment.house.infrastructure.exception.status.ExceptionMessage;
 import station3.assignment.house.presentation.request.HouseRegisterRequest;

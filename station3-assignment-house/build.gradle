@@ -28,6 +28,10 @@ ext {
 }
 
 dependencies {
+    // MockWebServer
+    implementation 'com.squareup.okhttp3:okhttp:5.0.0-alpha.10'
+    testImplementation 'com.squareup.okhttp3:mockwebserver:5.0.0-alpha.10'
+
     // JWT
     implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
     implementation 'io.jsonwebtoken:jjwt-jackson:0.11.5'

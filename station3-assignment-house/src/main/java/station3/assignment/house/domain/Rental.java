@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 import station3.assignment.house.domain.shared.CommonDateEntity;
@@ -16,6 +17,7 @@ import station3.assignment.house.domain.shared.CommonDateEntity;
 @Table(name = "rental")
 public class Rental extends CommonDateEntity { // 임대료
 
+    @Id
     @Column(value = "rentalId")
     private int rentalId; // 임대료 고유번호
 
