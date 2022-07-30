@@ -28,6 +28,10 @@ ext {
 }
 
 dependencies {
+    // MockWebServer
+    implementation 'com.squareup.okhttp3:okhttp:5.0.0-alpha.10'
+    testImplementation 'com.squareup.okhttp3:mockwebserver:5.0.0-alpha.10'
+
     // JWT
     implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
     implementation 'io.jsonwebtoken:jjwt-jackson:0.11.5'
@@ -90,7 +94,6 @@ asciidoctor {
 // static/docs 폴더 비우기
 asciidoctor.doFirst {
     delete docsDir
-    delete buildJar
 }
 
 // asciidoctor 작업 이후 생성된 HTML 파일을 static/docs 로 copy

@@ -1,4 +1,4 @@
-# 회원 서비스
+# 부동산 중개 플랫폼 API Test
 
 ### 회원 가입
 POST http://localhost:8080/auth/member-register
@@ -26,3 +26,26 @@ client.test("Request executed successfully", function() {
 });
 %}
 
+### 내방 등록
+POST http://localhost:8080/house/register
+Content-Type: application/json
+Accept: application/json
+Authorization: {{accessToken}}
+
+{
+  "memberToken": "492bc213-5c47-422f-9390-1b0c2206bcbe",
+  "houseAddress": "방 주소",
+  "houseType": "ONE",
+  "rentalRegisterRequestList": [
+    {
+      "rentalType": "JEONSE",
+      "deposit": 5000,
+      "rent": 0
+    },
+    {
+      "rentalType": "MONTHLY",
+      "deposit": 1000,
+      "rent": 50
+    }
+  ]
+}

@@ -14,7 +14,7 @@ public enum ExceptionMessage {
     IsRequiredMemberName("BadRequestException", "회원 이름을 입력해 주세요."),
     IsRequiredMemberBirth("BadRequestException", "회원 생년월일을 입력해 주세요."),
     IsRequiredMemberPhone("BadRequestException", "회원 연락처을 입력해 주세요."),
-    IsRequiredAuthorization("UnauthorizedException", "토큰을 전달해 주세요."),
+    IsRequiredMemberToken("BadRequestException", "회원 대체 식별키를 전달해 주세요."),
 
     InvalidMemberLogin("UnauthorizedException", "아이디 또는 비밀번호가 틀렸습니다."),
     InvalidMemberVerify("UnauthorizedException", "회원 인증에 실패했습니다."),

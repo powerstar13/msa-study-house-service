@@ -454,6 +454,17 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_response">Response</a></li>
 </ul>
 </li>
+<li><a href="#title">⚠️BackEnd WebClient 전용 API</a>
+<ul class="sectlevel1">
+<li><a href="#exchange-member-token">회원 고유번호 가져오기</a>
+<ul class="sectlevel2">
+<li><a href="#_http_2">Http</a></li>
+<li><a href="#_request_2">Request</a></li>
+<li><a href="#_response_2">Response</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
@@ -607,9 +618,105 @@ Host: localhost:8080
 <pre class="highlightjs highlight nowrap"><code class="language-none hljs">{
   "rt" : 201,
   "rtMsg" : "Created",
-  "memberToken" : "87758cd9-0488-48ab-bffa-319c09f832fd",
+  "memberToken" : "37221d6b-d04a-4692-9c2e-4e2d5cf80231",
   "accessToken" : "accessToken",
   "refreshToken" : "refreshToken"
+}</code></pre>
+</div>
+</div>
+<hr>
+</div>
+</div>
+</div>
+<h1 id="title" class="sect0"><a class="link" href="#title">⚠️BackEnd WebClient 전용 API</a></h1>
+<div class="sect1">
+<h2 id="exchange-member-token"><a class="link" href="#exchange-member-token">회원 고유번호 가져오기</a></h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_http_2"><a class="link" href="#_http_2">Http</a></h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /exchange/member-token?memberToken=c8790244-dbd6-425a-91aa-aaf20383fc68 HTTP/1.1
+Host: localhost:8080</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_request_2"><a class="link" href="#_request_2">Request</a></h3>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">필드명</th>
+<th class="tableblock halign-left valign-top">필수값</th>
+<th class="tableblock halign-left valign-top">양식</th>
+<th class="tableblock halign-left valign-top">설명</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">memberToken</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">회원 대체 식별키</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_response_2"><a class="link" href="#_response_2">Response</a></h3>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">필드명</th>
+<th class="tableblock halign-left valign-top">타입</th>
+<th class="tableblock halign-left valign-top">필수값</th>
+<th class="tableblock halign-left valign-top">양식</th>
+<th class="tableblock halign-left valign-top">설명</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">rt</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Number</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">결과 코드</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">rtMsg</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">결과 메시지</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">memberId</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Number</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">회원 고유번호</p></td>
+</tr>
+</tbody>
+</table>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-none hljs">{
+  "rt" : 200,
+  "rtMsg" : "OK",
+  "memberId" : 1
 }</code></pre>
 </div>
 </div>
@@ -620,7 +727,7 @@ Host: localhost:8080
 <div id="footer">
 <div id="footer-text">
 Version <br>
-Last updated 2022-07-29 22:36:16 +0900
+Last updated 2022-07-30 13:50:11 +0900
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">

@@ -19,8 +19,8 @@ endif::[]
 [[title]]
 = 부동산 중개플랫폼 API 문서
 
-include::{docdir}/common.adoc[]
-
 == link:http://localhost:8081/docs/index.html[회원 서비스 API 문서]
 
 == link:http://localhost:8082/docs/index.html[방 서비스 API 문서]
+
+include::{docdir}/common.adoc[]

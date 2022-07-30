@@ -10,23 +10,29 @@ import org.springframework.http.MediaType;
 import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.test.web.reactive.server.FluxExchangeResult;
 import org.springframework.test.web.reactive.server.WebTestClient;
+import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
-import station3.assignment.member.application.member.MemberFacade;
-import station3.assignment.member.application.member.dto.MemberCommand;
-import station3.assignment.member.domain.member.service.dto.MemberDTO;
+import station3.assignment.member.application.MemberFacade;
+import station3.assignment.member.application.dto.MemberCommand;
+import station3.assignment.member.domain.service.dto.MemberDTO;
 import station3.assignment.member.infrastructure.exception.GlobalExceptionHandler;
 import station3.assignment.member.infrastructure.router.RouterPathPattern;
 import station3.assignment.member.presentation.request.MemberRegisterRequest;
 import station3.assignment.member.presentation.request.MemberRequestMapper;
+import station3.assignment.member.presentation.response.ExchangeMemberTokenResponse;
 import station3.assignment.member.presentation.response.MemberRegisterResponse;
 import station3.assignment.member.presentation.response.MemberResponseMapper;
 import station3.assignment.member.presentation.shared.WebFluxSharedHandlerTest;
+
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
+import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
+import static org.springframework.restdocs.request.RequestDocumentation.requestParameters;
 import static org.springframework.restdocs.webtestclient.WebTestClientRestDocumentation.document;
 import static station3.assignment.member.infrastructure.factory.MemberTestFactory.*;
 import static station3.assignment.member.infrastructure.restdocs.RestdocsDocumentFormat.*;
@@ -99,6 +105,53 @@ class MemberHandlerTest extends WebFluxSharedHandlerTest {
             .assertNext(response -> assertAll(() -> {
                 assertEquals(HttpStatus.CREATED.value(), response.getRt());
                 assertInstanceOf(String.class, response.getMemberToken());
+            }))
+            .verifyComplete();
+    }
+
+    @DisplayName("회원 고유번호 가져오기")
+    @Test
+    void exchangeMemberToken() {
+        // given
+        given(memberFacade.exchangeMemberToken(any(String.class))).willReturn(memberIdInfoMono());
+        given(memberResponseMapper.of(any(MemberDTO.MemberIdInfo.class))).willReturn(exchangeMemberTokenResponse());
+
+        // when
+        final String URI = RouterPathPattern.EXCHANGE_MEMBER_TOKEN.getFullPath();
+        WebTestClient.ResponseSpec result = webClient
+            .get()
+            .uri(uriBuilder ->
+                uriBuilder.path(URI)
+                    .queryParam("memberToken", UUID.randomUUID().toString())
+                    .build()
+            )
+            .exchange();
+
+        result.expectStatus().isOk()
+            .expectBody()
+            .consumeWith(document(URI,
+                requestPrettyPrint(),
+                responsePrettyPrint(),
+                requestParameters(
+                    parameterWithName("memberToken").description("회원 대체 식별키")
+                ),
+                responseFields(
+                    fieldWithPath("rt").type(JsonFieldType.NUMBER).description("결과 코드"),
+                    fieldWithPath("rtMsg").type(JsonFieldType.STRING).description("결과 메시지"),
+                    fieldWithPath("memberId").type(JsonFieldType.NUMBER).description("회원 고유번호")
+                )
+            ));
+
+        FluxExchangeResult<ExchangeMemberTokenResponse> flux = result.returnResult(ExchangeMemberTokenResponse.class);
+
+        // then
+        verify(memberFacade).exchangeMemberToken(any(String.class));
+        verify(memberResponseMapper).of(any(MemberDTO.MemberIdInfo.class));
+
+        StepVerifier.create(flux.getResponseBody().log())
+            .assertNext(response -> assertAll(() -> {
+                assertEquals(HttpStatus.OK.value(), response.getRt());
+                assertTrue(response.getMemberId() > 0);
             }))
             .verifyComplete();
     }

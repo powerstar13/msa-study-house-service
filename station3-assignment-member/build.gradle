@@ -95,7 +95,6 @@ asciidoctor {
 // static/docs 폴더 비우기
 asciidoctor.doFirst {
     delete docsDir
-    delete buildJar
 }
 
 // asciidoctor 작업 이후 생성된 HTML 파일을 static/docs 로 copy

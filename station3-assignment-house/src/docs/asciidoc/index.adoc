@@ -20,3 +20,13 @@ endif::[]
 = 방 Domain API 문서
 
 == link:http://localhost:8080/docs/index.html[뒤로가기]
+
+[[house-register]]
+== 내방 등록
+=== Http
+include::{snippets}/house/register/http-request.adoc[]
+=== Request
+include::{snippets}/house/register/request-fields.adoc[]
+=== Response
+include::{snippets}/house/register/response-fields.adoc[]
+include::{snippets}/house/register/response-body.adoc[]

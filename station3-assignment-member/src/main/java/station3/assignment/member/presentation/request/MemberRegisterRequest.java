@@ -5,7 +5,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
-import station3.assignment.member.domain.member.MemberType;
+import station3.assignment.member.domain.MemberType;
 import station3.assignment.member.infrastructure.exception.status.BadRequestException;
 import station3.assignment.member.infrastructure.exception.status.ExceptionMessage;
 import station3.assignment.member.presentation.shared.request.RequestVerify;

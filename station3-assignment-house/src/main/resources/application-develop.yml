@@ -14,3 +14,7 @@ logging:
   level:
     root: INFO
     org.springframework.r2dbc: DEBUG
+
+msa:
+  client-url:
+    member: http://localhost:8081 # 회원 서비스 주소

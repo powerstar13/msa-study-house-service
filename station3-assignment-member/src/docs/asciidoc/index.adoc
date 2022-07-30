@@ -30,3 +30,7 @@ include::{snippets}/auth/member-register/request-fields.adoc[]
 === Response
 include::{snippets}/auth/member-register/response-fields.adoc[]
 include::{snippets}/auth/member-register/response-body.adoc[]
+
+---
+
+include::{docdir}/webClient.adoc[]
