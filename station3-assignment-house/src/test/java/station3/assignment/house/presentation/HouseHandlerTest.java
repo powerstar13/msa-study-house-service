@@ -26,6 +26,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
+import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.restdocs.webtestclient.WebTestClientRestDocumentation.document;
 import static station3.assignment.house.infrastructure.factory.HouseTestFactory.*;
@@ -63,6 +64,7 @@ class HouseHandlerTest extends WebFluxSharedHandlerTest {
         WebTestClient.ResponseSpec result = webClient
             .post()
             .uri(URI)
+            .header(AUTHORIZATION, "accessToken")
             .bodyValue(houseRegisterRequest())
             .accept(MediaType.APPLICATION_JSON)
             .exchange();

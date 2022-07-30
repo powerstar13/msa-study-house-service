@@ -472,13 +472,14 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /house/register HTTP/1.1
+Authorization: accessToken
 Accept: application/json
 Content-Type: application/json
 Content-Length: 317
 Host: localhost:8080
 
 {
-  "memberToken" : "a35c8911-2ce8-45ac-a7ac-72cb57eadc94",
+  "memberToken" : "2dca336d-b7b6-489a-b136-dd73fbad8a8d",
   "houseAddress" : "방 주소",
   "houseType" : "ONE",
   "rentalRegisterRequestList" : [ {
@@ -605,7 +606,7 @@ Host: localhost:8080
 <pre class="highlightjs highlight nowrap"><code class="language-none hljs">{
   "rt" : 201,
   "rtMsg" : "Created",
-  "houseToken" : "c65fb825-9950-471a-b0c6-13dbd6e7cc76"
+  "houseToken" : "beb01d8f-7ff8-4595-9486-84d3142e557a"
 }</code></pre>
 </div>
 </div>
