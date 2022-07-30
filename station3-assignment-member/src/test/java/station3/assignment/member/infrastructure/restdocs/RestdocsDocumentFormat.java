@@ -13,7 +13,8 @@ public class RestdocsDocumentFormat {
 
     public static Attributes.Attribute memberTypeFormat() {
         return setFormat(String.format(
-            "%s: %s, %s: %s",
+            "%s: %s, " +
+                "%s: %s",
             MemberType.LESSOR.name(), MemberType.LESSOR.getDescription(),
             MemberType.LESSEE.name(), MemberType.LESSEE.getDescription()
         ));
