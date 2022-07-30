@@ -1,10 +1,10 @@
 package station3.assignment.member.infrastructure.factory;
 
 import reactor.core.publisher.Mono;
-import station3.assignment.member.application.member.dto.MemberCommand;
-import station3.assignment.member.domain.member.Member;
-import station3.assignment.member.domain.member.MemberType;
-import station3.assignment.member.domain.member.service.dto.MemberDTO;
+import station3.assignment.member.application.dto.MemberCommand;
+import station3.assignment.member.domain.Member;
+import station3.assignment.member.domain.MemberType;
+import station3.assignment.member.domain.service.dto.MemberDTO;
 import station3.assignment.member.presentation.request.MemberRegisterRequest;
 import station3.assignment.member.presentation.response.MemberRegisterResponse;
 

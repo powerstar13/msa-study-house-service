@@ -13,6 +13,7 @@ CREATE TABLE IF NOT EXISTS house
 CREATE TABLE IF NOT EXISTS rental
 (
     `rentalId`    INT                          NOT NULL    AUTO_INCREMENT COMMENT '임대료 고유번호',
+    `rentalToken` VARCHAR(36)                  NOT NULL    COMMENT '임대료 대체 식별키',
     `houseId`     INT                          NOT NULL    COMMENT '방 고유번호',
     `rentalType`  VARCHAR(45)                  NOT NULL    COMMENT '임대 유형',
     `deposit`     INT                          NOT NULL    COMMENT '보증금',

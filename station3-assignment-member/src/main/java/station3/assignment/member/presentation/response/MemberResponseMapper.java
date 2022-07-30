@@ -3,7 +3,7 @@ package station3.assignment.member.presentation.response;
 import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
-import station3.assignment.member.domain.member.service.dto.MemberDTO;
+import station3.assignment.member.domain.service.dto.MemberDTO;
 
 @Mapper(
     componentModel = "spring",
