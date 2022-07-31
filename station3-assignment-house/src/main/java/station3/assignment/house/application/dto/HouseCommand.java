@@ -2,10 +2,12 @@ package station3.assignment.house.application.dto;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.experimental.SuperBuilder;
 import station3.assignment.house.domain.House;
 import station3.assignment.house.domain.HouseType;
 import station3.assignment.house.domain.Rental;
 import station3.assignment.house.domain.RentalType;
+import station3.assignment.house.presentation.shared.request.PageRequestDTO;
 
 import java.util.List;
 import java.util.UUID;
@@ -138,6 +140,31 @@ public class HouseCommand {
                 + ", \"rentalType\":\"" + rentalType + "\""
                 + ", \"deposit\":" + deposit
                 + ", \"rent\":" + rent
+                + "}";
+        }
+    }
+
+    @Getter
+    @SuperBuilder
+    public static class HouseDTOPage extends PageRequestDTO {
+
+        private HouseType houseType; // 방 유형
+        private RentalType rentalType; // 임대 유형
+        private Integer depositStartRange; // 보증금 시작 범위
+        private Integer depositEndRange; // 보증금 끝 범위
+        private Integer rentStartRange; // 월세 시작 범위
+        private Integer rentEndRange; // 월세 끝 범위
+
+        @Override
+        public String toString() {
+            return "{"
+                + super.toString().replace("}", "")
+                + ", \"houseType\":\"" + houseType + "\""
+                + ", \"rentalType\":\"" + rentalType + "\""
+                + ", \"depositStartRange\":" + depositStartRange
+                + ", \"depositEndRange\":" + depositEndRange
+                + ", \"rentStartRange\":" + rentStartRange
+                + ", \"rentEndRange\":" + rentEndRange
                 + "}";
         }
     }
