@@ -1,5 +1,6 @@
 package station3.assignment.house.infrastructure.factory;
 
+import org.apache.commons.lang3.RandomUtils;
 import org.springframework.http.HttpStatus;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -15,8 +16,10 @@ import station3.assignment.house.presentation.request.HouseRegisterRequest;
 import station3.assignment.house.presentation.request.dto.RentalModifyRequest;
 import station3.assignment.house.presentation.request.dto.RentalRegisterRequest;
 import station3.assignment.house.presentation.response.HouseInfoResponse;
+import station3.assignment.house.presentation.response.HouseListResponse;
 import station3.assignment.house.presentation.response.HouseRegisterResponse;
-import station3.assignment.house.presentation.response.dto.RentalInfoResponse;
+import station3.assignment.house.presentation.response.dto.HouseInfoResponseDTO;
+import station3.assignment.house.presentation.response.dto.RentalInfoResponseDTO;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
@@ -27,8 +30,6 @@ public class HouseTestFactory {
 
     private static final HouseType houseType = HouseType.ONE;
     private static final String houseAddress = "방 주소";
-    private static final String houseToken = UUID.randomUUID().toString();
-    private static final String memberToken = UUID.randomUUID().toString();
 
     /**
      * 임대료 등록 정보 구성
@@ -62,7 +63,7 @@ public class HouseTestFactory {
     public static HouseCommand.HouseRegister houseRegisterCommand() {
 
         return HouseCommand.HouseRegister.builder()
-            .memberToken("memberToken")
+            .memberToken(UUID.randomUUID().toString())
             .houseAddress(houseAddress)
             .houseType(houseType)
             .rentalList(rentalRegisterDTOCommandList())
@@ -101,7 +102,7 @@ public class HouseTestFactory {
     public static HouseRegisterRequest houseRegisterRequest() {
 
         return HouseRegisterRequest.builder()
-            .memberToken(memberToken)
+            .memberToken(UUID.randomUUID().toString())
             .houseAddress(houseAddress)
             .houseType(houseType)
             .rentalList(rentalRegisterRequestList())
@@ -114,7 +115,7 @@ public class HouseTestFactory {
     public static HouseRegisterResponse houseRegisterResponse() {
 
         return HouseRegisterResponse.builder()
-            .houseToken(houseToken)
+            .houseToken(UUID.randomUUID().toString())
             .build();
     }
 
@@ -141,7 +142,7 @@ public class HouseTestFactory {
     private static List<HouseCommand.RentalModifyDTO> rentalModifyDTOCommandList() {
 
         return Arrays.asList(
-            rentalModifyDTOCommand("rentalToken", RentalType.JEONSE, 6000, null),
+            rentalModifyDTOCommand(UUID.randomUUID().toString(), RentalType.JEONSE, 6000, null),
             rentalModifyDTOCommand(null, RentalType.MONTHLY, 1500, 40)
         );
     }
@@ -152,7 +153,7 @@ public class HouseTestFactory {
     public static HouseCommand.HouseModify houseModifyCommand() {
 
         return HouseCommand.HouseModify.builder()
-            .houseToken("houseToken")
+            .houseToken(UUID.randomUUID().toString())
             .houseAddress(houseAddress)
             .houseType(houseType)
             .rentalList(rentalModifyDTOCommandList())
@@ -182,7 +183,7 @@ public class HouseTestFactory {
     private static List<RentalModifyRequest> rentalModifyRequestList() {
 
         return Arrays.asList(
-            rentalModifyRequest("rentalToken", RentalType.JEONSE, 6000, null),
+            rentalModifyRequest(UUID.randomUUID().toString(), RentalType.JEONSE, 6000, null),
             rentalModifyRequest(null, RentalType.MONTHLY, 1500, 40)
         );
     }
@@ -193,7 +194,7 @@ public class HouseTestFactory {
     public static HouseModifyRequest houseModifyRequest() {
 
         return HouseModifyRequest.builder()
-            .houseToken(houseToken)
+            .houseToken(UUID.randomUUID().toString())
             .houseAddress(houseAddress)
             .houseType(houseType)
             .rentalList(rentalModifyRequestList())
@@ -206,7 +207,7 @@ public class HouseTestFactory {
     public static HouseCommand.ExchangedHouseRegister exchangedHouseRegisterCommand() {
 
         return HouseCommand.ExchangedHouseRegister.builder()
-            .memberId(1)
+            .memberId(RandomUtils.nextInt())
             .houseAddress(houseAddress)
             .houseType(houseType)
             .rentalList(rentalRegisterDTOCommandList())
@@ -219,9 +220,9 @@ public class HouseTestFactory {
     public static House house() {
 
         return House.builder()
-            .houseId(1)
-            .houseToken(houseToken)
-            .memberId(1)
+            .houseId(RandomUtils.nextInt())
+            .houseToken(UUID.randomUUID().toString())
+            .memberId(RandomUtils.nextInt())
             .houseAddress(houseAddress)
             .houseType(houseType)
             .createdAt(LocalDateTime.now())
@@ -230,6 +231,10 @@ public class HouseTestFactory {
 
     public static Mono<House> houseMono() {
         return Mono.just(house());
+    }
+
+    public static Flux<House> houseFlux() {
+        return Flux.just(house(), house());
     }
 
     /**
@@ -254,14 +259,14 @@ public class HouseTestFactory {
     }
 
     public static Mono<Rental> rentalMono() {
-        return Mono.just(rental(1, 1, RentalType.JEONSE, 5000, null));
+        return Mono.just(rental(RandomUtils.nextInt(), RandomUtils.nextInt(), RentalType.JEONSE, 5000, null));
     }
 
     public static Flux<Rental> rentalFlux() {
 
         return Flux.just(
-            rental(1, 1, RentalType.JEONSE, 5000, null),
-            rental(2, 1, RentalType.MONTHLY, 1000, 50)
+            rental(RandomUtils.nextInt(), 1, RentalType.JEONSE, 5000, null),
+            rental(RandomUtils.nextInt(), 1, RentalType.MONTHLY, 1000, 50)
         );
     }
 
@@ -310,7 +315,7 @@ public class HouseTestFactory {
     public static HouseDTO.HouseInfo houseInfoDTO() {
 
         return HouseDTO.HouseInfo.builder()
-            .houseToken(houseToken)
+            .houseToken(UUID.randomUUID().toString())
             .houseAddress(houseAddress)
             .houseType(houseType)
             .rentalList(rentalInfoList())
@@ -322,11 +327,29 @@ public class HouseTestFactory {
     }
 
     /**
+     * 방 목록
+     */
+    public static HouseDTO.HouseList houseListDTO() {
+
+        return HouseDTO.HouseList.builder()
+            .houseList(
+                Arrays.asList(
+                    houseInfoDTO(), houseInfoDTO()
+                )
+            )
+            .build();
+    }
+
+    public static Mono<HouseDTO.HouseList> houseListMono() {
+        return Mono.just(houseListDTO());
+    }
+
+    /**
      * 방 대체 식별키 정보
      */
     public static HouseDTO.HouseTokenInfo houseTokenInfo() {
         return HouseDTO.HouseTokenInfo.builder()
-            .houseToken(houseToken)
+            .houseToken(UUID.randomUUID().toString())
             .build();
     }
 
@@ -342,7 +365,7 @@ public class HouseTestFactory {
         return ExchangeMemberTokenResponse.builder()
             .rt(HttpStatus.OK.value())
             .rtMsg(HttpStatus.OK.getReasonPhrase())
-            .memberId(1)
+            .memberId(RandomUtils.nextInt())
             .build();
     }
 
@@ -356,9 +379,9 @@ public class HouseTestFactory {
      * @param deposit: 보증금
      * @param rent: 월세
      */
-    public static RentalInfoResponse rentalInfoResponse(RentalType rentalType, Integer deposit, Integer rent) {
+    public static RentalInfoResponseDTO rentalInfoResponseDTO(RentalType rentalType, Integer deposit, Integer rent) {
 
-        return RentalInfoResponse.builder()
+        return RentalInfoResponseDTO.builder()
             .rentalToken(UUID.randomUUID().toString())
             .rentalType(rentalType)
             .deposit(deposit)
@@ -366,11 +389,11 @@ public class HouseTestFactory {
             .build();
     }
 
-    public static List<RentalInfoResponse> rentalInfoResponseList() {
+    public static List<RentalInfoResponseDTO> rentalInfoResponseDTOList() {
 
         return Arrays.asList(
-            rentalInfoResponse(RentalType.JEONSE, 5000, null),
-            rentalInfoResponse( RentalType.MONTHLY, 1000, 50)
+            rentalInfoResponseDTO(RentalType.JEONSE, 5000, null),
+            rentalInfoResponseDTO( RentalType.MONTHLY, 1000, 50)
         );
     }
 
@@ -380,10 +403,38 @@ public class HouseTestFactory {
     public static HouseInfoResponse houseInfoResponse() {
 
         return HouseInfoResponse.builder()
-            .houseToken(houseToken)
+            .houseToken(UUID.randomUUID().toString())
             .houseAddress(houseAddress)
             .houseType(houseType)
-            .rentalList(rentalInfoResponseList())
+            .rentalList(rentalInfoResponseDTOList())
+            .build();
+    }
+
+    /**
+     * 내방 정보 조회 Response
+     */
+    public static HouseInfoResponseDTO houseInfoResponseDTO() {
+
+        return HouseInfoResponseDTO.builder()
+            .houseToken(UUID.randomUUID().toString())
+            .houseAddress(houseAddress)
+            .houseType(houseType)
+            .rentalList(rentalInfoResponseDTOList())
+            .build();
+    }
+
+    /**
+     * 내방 목록 조회 Response
+     */
+    public static HouseListResponse houseListResponse() {
+
+        return HouseListResponse.builder()
+            .houseList(
+                Arrays.asList(
+                    houseInfoResponseDTO(),
+                    houseInfoResponseDTO()
+                )
+            )
             .build();
     }
 }

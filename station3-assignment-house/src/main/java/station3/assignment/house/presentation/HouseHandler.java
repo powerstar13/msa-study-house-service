@@ -14,6 +14,7 @@ import station3.assignment.house.presentation.request.HouseModifyRequest;
 import station3.assignment.house.presentation.request.HouseRegisterRequest;
 import station3.assignment.house.presentation.request.HouseRequestMapper;
 import station3.assignment.house.presentation.response.HouseInfoResponse;
+import station3.assignment.house.presentation.response.HouseListResponse;
 import station3.assignment.house.presentation.response.HouseRegisterResponse;
 import station3.assignment.house.presentation.response.HouseResponseMapper;
 import station3.assignment.house.presentation.shared.response.SuccessResponse;
@@ -100,5 +101,22 @@ public class HouseHandler {
 
         return ok().contentType(MediaType.APPLICATION_JSON)
             .body(response, HouseInfoResponse.class);
+    }
+
+    /**
+     * 내방 목록 조회
+     * @param serverRequest: 조회할 회원 대체 식별키
+     * @return ServerResponse: 방 목록
+     */
+    public Mono<ServerResponse> houseList(ServerRequest serverRequest) {
+
+        String memberToken = serverRequest.pathVariable("memberToken"); // 회원 대체 식별키 추출
+        if (StringUtils.isBlank(memberToken)) throw new BadRequestException(ExceptionMessage.IsRequiredMemberToken.getMessage());
+
+        Mono<HouseListResponse> response = houseFacade.houseList(memberToken)
+            .flatMap(houseList -> Mono.just(houseResponseMapper.of(houseList)));
+
+        return ok().contentType(MediaType.APPLICATION_JSON)
+            .body(response, HouseListResponse.class);
     }
 }

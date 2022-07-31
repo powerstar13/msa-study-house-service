@@ -99,3 +99,9 @@ Authorization: {{accessToken}}
 GET http://localhost:8080/house/info/4ff3f414-7a5e-4ce1-8234-76788b5eff81
 Accept: application/json
 Authorization: {{accessToken}}
+
+### 내방 목록 조회
+// 회원 가입 API를 통해 얻은 {accessToken} 사용
+GET http://localhost:8080/house/list/492bc213-5c47-422f-9390-1b0c2206bcbe
+Accept: application/json
+Authorization: {{accessToken}}

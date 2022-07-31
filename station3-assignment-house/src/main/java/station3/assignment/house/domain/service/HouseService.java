@@ -13,4 +13,6 @@ public interface HouseService {
     Mono<Void> houseDelete(String houseToken);
 
     Mono<HouseDTO.HouseInfo> houseInfo(String houseToken);
+
+    Mono<HouseDTO.HouseList> houseList(int memberId);
 }

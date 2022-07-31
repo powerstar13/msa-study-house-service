@@ -15,4 +15,6 @@ public interface HouseResponseMapper {
     HouseRegisterResponse of(HouseDTO.HouseTokenInfo houseTokenInfo);
 
     HouseInfoResponse of(HouseDTO.HouseInfo houseInfo);
+
+    HouseListResponse of(HouseDTO.HouseList houseList);
 }

@@ -1,5 +1,6 @@
 package station3.assignment.member.infrastructure.factory;
 
+import org.apache.commons.lang3.RandomUtils;
 import reactor.core.publisher.Mono;
 import station3.assignment.member.application.dto.MemberCommand;
 import station3.assignment.member.domain.Member;
@@ -49,7 +50,7 @@ public class MemberTestFactory {
     public static Member member() {
 
         return Member.builder()
-            .memberId(1)
+            .memberId(RandomUtils.nextInt())
             .memberToken(memberToken)
             .memberType(memberType)
             .memberLoginId(memberLoginId)
@@ -112,7 +113,7 @@ public class MemberTestFactory {
     public static MemberDTO.MemberIdInfo memberIdInfo() {
 
         return MemberDTO.MemberIdInfo.builder()
-            .memberId(1)
+            .memberId(RandomUtils.nextInt())
             .build();
     }
 
@@ -123,7 +124,7 @@ public class MemberTestFactory {
     public static ExchangeMemberTokenResponse exchangeMemberTokenResponse() {
 
         return ExchangeMemberTokenResponse.builder()
-            .memberId(1)
+            .memberId(RandomUtils.nextInt())
             .build();
     }
 }

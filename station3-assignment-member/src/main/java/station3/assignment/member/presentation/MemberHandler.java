@@ -1,6 +1,7 @@
 package station3.assignment.member.presentation;
 
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.server.ServerRequest;
@@ -51,9 +52,9 @@ public class MemberHandler {
      * @return ExchangeMemberTokenResponse: 회원 고유번호
      */
     public Mono<ServerResponse> exchangeMemberToken(ServerRequest serverRequest) {
-        // 회원 대체 식별키 추출
-        String memberToken = serverRequest.queryParam("memberToken")
-            .orElseThrow(() -> new BadRequestException(ExceptionMessage.IsRequiredMemberToken.getMessage()));
+
+        String memberToken = serverRequest.pathVariable("memberToken"); // 회원 대체 식별키 추출
+        if (StringUtils.isBlank(memberToken)) throw new BadRequestException(ExceptionMessage.IsRequiredMemberToken.getMessage());
 
         Mono<ExchangeMemberTokenResponse> response = memberFacade.exchangeMemberToken(memberToken)
             .flatMap(memberIdInfo -> Mono.just(memberResponseMapper.of(memberIdInfo)));

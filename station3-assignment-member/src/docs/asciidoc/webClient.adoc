@@ -21,9 +21,9 @@ endif::[]
 [[exchange-member-token]]
 == 회원 고유번호 가져오기
 === Http
-include::{snippets}/exchange/member-token/http-request.adoc[]
+include::{snippets}/exchange/member-token/{memberToken}/http-request.adoc[]
 === Request
-include::{snippets}/exchange/member-token/request-parameters.adoc[]
+include::{snippets}/exchange/member-token/{memberToken}/path-parameters.adoc[]
 === Response
-include::{snippets}/exchange/member-token/response-fields.adoc[]
-include::{snippets}/exchange/member-token/response-body.adoc[]
+include::{snippets}/exchange/member-token/{memberToken}/response-fields.adoc[]
+include::{snippets}/exchange/member-token/{memberToken}/response-body.adoc[]

@@ -58,4 +58,19 @@ public class HouseFacade {
     public Mono<HouseDTO.HouseInfo> houseInfo(String houseToken) {
         return houseService.houseInfo(houseToken); // 내방 정보 조회 처리
     }
+
+    /**
+     * 내방 목록 조회
+     * @param memberToken: 등록할 내방 정보
+     * @return HouseList: 방 목록
+     */
+    public Mono<HouseDTO.HouseList> houseList(String memberToken) {
+
+        return memberWebClientService.exchangeMemberToken(memberToken) // 1. 회원 대체 식별키로 회원 고유번호 가져오기
+            .flatMap(exchangeMemberTokenResponse -> {
+                if (exchangeMemberTokenResponse.getRt() != 200) return Mono.error(new BadRequestException(exchangeMemberTokenResponse.getRtMsg()));
+
+                return houseService.houseList(exchangeMemberTokenResponse.getMemberId()); // 2. 내방 목록 조회 처리
+            });
+    }
 }

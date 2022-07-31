@@ -11,7 +11,7 @@ public enum RouterPathPattern {
     AUTH_MEMBER_REGISTER("/member-register", "/auth/member-register"),
 
     EXCHANGE_ROOT("/exchange", "/exchange/**"),
-    EXCHANGE_MEMBER_TOKEN("/member-token", "/exchange/member-token");
+    EXCHANGE_MEMBER_TOKEN("/member-token/{memberToken}", "/exchange/member-token/{memberToken}");
 
     private final String path;
     private final String fullPath;

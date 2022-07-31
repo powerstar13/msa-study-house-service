@@ -1,5 +1,6 @@
 package station3.assignment.house.domain.service;
 
+import org.apache.commons.lang3.RandomUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -103,6 +104,21 @@ class HouseServiceTest {
                 assertNotNull(houseInfo.getHouseAddress());
                 assertNotNull(houseInfo.getHouseType());
             }))
+            .verifyComplete();
+    }
+
+    @DisplayName("내방 목록 조회")
+    @Test
+    void houseList() {
+
+        given(houseReader.findAllHouseAggregateByMemberId(any(int.class))).willReturn(houseListMono());
+
+        Mono<HouseDTO.HouseList> houseListMono = houseService.houseList(RandomUtils.nextInt());
+
+        verify(houseReader).findAllHouseAggregateByMemberId(any(int.class));
+
+        StepVerifier.create(houseListMono.log())
+            .assertNext(houseList -> assertNotNull(houseList.getHouseList()))
             .verifyComplete();
     }
 }

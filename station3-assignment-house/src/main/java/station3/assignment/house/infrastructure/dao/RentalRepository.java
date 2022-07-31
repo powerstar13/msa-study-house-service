@@ -8,5 +8,5 @@ import station3.assignment.house.domain.Rental;
 @Repository
 public interface RentalRepository extends ReactiveCrudRepository<Rental, Integer> {
 
-    Flux<Rental> findByHouseId(int houseId);
+    Flux<Rental> findAllByHouseId(int houseId);
 }
