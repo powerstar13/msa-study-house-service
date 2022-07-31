@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
+import org.apache.commons.lang3.RandomUtils;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
@@ -51,7 +52,7 @@ class MemberWebClientServiceTest {
         ExchangeMemberTokenResponse exchangeMemberTokenResponse = ExchangeMemberTokenResponse.builder()
             .rt(HttpStatus.OK.value())
             .rtMsg(HttpStatus.OK.getReasonPhrase())
-            .memberId(1)
+            .memberId(RandomUtils.nextInt())
             .build();
 
         mockWebServer.enqueue(new MockResponse()

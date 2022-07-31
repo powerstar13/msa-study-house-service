@@ -6,4 +6,6 @@ import station3.assignment.house.domain.service.dto.HouseDTO;
 public interface HouseReader {
 
     Mono<HouseDTO.HouseAggregate> findHouseAggregateInfo(String houseToken);
+
+    Mono<HouseDTO.HouseList> findAllHouseAggregateByMemberId(int memberId);
 }

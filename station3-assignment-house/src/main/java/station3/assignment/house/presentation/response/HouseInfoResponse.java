@@ -5,7 +5,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import station3.assignment.house.domain.HouseType;
-import station3.assignment.house.presentation.response.dto.RentalInfoResponse;
+import station3.assignment.house.presentation.response.dto.RentalInfoResponseDTO;
 import station3.assignment.house.presentation.shared.response.SuccessResponse;
 
 import java.util.List;
@@ -19,7 +19,7 @@ public class HouseInfoResponse extends SuccessResponse {
     private String houseToken; // 방 대체 식별키
     private String houseAddress; // 방 주소
     private HouseType houseType; // 방 유형
-    private List<RentalInfoResponse> rentalList; // 임대료 목록
+    private List<RentalInfoResponseDTO> rentalList; // 임대료 목록
 
     @Override
     public String toString() {

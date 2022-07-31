@@ -101,4 +101,20 @@ class HouseFacadeTest {
             }))
             .verifyComplete();
     }
+
+    @DisplayName("내방 목록 조회")
+    @Test
+    void houseList() {
+
+        given(houseWebClientService.exchangeMemberToken(any(String.class))).willReturn(exchangeMemberTokenResponseMono());
+        given(houseService.houseList(any(int.class))).willReturn(houseListMono());
+
+        Mono<HouseDTO.HouseList> houseListMono = houseFacade.houseList("memberToken");
+
+        verify(houseWebClientService).exchangeMemberToken(any(String.class));
+
+        StepVerifier.create(houseListMono.log())
+            .assertNext(houseList -> assertNotNull(houseList.getHouseList()))
+            .verifyComplete();
+    }
 }

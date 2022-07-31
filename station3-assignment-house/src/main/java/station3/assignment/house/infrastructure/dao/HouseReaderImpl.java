@@ -12,6 +12,8 @@ import station3.assignment.house.domain.service.dto.HouseDTOMapper;
 import station3.assignment.house.infrastructure.exception.status.ExceptionMessage;
 import station3.assignment.house.infrastructure.exception.status.NotFoundDataException;
 
+import java.util.List;
+
 @Component
 @RequiredArgsConstructor
 public class HouseReaderImpl implements HouseReader {
@@ -32,9 +34,29 @@ public class HouseReaderImpl implements HouseReader {
             .switchIfEmpty(Mono.error(new NotFoundDataException(ExceptionMessage.NotFoundHouse.getMessage())));
 
         return houseMono.flatMap(house -> {
-            Flux<Rental> rentalFlux = rentalRepository.findByHouseId(house.getHouseId());
+            Flux<Rental> rentalFlux = rentalRepository.findAllByHouseId(house.getHouseId()); // 임대료 목록 조회
 
             return Mono.just(houseDTOMapper.of(house, rentalFlux));
         });
+    }
+
+    /**
+     * 내방 목록 조회
+     * @param memberId: 회원 고유번호
+     * @return HouseList: 방 목록
+     */
+    @Override
+    public Mono<HouseDTO.HouseList> findAllHouseAggregateByMemberId(int memberId) {
+
+        Flux<House> houseFlux = houseRepository.findAllByMemberId(memberId); // 방 목록 조회
+
+        return houseFlux
+            .flatMap(house ->
+                rentalRepository.findAllByHouseId(house.getHouseId()) // 임대료 목록 조회
+                    .collectList()
+                    .flatMap(rentalList -> Mono.just(houseDTOMapper.of(house, rentalList)))
+            )
+            .collectList()
+            .flatMap(houseInfoList -> Mono.just(new HouseDTO.HouseList(houseInfoList)));
     }
 }

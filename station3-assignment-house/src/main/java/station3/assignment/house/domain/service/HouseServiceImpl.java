@@ -52,7 +52,7 @@ public class HouseServiceImpl implements HouseService {
     }
 
     /**
-     * 내방 정보 조회
+     * 내방 정보 조회 처리
      * @param houseToken: 방 대체 식별키
      * @return HouseInfo: 방 정보
      */
@@ -67,5 +67,15 @@ public class HouseServiceImpl implements HouseService {
                         Mono.just(houseDTOMapper.of(houseAggregate.getHouse(), rentalList))
                     )
             );
+    }
+
+    /**
+     * 내방 목록 조회 처리
+     * @param memberId: 회원 고유번호
+     * @return HouseList: 방 목록
+     */
+    @Override
+    public Mono<HouseDTO.HouseList> houseList(int memberId) {
+        return houseReader.findAllHouseAggregateByMemberId(memberId);
     }
 }

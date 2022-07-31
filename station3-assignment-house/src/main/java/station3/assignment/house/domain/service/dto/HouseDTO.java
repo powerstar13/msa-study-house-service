@@ -32,8 +32,8 @@ public class HouseDTO {
     @Builder
     public static class HouseAggregate {
 
-        private House house;
-        private Flux<Rental> rentalFlux;
+        private House house; // 방 레퍼런스
+        private Flux<Rental> rentalFlux; // 임대료 목록 레퍼런스
 
         @Override
         public String toString() {
@@ -51,7 +51,7 @@ public class HouseDTO {
         private String houseToken; // 방 대체 식별키
         private String houseAddress; // 방 주소
         private HouseType houseType; // 방 유형
-        private List<RentalInfo> rentalList; // 임대료 정보 목록
+        private List<RentalInfo> rentalList; // 임대료 목록
 
         @Override
         public String toString() {
@@ -80,6 +80,21 @@ public class HouseDTO {
                 + ", \"rentalType\":\"" + rentalType + "\""
                 + ", \"deposit\":" + deposit
                 + ", \"rent\":" + rent
+                + "}";
+        }
+    }
+
+    @Getter
+    @Builder
+    @AllArgsConstructor
+    public static class HouseList {
+
+        private List<HouseInfo> houseList; // 방 목록
+
+        @Override
+        public String toString() {
+            return "{"
+                + "\"houseList\":" + houseList
                 + "}";
         }
     }

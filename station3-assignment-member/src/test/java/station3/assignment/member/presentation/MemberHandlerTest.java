@@ -30,8 +30,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
-import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
-import static org.springframework.restdocs.request.RequestDocumentation.requestParameters;
+import static org.springframework.restdocs.request.RequestDocumentation.*;
 import static org.springframework.restdocs.webtestclient.WebTestClientRestDocumentation.document;
 import static station3.assignment.member.infrastructure.factory.MemberTestFactory.*;
 import static station3.assignment.member.infrastructure.restdocs.RestdocsDocumentFormat.*;
@@ -119,11 +118,7 @@ class MemberHandlerTest extends WebFluxSharedHandlerTest {
         final String URI = RouterPathPattern.EXCHANGE_MEMBER_TOKEN.getFullPath();
         WebTestClient.ResponseSpec result = webClient
             .get()
-            .uri(uriBuilder ->
-                uriBuilder.path(URI)
-                    .queryParam("memberToken", UUID.randomUUID().toString())
-                    .build()
-            )
+            .uri(URI, UUID.randomUUID().toString())
             .exchange();
 
         result.expectStatus().isOk()
@@ -131,7 +126,7 @@ class MemberHandlerTest extends WebFluxSharedHandlerTest {
             .consumeWith(document(URI,
                 requestPrettyPrint(),
                 responsePrettyPrint(),
-                requestParameters(
+                pathParameters(
                     parameterWithName("memberToken").description("회원 대체 식별키")
                 ),
                 responseFields(

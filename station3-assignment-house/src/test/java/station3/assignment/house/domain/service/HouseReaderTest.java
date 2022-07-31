@@ -1,5 +1,6 @@
 package station3.assignment.house.domain.service;
 
+import org.apache.commons.lang3.RandomUtils;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,8 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
-import static station3.assignment.house.infrastructure.factory.HouseTestFactory.houseMono;
-import static station3.assignment.house.infrastructure.factory.HouseTestFactory.rentalFlux;
+import static station3.assignment.house.infrastructure.factory.HouseTestFactory.*;
 
 @SpringBootTest
 class HouseReaderTest {
@@ -31,10 +31,10 @@ class HouseReaderTest {
 
     @DisplayName("방 정보 조회")
     @Test
-    void findHouseAndRentalInfo() {
+    void findHouseAggregateInfo() {
 
         given(houseRepository.findByHouseToken(any(String.class))).willReturn(houseMono());
-        given(rentalRepository.findByHouseId(any(int.class))).willReturn(rentalFlux());
+        given(rentalRepository.findAllByHouseId(any(int.class))).willReturn(rentalFlux());
 
         Mono<HouseDTO.HouseAggregate> houseAggregateMono = houseReader.findHouseAggregateInfo("houseToken");
 
@@ -42,6 +42,22 @@ class HouseReaderTest {
 
         StepVerifier.create(houseAggregateMono.log())
             .assertNext(houseAggregate -> assertNotNull(houseAggregate.getHouse()))
+            .verifyComplete();
+    }
+
+    @DisplayName("방 목록 조회")
+    @Test
+    void findAllHouseAggregateByMemberId() {
+
+        given(houseRepository.findAllByMemberId(any(int.class))).willReturn(houseFlux());
+        given(rentalRepository.findAllByHouseId(any(int.class))).willReturn(rentalFlux());
+
+        Mono<HouseDTO.HouseList> houseListMono = houseReader.findAllHouseAggregateByMemberId(RandomUtils.nextInt());
+
+        verify(houseRepository).findAllByMemberId(any(int.class));
+
+        StepVerifier.create(houseListMono.log())
+            .assertNext(houseList -> assertNotNull(houseList.getHouseList()))
             .verifyComplete();
     }
 }

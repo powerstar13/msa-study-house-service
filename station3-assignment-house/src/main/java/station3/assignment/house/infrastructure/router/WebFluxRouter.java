@@ -42,6 +42,7 @@ public class WebFluxRouter implements WebFluxConfigurer {
             .path(RouterPathPattern.HOUSE_ROOT.getPath(), memberBuilder ->
                 memberBuilder
                     .GET(RouterPathPattern.HOUSE_INFO.getPath(), houseHandler::houseInfo) // 내방 정보 조회
+                    .GET(RouterPathPattern.HOUSE_LIST.getPath(), houseHandler::houseList) // 내방 목록 조회
             )
             .build();
     }

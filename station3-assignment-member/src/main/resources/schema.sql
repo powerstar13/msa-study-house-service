@@ -14,6 +14,8 @@ CREATE TABLE IF NOT EXISTS member
 );
 
 INSERT INTO member (memberToken, memberType, memberLoginId, memberPassword, memberName, memberBirth, memberPhone)
-VALUES ('492bc213-5c47-422f-9390-1b0c2206bcbe', 'LESSOR', 'lessor@gmail.com', '$2a$10$oKmFs6UNvZhEoKhJYI5rxOmNU6/c8oUpkVYry.PBKcY1ZuHMToppa', '다방이', '19910101', '01012341234');
+VALUES ('492bc213-5c47-422f-9390-1b0c2206bcbe', 'LESSOR', 'lessor1@gmail.com', '$2a$10$oKmFs6UNvZhEoKhJYI5rxOmNU6/c8oUpkVYry.PBKcY1ZuHMToppa', '다방이', '19910101', '01012341234');
 INSERT INTO member (memberToken, memberType, memberLoginId, memberPassword, memberName, memberBirth, memberPhone)
-VALUES (UUID(), 'LESSEE', 'lessee@gmail.com', '$2a$10$oKmFs6UNvZhEoKhJYI5rxOmNU6/c8oUpkVYry.PBKcY1ZuHMToppa', '임차인이름', '19880101', '01056785678');
+VALUES ('5df1d272-57fa-4063-ae9d-abd64c9cc070', 'LESSOR', 'lessor2@gmail.com', '$2a$10$oKmFs6UNvZhEoKhJYI5rxOmNU6/c8oUpkVYry.PBKcY1ZuHMToppa', '다방이2', '19910102', '01012345678');
+INSERT INTO member (memberToken, memberType, memberLoginId, memberPassword, memberName, memberBirth, memberPhone)
+VALUES ('108358d3-72cc-47eb-8fb2-d1635c95abf8', 'LESSEE', 'lessee@gmail.com', '$2a$10$oKmFs6UNvZhEoKhJYI5rxOmNU6/c8oUpkVYry.PBKcY1ZuHMToppa', '임차인이름', '19880101', '01056785678');
