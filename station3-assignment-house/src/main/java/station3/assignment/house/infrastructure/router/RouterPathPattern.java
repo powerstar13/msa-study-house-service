@@ -6,10 +6,11 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum RouterPathPattern {
-    
-    HOUSE_REGISTER("/house", "/register", "/house/register");
-    
-    private final String path1;
-    private final String path2;
+
+    HOUSE_ROOT("/house", "/house/**"),
+    HOUSE_REGISTER("/register", "/house/register"),
+    HOUSE_MODIFY("/modify", "/house/modify");
+
+    private final String path;
     private final String fullPath;
 }

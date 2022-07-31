@@ -10,7 +10,6 @@ import org.springframework.http.MediaType;
 import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.test.web.reactive.server.FluxExchangeResult;
 import org.springframework.test.web.reactive.server.WebTestClient;
-import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 import station3.assignment.member.application.MemberFacade;
 import station3.assignment.member.application.dto.MemberCommand;
@@ -64,7 +63,7 @@ class MemberHandlerTest extends WebFluxSharedHandlerTest {
         given(memberResponseMapper.of(any(MemberDTO.MemberTokenInfo.class))).willReturn(memberRegisterResponse());
 
         // when
-        final String URI = RouterPathPattern.MEMBER_REGISTER.getFullPath();
+        final String URI = RouterPathPattern.AUTH_MEMBER_REGISTER.getFullPath();
         WebTestClient.ResponseSpec result = webClient
             .post()
             .uri(URI)

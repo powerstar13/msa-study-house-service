@@ -49,3 +49,29 @@ Authorization: {{accessToken}}
     }
   ]
 }
+
+### 내방 수정
+PUT http://localhost:8080/house/modify
+Content-Type: application/json
+Accept: application/json
+Authorization: {{accessToken}}
+
+{
+  "houseToken": "4ff3f414-7a5e-4ce1-8234-76788b5eff87",
+  "houseAddress": "방 주소",
+  "houseType": "ONE",
+  "rentalModifyRequestList": [
+    {
+      "rentalToken": "8143d59c-2e61-4157-8380-9da06713c847",
+      "rentalType": "JEONSE",
+      "deposit": 5000,
+      "rent": 0
+    },
+    {
+      "rentalToken": null,
+      "rentalType": "MONTHLY",
+      "deposit": 1000,
+      "rent": 50
+    }
+  ]
+}

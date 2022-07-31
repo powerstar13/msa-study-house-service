@@ -10,17 +10,20 @@ import org.springframework.http.MediaType;
 import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.test.web.reactive.server.FluxExchangeResult;
 import org.springframework.test.web.reactive.server.WebTestClient;
+import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 import station3.assignment.house.application.dto.HouseCommand;
 import station3.assignment.house.application.HouseFacade;
 import station3.assignment.house.domain.service.dto.HouseDTO;
 import station3.assignment.house.infrastructure.exception.GlobalExceptionHandler;
 import station3.assignment.house.infrastructure.router.RouterPathPattern;
+import station3.assignment.house.presentation.request.HouseModifyRequest;
 import station3.assignment.house.presentation.request.HouseRegisterRequest;
 import station3.assignment.house.presentation.request.HouseRequestMapper;
 import station3.assignment.house.presentation.response.HouseRegisterResponse;
 import station3.assignment.house.presentation.response.HouseResponseMapper;
 import station3.assignment.house.presentation.shared.WebFluxSharedHandlerTest;
+import station3.assignment.house.presentation.shared.response.SuccessResponse;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -65,6 +68,7 @@ class HouseHandlerTest extends WebFluxSharedHandlerTest {
             .post()
             .uri(URI)
             .header(AUTHORIZATION, "accessToken")
+            .contentType(MediaType.APPLICATION_JSON)
             .bodyValue(houseRegisterRequest())
             .accept(MediaType.APPLICATION_JSON)
             .exchange();
@@ -81,7 +85,7 @@ class HouseHandlerTest extends WebFluxSharedHandlerTest {
                     fieldWithPath("rentalRegisterRequestList[]").type(JsonFieldType.ARRAY).description("임대료 정보 목록"),
                     fieldWithPath("rentalRegisterRequestList[].rentalType").type(JsonFieldType.STRING).description("임대 유형").attributes(rentalTypeFormat()),
                     fieldWithPath("rentalRegisterRequestList[].deposit").type(JsonFieldType.NUMBER).description("보증금"),
-                    fieldWithPath("rentalRegisterRequestList[].rent").type(JsonFieldType.NUMBER).description("월세").optional()
+                    fieldWithPath("rentalRegisterRequestList[].rent").type(JsonFieldType.NUMBER).description("월세 (임대 유형이 월세의 경우 필수)").optional()
                 ),
                 responseFields(
                     fieldWithPath("rt").type(JsonFieldType.NUMBER).description("결과 코드"),
@@ -102,6 +106,56 @@ class HouseHandlerTest extends WebFluxSharedHandlerTest {
                 assertEquals(HttpStatus.CREATED.value(), response.getRt());
                 assertInstanceOf(String.class, response.getHouseToken());
             }))
+            .verifyComplete();
+    }
+
+    @DisplayName("내방 수정")
+    @Test
+    void houseModify() {
+        // given
+        given(houseRequestMapper.of(any(HouseModifyRequest.class))).willReturn(houseModifyCommand());
+        given(houseFacade.houseModify(any(HouseCommand.HouseModify.class))).willReturn(Mono.empty());
+
+        // when
+        final String URI = RouterPathPattern.HOUSE_MODIFY.getFullPath();
+        WebTestClient.ResponseSpec result = webClient
+            .put()
+            .uri(URI)
+            .header(AUTHORIZATION, "accessToken")
+            .contentType(MediaType.APPLICATION_JSON)
+            .bodyValue(houseModifyRequest())
+            .accept(MediaType.APPLICATION_JSON)
+            .exchange();
+
+        result.expectStatus().isOk()
+            .expectBody()
+            .consumeWith(document(URI,
+                requestPrettyPrint(),
+                responsePrettyPrint(),
+                requestFields(
+                    fieldWithPath("houseToken").type(JsonFieldType.STRING).description("방 대체 식별키"),
+                    fieldWithPath("houseAddress").type(JsonFieldType.STRING).description("방 주소"),
+                    fieldWithPath("houseType").type(JsonFieldType.STRING).description("방 유형").attributes(houseTypeFormat()),
+                    fieldWithPath("rentalModifyRequestList[]").type(JsonFieldType.ARRAY).description("임대료 정보 목록"),
+                    fieldWithPath("rentalModifyRequestList[].rentalToken").type(JsonFieldType.STRING).description("임대료 대체 식별키 (수정할 경우 필수)").optional(),
+                    fieldWithPath("rentalModifyRequestList[].rentalType").type(JsonFieldType.STRING).description("임대 유형").attributes(rentalTypeFormat()),
+                    fieldWithPath("rentalModifyRequestList[].deposit").type(JsonFieldType.NUMBER).description("보증금"),
+                    fieldWithPath("rentalModifyRequestList[].rent").type(JsonFieldType.NUMBER).description("월세 (임대 유형이 월세의 경우 필수)").optional()
+                ),
+                responseFields(
+                    fieldWithPath("rt").type(JsonFieldType.NUMBER).description("결과 코드"),
+                    fieldWithPath("rtMsg").type(JsonFieldType.STRING).description("결과 메시지")
+                )
+            ));
+
+        FluxExchangeResult<SuccessResponse> flux = result.returnResult(SuccessResponse.class);
+
+        // then
+        verify(houseRequestMapper).of(any(HouseModifyRequest.class));
+        verify(houseFacade).houseModify(any(HouseCommand.HouseModify.class));
+
+        StepVerifier.create(flux.getResponseBody().log())
+            .assertNext(response -> assertEquals(HttpStatus.OK.value(), response.getRt()))
             .verifyComplete();
     }
 }

@@ -36,6 +36,18 @@ public class Rental extends CommonDateEntity { // 임대료
     @Column(value = "rent")
     private Integer rent; // 월세
 
+    /**
+     * 임대료 정보 수정
+     * @param rentalType: 임대 유형
+     * @param deposit: 보증금
+     * @param rent: 월세
+     */
+    public void modify(RentalType rentalType, int deposit, Integer rent) {
+        this.rentalType = rentalType;
+        this.deposit = deposit;
+        this.rent = rent;
+    }
+
     @Override
     public String toString() {
         return "{"

@@ -2,16 +2,17 @@ package station3.assignment.member.infrastructure.router;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 
 @Getter
 @AllArgsConstructor
 public enum RouterPathPattern {
 
-    MEMBER_REGISTER("/auth", "/member-register", "/auth/member-register"),
-    EXCHANGE_MEMBER_TOKEN("/exchange", "/member-token", "/exchange/member-token");
+    AUTH_ROOT("/auth", "/auth/**"),
+    AUTH_MEMBER_REGISTER("/member-register", "/auth/member-register"),
 
-    private final String path1;
-    private final String path2;
+    EXCHANGE_ROOT("/exchange", "/exchange/**"),
+    EXCHANGE_MEMBER_TOKEN("/member-token", "/exchange/member-token");
+
+    private final String path;
     private final String fullPath;
 }

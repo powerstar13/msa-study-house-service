@@ -34,4 +34,12 @@ public class HouseFacade {
                 return houseService.houseRegister(exchangedHouseRegister); // 2. 내방 등록 처리
             });
     }
+
+    /**
+     * 내방 수정
+     * @param command: 수정할 내방 정보
+     */
+    public Mono<Void> houseModify(HouseCommand.HouseModify command) {
+        return houseService.houseModify(command); // 내방 수정 처리
+    }
 }

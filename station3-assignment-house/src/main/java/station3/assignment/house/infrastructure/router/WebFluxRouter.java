@@ -31,10 +31,11 @@ public class WebFluxRouter implements WebFluxConfigurer {
 
         return RouterFunctions.route()
             .resources("/**", new ClassPathResource("static/docs")) // API 문서 제공
-            .path(RouterPathPattern.HOUSE_REGISTER.getPath1(), memberBuilder ->
+            .path(RouterPathPattern.HOUSE_ROOT.getPath(), memberBuilder ->
                 memberBuilder.nest(accept(MediaType.APPLICATION_JSON), builder ->
                     builder
-                        .POST(RouterPathPattern.HOUSE_REGISTER.getPath2(), houseHandler::houseRegister) // 내방 등록
+                        .POST(RouterPathPattern.HOUSE_REGISTER.getPath(), houseHandler::houseRegister) // 내방 등록
+                        .PUT(RouterPathPattern.HOUSE_MODIFY.getPath(), houseHandler::houseModify) // 내방 수정
                 )
             )
             .build();

@@ -30,3 +30,13 @@ include::{snippets}/house/register/request-fields.adoc[]
 === Response
 include::{snippets}/house/register/response-fields.adoc[]
 include::{snippets}/house/register/response-body.adoc[]
+
+[[house-modify]]
+== 내방 수정
+=== Http
+include::{snippets}/house/modify/http-request.adoc[]
+=== Request
+include::{snippets}/house/modify/request-fields.adoc[]
+=== Response
+include::{snippets}/house/modify/response-fields.adoc[]
+include::{snippets}/house/modify/response-body.adoc[]
