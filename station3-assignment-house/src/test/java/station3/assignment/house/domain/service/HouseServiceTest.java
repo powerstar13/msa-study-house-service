@@ -9,9 +9,17 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 import station3.assignment.house.application.dto.HouseCommand;
+import station3.assignment.house.domain.House;
+import station3.assignment.house.domain.Rental;
 import station3.assignment.house.domain.service.dto.HouseDTO;
+import station3.assignment.house.domain.service.dto.HouseDTOMapper;
 
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 import static station3.assignment.house.infrastructure.factory.HouseTestFactory.*;
@@ -26,6 +34,8 @@ class HouseServiceTest {
     private HouseStore houseStore;
     @MockBean
     private HouseReader houseReader;
+    @MockBean
+    private HouseDTOMapper houseDTOMapper;
 
     @DisplayName("내방 등록 처리")
     @Test
@@ -73,6 +83,26 @@ class HouseServiceTest {
 
         StepVerifier.create(voidMono.log())
             .expectNextCount(0)
+            .verifyComplete();
+    }
+
+    @DisplayName("내방 정보 조회")
+    @Test
+    void houseInfo() {
+
+        given(houseReader.findHouseAggregateInfo(any(String.class))).willReturn(houseAggregateMono());
+        given(houseDTOMapper.of(any(House.class), anyList())).willReturn(houseInfoDTO());
+
+        Mono<HouseDTO.HouseInfo> houseInfoMono = houseService.houseInfo("houseToken");
+
+        verify(houseReader).findHouseAggregateInfo(any(String.class));
+
+        StepVerifier.create(houseInfoMono.log())
+            .assertNext(houseInfo -> assertAll(() -> {
+                assertNotNull(houseInfo.getHouseToken());
+                assertNotNull(houseInfo.getHouseAddress());
+                assertNotNull(houseInfo.getHouseType());
+            }))
             .verifyComplete();
     }
 }

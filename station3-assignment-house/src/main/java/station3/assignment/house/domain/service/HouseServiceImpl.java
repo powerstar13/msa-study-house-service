@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 import station3.assignment.house.application.dto.HouseCommand;
 import station3.assignment.house.domain.service.dto.HouseDTO;
+import station3.assignment.house.domain.service.dto.HouseDTOMapper;
 
 @Component
 @RequiredArgsConstructor
@@ -12,6 +13,7 @@ public class HouseServiceImpl implements HouseService {
 
     private final HouseStore houseStore;
     private final HouseReader houseReader;
+    private final HouseDTOMapper houseDTOMapper;
 
     /**
      * 내방 등록 처리
@@ -47,5 +49,23 @@ public class HouseServiceImpl implements HouseService {
 
         return houseReader.findHouseAggregateInfo(houseToken) // 1. 내방 정보 조회
             .flatMap(houseStore::houseDelete); // 2. 내방 삭제
+    }
+
+    /**
+     * 내방 정보 조회
+     * @param houseToken: 방 대체 식별키
+     * @return HouseInfo: 방 정보
+     */
+    @Override
+    public Mono<HouseDTO.HouseInfo> houseInfo(String houseToken) {
+
+        return houseReader.findHouseAggregateInfo(houseToken) // 1. 내방 정보 조회
+            .flatMap(houseAggregate ->
+                houseAggregate.getRentalFlux()
+                    .collectList()
+                    .flatMap(rentalList ->
+                        Mono.just(houseDTOMapper.of(houseAggregate.getHouse(), rentalList))
+                    )
+            );
     }
 }

@@ -13,4 +13,6 @@ import station3.assignment.house.domain.service.dto.HouseDTO;
 public interface HouseResponseMapper {
 
     HouseRegisterResponse of(HouseDTO.HouseTokenInfo houseTokenInfo);
+
+    HouseInfoResponse of(HouseDTO.HouseInfo houseInfo);
 }

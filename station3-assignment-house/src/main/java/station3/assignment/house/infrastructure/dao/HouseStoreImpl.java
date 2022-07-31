@@ -36,7 +36,7 @@ public class HouseStoreImpl implements HouseStore {
             .flatMap(house -> {
 
                 // 등록할 임대료 목록 취합
-                List<Rental> rentalList = command.getRentalRegisterDTOList()
+                List<Rental> rentalList = command.getRentalList()
                     .stream().map(rentalRegisterDTO ->
                         rentalRegisterDTO.toEntity(house.getHouseId())
                     )
@@ -63,7 +63,7 @@ public class HouseStoreImpl implements HouseStore {
         return houseRepository.save(house) // 내방 정보 수정
             .flatMap(updatedHouse -> {
 
-                List<HouseCommand.RentalModifyDTO> rentalModifyDTOList = command.getRentalModifyDTOList();
+                List<HouseCommand.RentalModifyDTO> rentalModifyDTOList = command.getRentalList();
 
                 return houseAggregate.getRentalFlux()
                     .flatMap(rental -> {

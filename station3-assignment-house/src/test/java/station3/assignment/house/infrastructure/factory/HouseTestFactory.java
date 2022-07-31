@@ -14,7 +14,9 @@ import station3.assignment.house.presentation.request.HouseModifyRequest;
 import station3.assignment.house.presentation.request.HouseRegisterRequest;
 import station3.assignment.house.presentation.request.dto.RentalModifyRequest;
 import station3.assignment.house.presentation.request.dto.RentalRegisterRequest;
+import station3.assignment.house.presentation.response.HouseInfoResponse;
 import station3.assignment.house.presentation.response.HouseRegisterResponse;
+import station3.assignment.house.presentation.response.dto.RentalInfoResponse;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
@@ -44,6 +46,79 @@ public class HouseTestFactory {
     }
 
     /**
+     * 임대료 등록 정보 목록
+     */
+    private static List<HouseCommand.RentalRegisterDTO> rentalRegisterDTOCommandList() {
+
+        return Arrays.asList(
+            rentalRegisterDTOCommand(RentalType.JEONSE, 5000, null),
+            rentalRegisterDTOCommand(RentalType.MONTHLY, 1000, 50)
+        );
+    }
+
+    /**
+     * 방 등록 정보
+     */
+    public static HouseCommand.HouseRegister houseRegisterCommand() {
+
+        return HouseCommand.HouseRegister.builder()
+            .memberToken("memberToken")
+            .houseAddress(houseAddress)
+            .houseType(houseType)
+            .rentalList(rentalRegisterDTOCommandList())
+            .build();
+    }
+
+    /**
+     * 임대료 등록 Request 구성
+     * @param rentalType: 임대 유형
+     * @param deposit: 보증금
+     * @param rent: 월세
+     */
+    private static RentalRegisterRequest rentalRegisterRequest(RentalType rentalType, Integer deposit, Integer rent) {
+
+        return RentalRegisterRequest.builder()
+            .rentalType(rentalType)
+            .deposit(deposit)
+            .rent(rent)
+            .build();
+    }
+
+    /**
+     * 임대료 등록 Request 목록
+     */
+    private static List<RentalRegisterRequest> rentalRegisterRequestList() {
+
+        return Arrays.asList(
+            rentalRegisterRequest(RentalType.JEONSE, 10000, null),
+            rentalRegisterRequest(RentalType.MONTHLY, 1000, 50)
+        );
+    }
+
+    /**
+     * 방 등록 Request
+     */
+    public static HouseRegisterRequest houseRegisterRequest() {
+
+        return HouseRegisterRequest.builder()
+            .memberToken(memberToken)
+            .houseAddress(houseAddress)
+            .houseType(houseType)
+            .rentalList(rentalRegisterRequestList())
+            .build();
+    }
+
+    /**
+     * 방 등록 Response
+     */
+    public static HouseRegisterResponse houseRegisterResponse() {
+
+        return HouseRegisterResponse.builder()
+            .houseToken(houseToken)
+            .build();
+    }
+
+    /**
      * 임대료 수정 정보 구성
      * @param rentalToken: 임대료 대체 식별키
      * @param rentalType: 임대 유형
@@ -61,17 +136,6 @@ public class HouseTestFactory {
     }
 
     /**
-     * 임대료 등록 정보 목록
-     */
-    private static List<HouseCommand.RentalRegisterDTO> rentalRegisterDTOCommandList() {
-
-        return Arrays.asList(
-            rentalRegisterDTOCommand(RentalType.JEONSE, 5000, null),
-            rentalRegisterDTOCommand(RentalType.MONTHLY, 1000, 50)
-        );
-    }
-
-    /**
      * 임대료 수정 정보 목록
      */
     private static List<HouseCommand.RentalModifyDTO> rentalModifyDTOCommandList() {
@@ -83,19 +147,6 @@ public class HouseTestFactory {
     }
 
     /**
-     * 방 등록 정보
-     */
-    public static HouseCommand.HouseRegister houseRegisterCommand() {
-
-        return HouseCommand.HouseRegister.builder()
-            .memberToken("memberToken")
-            .houseAddress(houseAddress)
-            .houseType(houseType)
-            .rentalRegisterDTOList(rentalRegisterDTOCommandList())
-            .build();
-    }
-
-    /**
      * 방 수정 정보
      */
     public static HouseCommand.HouseModify houseModifyCommand() {
@@ -104,7 +155,48 @@ public class HouseTestFactory {
             .houseToken("houseToken")
             .houseAddress(houseAddress)
             .houseType(houseType)
-            .rentalModifyDTOList(rentalModifyDTOCommandList())
+            .rentalList(rentalModifyDTOCommandList())
+            .build();
+    }
+
+    /**
+     * 임대료 수정 Request 구성
+     * @param rentalToken: 임대료 대체 식별키 (수정할 경우 필수)
+     * @param rentalType: 임대 유형
+     * @param deposit: 보증금
+     * @param rent: 월세
+     */
+    private static RentalModifyRequest rentalModifyRequest(String rentalToken, RentalType rentalType, Integer deposit, Integer rent) {
+
+        return RentalModifyRequest.builder()
+            .rentalToken(rentalToken)
+            .rentalType(rentalType)
+            .deposit(deposit)
+            .rent(rent)
+            .build();
+    }
+
+    /**
+     * 임대료 수정 Request 목록
+     */
+    private static List<RentalModifyRequest> rentalModifyRequestList() {
+
+        return Arrays.asList(
+            rentalModifyRequest("rentalToken", RentalType.JEONSE, 6000, null),
+            rentalModifyRequest(null, RentalType.MONTHLY, 1500, 40)
+        );
+    }
+
+    /**
+     * 방 수정 Request
+     */
+    public static HouseModifyRequest houseModifyRequest() {
+
+        return HouseModifyRequest.builder()
+            .houseToken(houseToken)
+            .houseAddress(houseAddress)
+            .houseType(houseType)
+            .rentalList(rentalModifyRequestList())
             .build();
     }
 
@@ -117,7 +209,7 @@ public class HouseTestFactory {
             .memberId(1)
             .houseAddress(houseAddress)
             .houseType(houseType)
-            .rentalRegisterDTOList(rentalRegisterDTOCommandList())
+            .rentalList(rentalRegisterDTOCommandList())
             .build();
     }
 
@@ -189,6 +281,47 @@ public class HouseTestFactory {
     }
 
     /**
+     * 임대료 정보
+     * @param rentalType: 임대 유형
+     * @param deposit: 보증금
+     * @param rent: 월세
+     */
+    public static HouseDTO.RentalInfo rentalInfo(RentalType rentalType, Integer deposit, Integer rent) {
+
+        return HouseDTO.RentalInfo.builder()
+            .rentalToken(UUID.randomUUID().toString())
+            .rentalType(rentalType)
+            .deposit(deposit)
+            .rent(rent)
+            .build();
+    }
+
+    public static List<HouseDTO.RentalInfo> rentalInfoList() {
+
+        return Arrays.asList(
+            rentalInfo(RentalType.JEONSE, 5000, null),
+            rentalInfo( RentalType.MONTHLY, 1000, 50)
+        );
+    }
+
+    /**
+     * 방 정보
+     */
+    public static HouseDTO.HouseInfo houseInfoDTO() {
+
+        return HouseDTO.HouseInfo.builder()
+            .houseToken(houseToken)
+            .houseAddress(houseAddress)
+            .houseType(houseType)
+            .rentalList(rentalInfoList())
+            .build();
+    }
+
+    public static Mono<HouseDTO.HouseInfo> houseInfoMono() {
+        return Mono.just(houseInfoDTO());
+    }
+
+    /**
      * 방 대체 식별키 정보
      */
     public static HouseDTO.HouseTokenInfo houseTokenInfo() {
@@ -199,55 +332,6 @@ public class HouseTestFactory {
 
     public static Mono<HouseDTO.HouseTokenInfo> houseTokenInfoMono() {
         return Mono.just(houseTokenInfo());
-    }
-
-    /**
-     * 임대료 등록 Request 구성
-     * @param rentalType: 임대 유형
-     * @param deposit: 보증금
-     * @param rent: 월세
-     */
-    private static RentalRegisterRequest rentalRegisterRequest(RentalType rentalType, Integer deposit, Integer rent) {
-
-        return RentalRegisterRequest.builder()
-            .rentalType(rentalType)
-            .deposit(deposit)
-            .rent(rent)
-            .build();
-    }
-
-    /**
-     * 임대료 등록 Request 목록
-     */
-    private static List<RentalRegisterRequest> rentalRegisterRequestList() {
-
-        return Arrays.asList(
-            rentalRegisterRequest(RentalType.JEONSE, 10000, null),
-            rentalRegisterRequest(RentalType.MONTHLY, 1000, 50)
-        );
-    }
-
-    /**
-     * 방 등록 Request
-     */
-    public static HouseRegisterRequest houseRegisterRequest() {
-
-        return HouseRegisterRequest.builder()
-            .memberToken(memberToken)
-            .houseAddress(houseAddress)
-            .houseType(houseType)
-            .rentalRegisterRequestList(rentalRegisterRequestList())
-            .build();
-    }
-
-    /**
-     * 방 등록 Response
-     */
-    public static HouseRegisterResponse houseRegisterResponse() {
-
-        return HouseRegisterResponse.builder()
-            .houseToken(houseToken)
-            .build();
     }
 
     /**
@@ -267,43 +351,39 @@ public class HouseTestFactory {
     }
 
     /**
-     * 임대료 수정 Request 구성
-     * @param rentalToken: 임대료 대체 식별키 (수정할 경우 필수)
+     * 임대료 정보
      * @param rentalType: 임대 유형
      * @param deposit: 보증금
      * @param rent: 월세
      */
-    private static RentalModifyRequest rentalModifyRequest(String rentalToken, RentalType rentalType, Integer deposit, Integer rent) {
+    public static RentalInfoResponse rentalInfoResponse(RentalType rentalType, Integer deposit, Integer rent) {
 
-        return RentalModifyRequest.builder()
-            .rentalToken(rentalToken)
+        return RentalInfoResponse.builder()
+            .rentalToken(UUID.randomUUID().toString())
             .rentalType(rentalType)
             .deposit(deposit)
             .rent(rent)
             .build();
     }
 
-    /**
-     * 임대료 수정 Request 목록
-     */
-    private static List<RentalModifyRequest> rentalModifyRequestList() {
+    public static List<RentalInfoResponse> rentalInfoResponseList() {
 
         return Arrays.asList(
-            rentalModifyRequest("rentalToken", RentalType.JEONSE, 6000, null),
-            rentalModifyRequest(null, RentalType.MONTHLY, 1500, 40)
+            rentalInfoResponse(RentalType.JEONSE, 5000, null),
+            rentalInfoResponse( RentalType.MONTHLY, 1000, 50)
         );
     }
 
     /**
-     * 방 수정 Request
+     * 내방 정보 조회 Response
      */
-    public static HouseModifyRequest houseModifyRequest() {
+    public static HouseInfoResponse houseInfoResponse() {
 
-        return HouseModifyRequest.builder()
+        return HouseInfoResponse.builder()
             .houseToken(houseToken)
             .houseAddress(houseAddress)
             .houseType(houseType)
-            .rentalModifyRequestList(rentalModifyRequestList())
+            .rentalList(rentalInfoResponseList())
             .build();
     }
 }

@@ -1,11 +1,11 @@
 package station3.assignment.house.domain.service.dto;
 
-import org.mapstruct.InjectionStrategy;
-import org.mapstruct.Mapper;
-import org.mapstruct.ReportingPolicy;
+import org.mapstruct.*;
 import reactor.core.publisher.Flux;
 import station3.assignment.house.domain.House;
 import station3.assignment.house.domain.Rental;
+
+import java.util.List;
 
 @Mapper(
     componentModel = "spring",
@@ -15,4 +15,6 @@ import station3.assignment.house.domain.Rental;
 public interface HouseDTOMapper {
 
     HouseDTO.HouseAggregate of(House house, Flux<Rental> rentalFlux);
+
+    HouseDTO.HouseInfo of(House house, List<Rental> rentalList);
 }

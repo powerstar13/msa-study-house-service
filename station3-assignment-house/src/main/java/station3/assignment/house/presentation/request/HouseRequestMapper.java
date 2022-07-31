@@ -12,10 +12,8 @@ import station3.assignment.house.application.dto.HouseCommand;
     unmappedTargetPolicy = ReportingPolicy.ERROR
 )
 public interface HouseRequestMapper {
-    
-    @Mapping(source = "rentalRegisterRequestList", target = "rentalRegisterDTOList")
+
     HouseCommand.HouseRegister of(HouseRegisterRequest request);
 
-    @Mapping(source = "rentalModifyRequestList", target = "rentalModifyDTOList")
     HouseCommand.HouseModify of(HouseModifyRequest request);
 }

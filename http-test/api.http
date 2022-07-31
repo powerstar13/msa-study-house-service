@@ -27,6 +27,7 @@ client.test("Request executed successfully", function() {
 %}
 
 ### 내방 등록
+// 회원 가입 API를 통해 얻은 {accessToken} 사용
 POST http://localhost:8080/house/register
 Content-Type: application/json
 Accept: application/json
@@ -36,7 +37,7 @@ Authorization: {{accessToken}}
   "memberToken": "492bc213-5c47-422f-9390-1b0c2206bcbe",
   "houseAddress": "방 주소",
   "houseType": "ONE",
-  "rentalRegisterRequestList": [
+  "rentalList": [
     {
       "rentalType": "JEONSE",
       "deposit": 5000,
@@ -59,6 +60,7 @@ client.test("Request executed successfully", function() {
 %}
 
 ### 내방 수정
+// 회원 가입 API를 통해 얻은 {accessToken} 사용
 PUT http://localhost:8080/house/modify
 Content-Type: application/json
 Accept: application/json
@@ -68,7 +70,7 @@ Authorization: {{accessToken}}
   "houseToken": "4ff3f414-7a5e-4ce1-8234-76788b5eff87",
   "houseAddress": "방 주소",
   "houseType": "ONE",
-  "rentalModifyRequestList": [
+  "rentalList": [
     {
       "rentalToken": "8143d59c-2e61-4157-8380-9da06713c847",
       "rentalType": "JEONSE",
@@ -86,7 +88,14 @@ Authorization: {{accessToken}}
 
 ### 내방 삭제
 // 내방 등록 API를 통해 얻은 {houseToken} 사용
+// 회원 가입 API를 통해 얻은 {accessToken} 사용
 DELETE http://localhost:8080/house/delete/{{houseToken}}
 Content-Type: application/json
+Accept: application/json
+Authorization: {{accessToken}}
+
+### 내방 정보 조회
+// 회원 가입 API를 통해 얻은 {accessToken} 사용
+GET http://localhost:8080/house/info/4ff3f414-7a5e-4ce1-8234-76788b5eff81
 Accept: application/json
 Authorization: {{accessToken}}

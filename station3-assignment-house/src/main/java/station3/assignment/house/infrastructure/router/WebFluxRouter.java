@@ -39,6 +39,10 @@ public class WebFluxRouter implements WebFluxConfigurer {
                         .DELETE(RouterPathPattern.HOUSE_DELETE.getPath(), houseHandler::houseDelete) // 내방 삭제
                 )
             )
+            .path(RouterPathPattern.HOUSE_ROOT.getPath(), memberBuilder ->
+                memberBuilder
+                    .GET(RouterPathPattern.HOUSE_INFO.getPath(), houseHandler::houseInfo) // 내방 정보 조회
+            )
             .build();
     }
 }

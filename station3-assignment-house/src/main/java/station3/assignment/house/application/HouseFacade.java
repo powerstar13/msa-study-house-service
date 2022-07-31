@@ -45,9 +45,17 @@ public class HouseFacade {
 
     /**
      * 내방 삭제
-     * @param houseToken: 삭제할 내방 정보
+     * @param houseToken: 삭제할 방 대체 식별키
      */
     public Mono<Void> houseDelete(String houseToken) {
         return houseService.houseDelete(houseToken); // 내방 삭제 처리
+    }
+
+    /**
+     * 내방 정보 조회
+     * @param houseToken: 방 대체 식별키
+     */
+    public Mono<HouseDTO.HouseInfo> houseInfo(String houseToken) {
+        return houseService.houseInfo(houseToken); // 내방 정보 조회 처리
     }
 }

@@ -12,6 +12,7 @@ public enum ExceptionMessage {
     IsRequiredHouseToken("BadRequestException", "방 대체 식별키를 전달해주세요."),
     IsRequiredHouseAddress("BadRequestException", "방 주소를 입력해주세요."),
     IsRequiredHouseType("BadRequestException", "방 유형을 입력해주세요."),
+    IsRequiredRentalInfo("BadRequestException", "임대료 정보를 입력해주세요."),
     IsRequiredRentalType("BadRequestException", "임대 유형을 입력해주세요."),
     IsRequiredDeposit("BadRequestException", "보증금을 입력해주세요."),
     IsRequiredRent("BadRequestException", "월세를 입력해주세요."),
