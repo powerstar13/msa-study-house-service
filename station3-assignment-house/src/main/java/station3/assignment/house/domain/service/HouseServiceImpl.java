@@ -64,7 +64,7 @@ public class HouseServiceImpl implements HouseService {
                 houseAggregate.getRentalFlux()
                     .collectList()
                     .flatMap(rentalList ->
-                        Mono.just(houseDTOMapper.of(houseAggregate.getHouse(), rentalList))
+                        Mono.just(houseDTOMapper.of(houseAggregate.getHouse(), rentalList)) // 2. 내보낼 정보 취합
                     )
             );
     }
@@ -76,6 +76,16 @@ public class HouseServiceImpl implements HouseService {
      */
     @Override
     public Mono<HouseDTO.HouseList> houseList(int memberId) {
-        return houseReader.findAllHouseAggregateByMemberId(memberId);
+        return houseReader.findAllHouseAggregateByMemberId(memberId); // 내방 목록 조회
+    }
+
+    /**
+     * 전체방 페이지 조회 처리
+     * @param command: 조회할 정보
+     * @return HousePage: 방 페이지
+     */
+    @Override
+    public Mono<HouseDTO.HousePage> housePage(HouseCommand.HousePage command) {
+        return houseReader.findAllByPageable(command); // 전체방 페이지 조회
     }
 }

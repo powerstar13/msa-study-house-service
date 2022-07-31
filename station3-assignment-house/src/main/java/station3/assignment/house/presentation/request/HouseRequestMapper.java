@@ -18,5 +18,5 @@ public interface HouseRequestMapper {
 
     HousePageRequest of(Map<String, String> params);
 
-    HouseCommand.HouseDTOPage of(HousePageRequest request);
+    HouseCommand.HousePage of(HousePageRequest request);
 }

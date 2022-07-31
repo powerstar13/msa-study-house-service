@@ -146,7 +146,7 @@ public class HouseCommand {
 
     @Getter
     @SuperBuilder
-    public static class HouseDTOPage extends PageRequestDTO {
+    public static class HousePage extends PageRequestDTO {
 
         private HouseType houseType; // 방 유형
         private RentalType rentalType; // 임대 유형

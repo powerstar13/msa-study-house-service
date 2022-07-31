@@ -79,7 +79,7 @@ public class HouseFacade {
      * @param command: 조회할 정보
      * @return HousePage: 방 페이지
      */
-    public Mono<HouseDTO.HousePage> housePage(HouseCommand.HouseDTOPage command) {
-return null;
+    public Mono<HouseDTO.HousePage> housePage(HouseCommand.HousePage command) {
+        return houseService.housePage(command); // 전체방 페이지 조회 처리
     }
 }
