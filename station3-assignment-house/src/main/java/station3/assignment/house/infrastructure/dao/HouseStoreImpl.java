@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
-import reactor.core.scheduler.Schedulers;
 import station3.assignment.house.application.dto.HouseCommand;
 import station3.assignment.house.domain.House;
 import station3.assignment.house.domain.Rental;
@@ -51,7 +50,7 @@ public class HouseStoreImpl implements HouseStore {
     }
 
     /**
-     * 방 정보 수정
+     * 내방 정보 수정
      * @param houseAggregate: 방 애그리거트
      * @param command: 수정할 방 정보
      */
@@ -98,5 +97,17 @@ public class HouseStoreImpl implements HouseStore {
                     })
                     .then();
             });
+    }
+
+    /**
+     * 내방 정보 삭제
+     * @param houseAggregate: 내방 애그리거트
+     */
+    @Override
+    public Mono<Void> houseDelete(HouseDTO.HouseAggregate houseAggregate) {
+
+        return houseAggregate.getRentalFlux()
+            .flatMap(rentalRepository::delete) // 임대료 정보 삭제
+            .then(houseRepository.delete(houseAggregate.getHouse())); // 내방 정보 삭제
     }
 }

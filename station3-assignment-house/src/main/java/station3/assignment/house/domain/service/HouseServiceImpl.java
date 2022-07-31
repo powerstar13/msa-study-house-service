@@ -37,4 +37,15 @@ public class HouseServiceImpl implements HouseService {
                 return houseStore.houseModify(houseAggregate, command); // 2. 내방 수정
             });
     }
+
+    /**
+     * 내방 삭제 처리
+     * @param houseToken: 방 대체 식별키
+     */
+    @Override
+    public Mono<Void> houseDelete(String houseToken) {
+
+        return houseReader.findHouseAggregateInfo(houseToken) // 1. 내방 정보 조회
+            .flatMap(houseStore::houseDelete); // 2. 내방 삭제
+    }
 }

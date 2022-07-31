@@ -9,7 +9,8 @@ public enum RouterPathPattern {
 
     HOUSE_ROOT("/house", "/house/**"),
     HOUSE_REGISTER("/register", "/house/register"),
-    HOUSE_MODIFY("/modify", "/house/modify");
+    HOUSE_MODIFY("/modify", "/house/modify"),
+    HOUSE_DELETE("/delete/{houseToken}", "/house/delete/{houseToken}");
 
     private final String path;
     private final String fullPath;

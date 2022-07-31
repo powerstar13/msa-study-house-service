@@ -1,12 +1,12 @@
 package station3.assignment.house.presentation;
 
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Mono;
-import reactor.core.scheduler.Schedulers;
 import station3.assignment.house.application.HouseFacade;
 import station3.assignment.house.infrastructure.exception.status.BadRequestException;
 import station3.assignment.house.infrastructure.exception.status.ExceptionMessage;
@@ -46,6 +46,7 @@ public class HouseHandler {
         return ok().contentType(MediaType.APPLICATION_JSON)
             .body(response, HouseRegisterResponse.class);
     }
+
     /**
      * 내방 수정
      * @param serverRequest: 수정할 내방 정보
@@ -64,5 +65,22 @@ public class HouseHandler {
                             .body(Mono.just(new SuccessResponse()), SuccessResponse.class)
                     );
             });
+    }
+
+    /**
+     * 내방 삭제
+     * @param serverRequest: 삭제할 내방 대체 식별키
+     * @return ServerResponse: 처리 완료
+     */
+    public Mono<ServerResponse> houseDelete(ServerRequest serverRequest) {
+
+        String houseToken = serverRequest.pathVariable("houseToken");
+        if (StringUtils.isBlank(houseToken)) throw new BadRequestException(ExceptionMessage.IsRequiredHouseToken.getMessage());
+
+        return houseFacade.houseDelete(houseToken)
+            .then(
+                ok().contentType(MediaType.APPLICATION_JSON)
+                    .body(Mono.just(new SuccessResponse()), SuccessResponse.class)
+            );
     }
 }

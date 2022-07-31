@@ -42,4 +42,12 @@ public class HouseFacade {
     public Mono<Void> houseModify(HouseCommand.HouseModify command) {
         return houseService.houseModify(command); // 내방 수정 처리
     }
+
+    /**
+     * 내방 삭제
+     * @param houseToken: 삭제할 내방 정보
+     */
+    public Mono<Void> houseDelete(String houseToken) {
+        return houseService.houseDelete(houseToken); // 내방 삭제 처리
+    }
 }

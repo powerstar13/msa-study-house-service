@@ -59,4 +59,20 @@ class HouseServiceTest {
             .expectNextCount(0)
             .verifyComplete();
     }
+
+    @DisplayName("내방 삭제")
+    @Test
+    void houseDelete() {
+
+        given(houseReader.findHouseAggregateInfo(any(String.class))).willReturn(houseAggregateMono());
+        given(houseStore.houseDelete(any(HouseDTO.HouseAggregate.class))).willReturn(Mono.empty());
+
+        Mono<Void> voidMono = houseService.houseDelete("houseToken");
+
+        verify(houseReader).findHouseAggregateInfo(any(String.class));
+
+        StepVerifier.create(voidMono.log())
+            .expectNextCount(0)
+            .verifyComplete();
+    }
 }
