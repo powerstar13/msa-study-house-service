@@ -11,4 +11,6 @@ public interface HouseService {
     Mono<Void> houseModify(HouseCommand.HouseModify command);
 
     Mono<Void> houseDelete(String houseToken);
+
+    Mono<HouseDTO.HouseInfo> houseInfo(String houseToken);
 }

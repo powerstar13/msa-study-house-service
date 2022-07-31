@@ -468,6 +468,13 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_response_3">Response</a></li>
 </ul>
 </li>
+<li><a href="#house-info">내방 조회</a>
+<ul class="sectlevel2">
+<li><a href="#_http_4">Http</a></li>
+<li><a href="#_request_4">Request</a></li>
+<li><a href="#_response_4">Response</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
@@ -489,14 +496,14 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 Authorization: accessToken
 Content-Type: application/json
 Accept: application/json
-Content-Length: 317
+Content-Length: 302
 Host: localhost:8080
 
 {
-  "memberToken" : "0d96fd0b-a9e8-4614-a4ab-2d7f57732dc2",
+  "memberToken" : "05d392c3-3e05-47a3-97be-ee59699477e1",
   "houseAddress" : "방 주소",
   "houseType" : "ONE",
-  "rentalRegisterRequestList" : [ {
+  "rentalList" : [ {
     "rentalType" : "JEONSE",
     "deposit" : 10000,
     "rent" : null
@@ -546,25 +553,25 @@ Host: localhost:8080
 <td class="tableblock halign-left valign-top"><p class="tableblock">방 유형</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">rentalRegisterRequestList[]</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">rentalList[]</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">임대료 정보 목록</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">rentalRegisterRequestList[].rentalType</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">rentalList[].rentalType</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">JEONSE: 전세, MONTHLY: 월세</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">임대 유형</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">rentalRegisterRequestList[].deposit</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">rentalList[].deposit</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">보증금</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">rentalRegisterRequestList[].rent</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">rentalList[].rent</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">월세 (임대 유형이 월세의 경우 필수)</p></td>
@@ -620,7 +627,7 @@ Host: localhost:8080
 <pre class="highlightjs highlight nowrap"><code class="language-none hljs">{
   "rt" : 201,
   "rtMsg" : "Created",
-  "houseToken" : "fe3f1a08-13ca-4fe2-a174-4fcace24b78b"
+  "houseToken" : "f21537fe-7dfa-4b3d-aeb5-2a6403804987"
 }</code></pre>
 </div>
 </div>
@@ -638,14 +645,14 @@ Host: localhost:8080
 Authorization: accessToken
 Content-Type: application/json
 Accept: application/json
-Content-Length: 376
+Content-Length: 363
 Host: localhost:8080
 
 {
-  "houseToken" : "fe3f1a08-13ca-4fe2-a174-4fcace24b78b",
+  "houseToken" : "f21537fe-7dfa-4b3d-aeb5-2a6403804987",
   "houseAddress" : "방 주소",
   "houseType" : "ONE",
-  "rentalModifyRequestList" : [ {
+  "rentalList" : [ {
     "rentalToken" : "rentalToken",
     "rentalType" : "JEONSE",
     "deposit" : 6000,
@@ -697,31 +704,31 @@ Host: localhost:8080
 <td class="tableblock halign-left valign-top"><p class="tableblock">방 유형</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">rentalModifyRequestList[]</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">rentalList[]</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">임대료 정보 목록</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">rentalModifyRequestList[].rentalToken</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">rentalList[].rentalToken</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">임대료 대체 식별키 (수정할 경우 필수)</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">rentalModifyRequestList[].rentalType</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">rentalList[].rentalType</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">JEONSE: 전세, MONTHLY: 월세</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">임대 유형</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">rentalModifyRequestList[].deposit</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">rentalList[].deposit</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">보증금</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">rentalModifyRequestList[].rent</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">rentalList[].rent</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">월세 (임대 유형이 월세의 경우 필수)</p></td>
@@ -783,7 +790,7 @@ Host: localhost:8080
 <h3 id="_http_3"><a class="link" href="#_http_3">Http</a></h3>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">DELETE /house/delete/6f75c893-3af9-46d3-a9be-beb273b7f7fa HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">DELETE /house/delete/a15debeb-d19d-4d66-8859-e8e795164c58 HTTP/1.1
 Authorization: accessToken
 Accept: application/json
 Host: localhost:8080</code></pre>
@@ -865,11 +872,170 @@ Host: localhost:8080</code></pre>
 </div>
 </div>
 </div>
+<div class="sect1">
+<h2 id="house-info"><a class="link" href="#house-info">내방 조회</a></h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_http_4"><a class="link" href="#_http_4">Http</a></h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /house/info/18c94711-521d-4e52-a11a-76311e2b2c43 HTTP/1.1
+Authorization: accessToken
+Accept: application/json
+Host: localhost:8080</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_request_4"><a class="link" href="#_request_4">Request</a></h3>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 2. /house/info/{houseToken}</caption>
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">필드명</th>
+<th class="tableblock halign-left valign-top">필수값</th>
+<th class="tableblock halign-left valign-top">양식</th>
+<th class="tableblock halign-left valign-top">설명</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">houseToken</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">방 대체 식별키</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_response_4"><a class="link" href="#_response_4">Response</a></h3>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">필드명</th>
+<th class="tableblock halign-left valign-top">타입</th>
+<th class="tableblock halign-left valign-top">필수값</th>
+<th class="tableblock halign-left valign-top">양식</th>
+<th class="tableblock halign-left valign-top">설명</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">rt</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Number</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">결과 코드</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">rtMsg</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">결과 메시지</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">houseToken</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">방 대체 식별키</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">houseAddress</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">방 주소</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">houseType</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ONE: 원룸, TWO: 투룸, THREE: 쓰리룸</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">방 유형</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">rentalList[]</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Array</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">임대료 정보 목록</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">rentalList[].rentalToken</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">임대료 대체 식별키</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">rentalList[].rentalType</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">JEONSE: 전세, MONTHLY: 월세</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">임대 유형</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">rentalList[].deposit</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Number</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">보증금</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">rentalList[].rent</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Number</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">월세</p></td>
+</tr>
+</tbody>
+</table>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-none hljs">{
+  "rt" : 200,
+  "rtMsg" : "OK",
+  "houseToken" : "f21537fe-7dfa-4b3d-aeb5-2a6403804987",
+  "houseAddress" : "방 주소",
+  "houseType" : "ONE",
+  "rentalList" : [ {
+    "rentalToken" : "0ef5c676-3a5f-4e7f-a8bf-a0ba03b50ad0",
+    "rentalType" : "JEONSE",
+    "deposit" : 5000,
+    "rent" : null
+  }, {
+    "rentalToken" : "88896b53-b334-4463-a787-2f98d31cbbd6",
+    "rentalType" : "MONTHLY",
+    "deposit" : 1000,
+    "rent" : 50
+  } ]
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
 </div>
 <div id="footer">
 <div id="footer-text">
 Version <br>
-Last updated 2022-07-31 10:47:56 +0900
+Last updated 2022-07-31 15:56:46 +0900
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">

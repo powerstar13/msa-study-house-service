@@ -26,4 +26,14 @@ public class RentalModifyRequest implements RequestVerify {
         if (deposit == null) throw new BadRequestException(ExceptionMessage.IsRequiredDeposit.getMessage());
         if (rentalType.equals(RentalType.MONTHLY) && rent == null) throw new BadRequestException(ExceptionMessage.IsRequiredRent.getMessage());
     }
+
+    @Override
+    public String toString() {
+        return "{"
+            + "\"rentalToken\":\"" + rentalToken + "\""
+            + ", \"rentalType\":\"" + rentalType + "\""
+            + ", \"deposit\":" + deposit
+            + ", \"rent\":" + rent
+            + "}";
+    }
 }

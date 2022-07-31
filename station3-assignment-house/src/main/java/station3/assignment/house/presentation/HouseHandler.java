@@ -13,6 +13,7 @@ import station3.assignment.house.infrastructure.exception.status.ExceptionMessag
 import station3.assignment.house.presentation.request.HouseModifyRequest;
 import station3.assignment.house.presentation.request.HouseRegisterRequest;
 import station3.assignment.house.presentation.request.HouseRequestMapper;
+import station3.assignment.house.presentation.response.HouseInfoResponse;
 import station3.assignment.house.presentation.response.HouseRegisterResponse;
 import station3.assignment.house.presentation.response.HouseResponseMapper;
 import station3.assignment.house.presentation.shared.response.SuccessResponse;
@@ -74,7 +75,7 @@ public class HouseHandler {
      */
     public Mono<ServerResponse> houseDelete(ServerRequest serverRequest) {
 
-        String houseToken = serverRequest.pathVariable("houseToken");
+        String houseToken = serverRequest.pathVariable("houseToken"); // 방 대체 식별키 추출
         if (StringUtils.isBlank(houseToken)) throw new BadRequestException(ExceptionMessage.IsRequiredHouseToken.getMessage());
 
         return houseFacade.houseDelete(houseToken)
@@ -82,5 +83,22 @@ public class HouseHandler {
                 ok().contentType(MediaType.APPLICATION_JSON)
                     .body(Mono.just(new SuccessResponse()), SuccessResponse.class)
             );
+    }
+
+    /**
+     * 내방 정보 조회
+     * @param serverRequest: 조회할 방 대체 식별키
+     * @return ServerResponse: 방 정보
+     */
+    public Mono<ServerResponse> houseInfo(ServerRequest serverRequest) {
+
+        String houseToken = serverRequest.pathVariable("houseToken"); // 방 대체 식별키 추출
+        if (StringUtils.isBlank(houseToken)) throw new BadRequestException(ExceptionMessage.IsRequiredHouseToken.getMessage());
+
+        Mono<HouseInfoResponse> response = houseFacade.houseInfo(houseToken)
+            .flatMap(houseInfo -> Mono.just(houseResponseMapper.of(houseInfo)));
+
+        return ok().contentType(MediaType.APPLICATION_JSON)
+            .body(response, HouseInfoResponse.class);
     }
 }

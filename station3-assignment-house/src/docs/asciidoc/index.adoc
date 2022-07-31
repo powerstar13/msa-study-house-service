@@ -50,3 +50,13 @@ include::{snippets}/house/delete/{houseToken}/path-parameters.adoc[]
 === Response
 include::{snippets}/house/delete/{houseToken}/response-fields.adoc[]
 include::{snippets}/house/delete/{houseToken}/response-body.adoc[]
+
+[[house-info]]
+== 내방 조회
+=== Http
+include::{snippets}/house/info/{houseToken}/http-request.adoc[]
+=== Request
+include::{snippets}/house/info/{houseToken}/path-parameters.adoc[]
+=== Response
+include::{snippets}/house/info/{houseToken}/response-fields.adoc[]
+include::{snippets}/house/info/{houseToken}/response-body.adoc[]

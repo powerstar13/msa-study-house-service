@@ -19,7 +19,7 @@ public class HouseCommand {
         private String memberToken; // 회원 대체 식별키
         private String houseAddress; // 방 주소
         private HouseType houseType; // 방 유형
-        private List<RentalRegisterDTO> rentalRegisterDTOList; // 임대료 정보 목록
+        private List<RentalRegisterDTO> rentalList; // 임대료 목록
 
         @Override
         public String toString() {
@@ -27,7 +27,7 @@ public class HouseCommand {
                 + "\"memberToken\":\"" + memberToken + "\""
                 + ", \"houseAddress\":\"" + houseAddress + "\""
                 + ", \"houseType\":\"" + houseType + "\""
-                + ", \"rentalRegisterDTOList\":" + rentalRegisterDTOList
+                + ", \"rentalList\":" + rentalList
                 + "}";
         }
     }
@@ -39,7 +39,7 @@ public class HouseCommand {
         private int memberId; // 회원 고유번호
         private String houseAddress; // 방 주소
         private HouseType houseType; // 방 유형
-        private List<RentalRegisterDTO> rentalRegisterDTOList; // 임대료 정보 목록
+        private List<RentalRegisterDTO> rentalList; // 임대료 정보 목록
 
         public House toEntity() {
 
@@ -57,7 +57,7 @@ public class HouseCommand {
                 + "\"memberId\":" + memberId
                 + ", \"houseAddress\":\"" + houseAddress + "\""
                 + ", \"houseType\":\"" + houseType + "\""
-                + ", \"rentalRegisterDTOList\":" + rentalRegisterDTOList
+                + ", \"rentalList\":" + rentalList
                 + "}";
         }
     }
@@ -98,7 +98,7 @@ public class HouseCommand {
         private String houseToken; // 방 대체 식별키
         private String houseAddress; // 방 주소
         private HouseType houseType; // 방 유형
-        private List<RentalModifyDTO> rentalModifyDTOList; // 임대료 정보 목록
+        private List<RentalModifyDTO> rentalList; // 임대료 목록
 
         @Override
         public String toString() {
@@ -106,7 +106,7 @@ public class HouseCommand {
                 + "\"houseToken\":\"" + houseToken + "\""
                 + ", \"houseAddress\":\"" + houseAddress + "\""
                 + ", \"houseType\":\"" + houseType + "\""
-                + ", \"rentalModifyDTOList\":" + rentalModifyDTOList
+                + ", \"rentalList\":" + rentalList
                 + "}";
         }
     }

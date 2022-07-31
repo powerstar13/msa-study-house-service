@@ -14,6 +14,8 @@ import station3.assignment.house.domain.service.HouseService;
 import station3.assignment.house.domain.service.dto.HouseDTO;
 import station3.assignment.house.infrastructure.webClient.MemberWebClientService;
 
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
@@ -78,6 +80,25 @@ class HouseFacadeTest {
 
         StepVerifier.create(voidMono.log())
             .expectNextCount(0)
+            .verifyComplete();
+    }
+
+    @DisplayName("내방 정보 조회")
+    @Test
+    void houseInfo() {
+
+        given(houseService.houseInfo(any(String.class))).willReturn(houseInfoMono());
+
+        Mono<HouseDTO.HouseInfo> houseInfoMono = houseFacade.houseInfo("houseToken");
+
+        verify(houseService).houseInfo(any(String.class));
+
+        StepVerifier.create(houseInfoMono.log())
+            .assertNext(houseInfo -> assertAll(() -> {
+                assertNotNull(houseInfo.getHouseToken());
+                assertNotNull(houseInfo.getHouseAddress());
+                assertNotNull(houseInfo.getHouseType());
+            }))
             .verifyComplete();
     }
 }
