@@ -32,6 +32,16 @@ public class House extends CommonDateEntity { // 방
     @Column(value = "houseType")
     private HouseType houseType; // 방 유형
 
+    /**
+     * 내방 정보 수정
+     * @param houseAddress: 방 주소
+     * @param houseType: 방 유형
+     */
+    public void modify(String houseAddress, HouseType houseType) {
+        this.houseAddress = houseAddress;
+        this.houseType = houseType;
+    }
+
     @Override
     public String toString() {
         return "{"

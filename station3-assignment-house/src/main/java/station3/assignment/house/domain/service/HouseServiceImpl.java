@@ -11,6 +11,7 @@ import station3.assignment.house.domain.service.dto.HouseDTO;
 public class HouseServiceImpl implements HouseService {
 
     private final HouseStore houseStore;
+    private final HouseReader houseReader;
 
     /**
      * 내방 등록 처리
@@ -22,5 +23,18 @@ public class HouseServiceImpl implements HouseService {
 
         return houseStore.houseRegister(command) // 내방 등록
             .flatMap(house -> Mono.just(new HouseDTO.HouseTokenInfo(house.getHouseToken())));
+    }
+
+    /**
+     * 내방 수정 처리
+     * @param command: 수정할 내방 정보
+     */
+    @Override
+    public Mono<Void> houseModify(HouseCommand.HouseModify command) {
+
+        return houseReader.findHouseAggregateInfo(command.getHouseToken()) // 1. 내방 정보 조회
+            .flatMap(houseAggregate -> {
+                return houseStore.houseModify(houseAggregate, command); // 2. 내방 수정
+            });
     }
 }

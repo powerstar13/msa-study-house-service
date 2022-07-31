@@ -33,13 +33,13 @@ public class MemberHandler {
     public Mono<ServerResponse> memberRegister(ServerRequest serverRequest) {
 
         Mono<MemberRegisterResponse> response = serverRequest.bodyToMono(MemberRegisterRequest.class)
+            .switchIfEmpty(Mono.error(new BadRequestException(ExceptionMessage.IsRequiredRequest.getMessage())))
             .flatMap(request -> {
                 request.verify(); // Request 유효성 검사
 
                 return memberFacade.memberRegister(memberRequestMapper.of(request));
             })
-            .flatMap(memberTokenInfo -> Mono.just(memberResponseMapper.of(memberTokenInfo)))
-            .switchIfEmpty(Mono.error(new BadRequestException(ExceptionMessage.IsRequiredRequest.getMessage())));
+            .flatMap(memberTokenInfo -> Mono.just(memberResponseMapper.of(memberTokenInfo)));
 
         return ok().contentType(MediaType.APPLICATION_JSON)
             .body(response, MemberRegisterResponse.class);

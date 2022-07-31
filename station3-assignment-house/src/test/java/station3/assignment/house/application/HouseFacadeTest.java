@@ -49,4 +49,20 @@ class HouseFacadeTest {
             .assertNext(Assertions::assertNotNull)
             .verifyComplete();
     }
+
+    @DisplayName("내방 수정")
+    @Test
+    void houseModify() {
+        HouseCommand.HouseModify command = houseModifyCommand();
+
+        given(houseService.houseModify(any(HouseCommand.HouseModify.class))).willReturn(Mono.empty());
+
+        Mono<Void> voidMono = houseFacade.houseModify(command);
+
+        verify(houseService).houseModify(any(HouseCommand.HouseModify.class));
+
+        StepVerifier.create(voidMono.log())
+            .expectNextCount(0)
+            .verifyComplete();
+    }
 }

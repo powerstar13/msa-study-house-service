@@ -31,15 +31,15 @@ public class WebFluxRouter implements WebFluxConfigurer {
 
         return RouterFunctions.route()
             .resources("/**", new ClassPathResource("static/docs")) // API 문서 제공
-            .path(RouterPathPattern.MEMBER_REGISTER.getPath1(), memberBuilder ->
+            .path(RouterPathPattern.AUTH_ROOT.getPath(), memberBuilder ->
                 memberBuilder.nest(accept(MediaType.APPLICATION_JSON), builder ->
                     builder
-                        .POST(RouterPathPattern.MEMBER_REGISTER.getPath2(), memberHandler::memberRegister) // 회원 가입
+                        .POST(RouterPathPattern.AUTH_MEMBER_REGISTER.getPath(), memberHandler::memberRegister) // 회원 가입
                 )
             )
-            .path(RouterPathPattern.EXCHANGE_MEMBER_TOKEN.getPath1(), memberBuilder ->
+            .path(RouterPathPattern.EXCHANGE_ROOT.getPath(), memberBuilder ->
                 memberBuilder
-                    .GET(RouterPathPattern.EXCHANGE_MEMBER_TOKEN.getPath2(), memberHandler::exchangeMemberToken) // 회원 고유번호 가져오기
+                    .GET(RouterPathPattern.EXCHANGE_MEMBER_TOKEN.getPath(), memberHandler::exchangeMemberToken) // 회원 고유번호 가져오기
             )
             .build();
     }
