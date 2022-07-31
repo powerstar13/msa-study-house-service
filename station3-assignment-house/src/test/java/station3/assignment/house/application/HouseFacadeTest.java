@@ -65,4 +65,19 @@ class HouseFacadeTest {
             .expectNextCount(0)
             .verifyComplete();
     }
+
+    @DisplayName("내방 삭제")
+    @Test
+    void houseDelete() {
+
+        given(houseService.houseDelete(any(String.class))).willReturn(Mono.empty());
+
+        Mono<Void> voidMono = houseFacade.houseDelete("houseToken");
+
+        verify(houseService).houseDelete(any(String.class));
+
+        StepVerifier.create(voidMono.log())
+            .expectNextCount(0)
+            .verifyComplete();
+    }
 }

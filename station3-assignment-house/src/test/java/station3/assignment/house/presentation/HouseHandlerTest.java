@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.payload.JsonFieldType;
@@ -25,12 +26,16 @@ import station3.assignment.house.presentation.response.HouseResponseMapper;
 import station3.assignment.house.presentation.shared.WebFluxSharedHandlerTest;
 import station3.assignment.house.presentation.shared.response.SuccessResponse;
 
+import java.util.UUID;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
+import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
+import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
 import static org.springframework.restdocs.webtestclient.WebTestClientRestDocumentation.document;
 import static station3.assignment.house.infrastructure.factory.HouseTestFactory.*;
 import static station3.assignment.house.infrastructure.restdocs.RestdocsDocumentFormat.houseTypeFormat;
@@ -153,6 +158,45 @@ class HouseHandlerTest extends WebFluxSharedHandlerTest {
         // then
         verify(houseRequestMapper).of(any(HouseModifyRequest.class));
         verify(houseFacade).houseModify(any(HouseCommand.HouseModify.class));
+
+        StepVerifier.create(flux.getResponseBody().log())
+            .assertNext(response -> assertEquals(HttpStatus.OK.value(), response.getRt()))
+            .verifyComplete();
+    }
+
+    @DisplayName("내방 삭제")
+    @Test
+    void houseDelete() {
+        // given
+        given(houseFacade.houseDelete(any(String.class))).willReturn(Mono.empty());
+
+        // when
+        final String URI = RouterPathPattern.HOUSE_DELETE.getFullPath();
+        WebTestClient.ResponseSpec result = webClient
+            .delete()
+            .uri(URI, UUID.randomUUID().toString())
+            .header(AUTHORIZATION, "accessToken")
+            .accept(MediaType.APPLICATION_JSON)
+            .exchange();
+
+        result.expectStatus().isOk()
+            .expectBody()
+            .consumeWith(document(URI,
+                requestPrettyPrint(),
+                responsePrettyPrint(),
+                pathParameters(
+                    parameterWithName("houseToken").description("방 대체 식별키")
+                ),
+                responseFields(
+                    fieldWithPath("rt").type(JsonFieldType.NUMBER).description("결과 코드"),
+                    fieldWithPath("rtMsg").type(JsonFieldType.STRING).description("결과 메시지")
+                )
+            ));
+
+        FluxExchangeResult<SuccessResponse> flux = result.returnResult(SuccessResponse.class);
+
+        // then
+        verify(houseFacade).houseDelete(any(String.class));
 
         StepVerifier.create(flux.getResponseBody().log())
             .assertNext(response -> assertEquals(HttpStatus.OK.value(), response.getRt()))

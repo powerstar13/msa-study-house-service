@@ -36,6 +36,7 @@ public class WebFluxRouter implements WebFluxConfigurer {
                     builder
                         .POST(RouterPathPattern.HOUSE_REGISTER.getPath(), houseHandler::houseRegister) // 내방 등록
                         .PUT(RouterPathPattern.HOUSE_MODIFY.getPath(), houseHandler::houseModify) // 내방 수정
+                        .DELETE(RouterPathPattern.HOUSE_DELETE.getPath(), houseHandler::houseDelete) // 내방 삭제
                 )
             )
             .build();

@@ -40,3 +40,13 @@ include::{snippets}/house/modify/request-fields.adoc[]
 === Response
 include::{snippets}/house/modify/response-fields.adoc[]
 include::{snippets}/house/modify/response-body.adoc[]
+
+[[house-delete]]
+== 내방 삭제
+=== Http
+include::{snippets}/house/delete/{houseToken}/http-request.adoc[]
+=== Request
+include::{snippets}/house/delete/{houseToken}/path-parameters.adoc[]
+=== Response
+include::{snippets}/house/delete/{houseToken}/response-fields.adoc[]
+include::{snippets}/house/delete/{houseToken}/response-body.adoc[]

@@ -50,6 +50,14 @@ Authorization: {{accessToken}}
   ]
 }
 
+> {% // response handler
+client.test("Request executed successfully", function() {
+    client.assert(response.status === 200, "Response status is not 200");
+    client.global.set("houseToken", response.body.houseToken);
+    client.log("houseToken >>> " + client.global.get("houseToken"));
+});
+%}
+
 ### 내방 수정
 PUT http://localhost:8080/house/modify
 Content-Type: application/json
@@ -75,3 +83,10 @@ Authorization: {{accessToken}}
     }
   ]
 }
+
+### 내방 삭제
+// 내방 등록 API를 통해 얻은 {houseToken} 사용
+DELETE http://localhost:8080/house/delete/{{houseToken}}
+Content-Type: application/json
+Accept: application/json
+Authorization: {{accessToken}}

@@ -52,7 +52,7 @@ class HouseStoreTest {
             .verifyComplete();
     }
 
-    @DisplayName("방 정보 조회")
+    @DisplayName("내방 정보 수정")
     @Test
     void houseModify() {
 
@@ -66,6 +66,23 @@ class HouseStoreTest {
         Mono<Void> voidMono = houseStore.houseModify(houseAggregate, command);
 
         verify(houseRepository).save(any(House.class));
+
+        StepVerifier.create(voidMono.log())
+            .expectNextCount(0)
+            .verifyComplete();
+    }
+
+    @DisplayName("내방 정보 삭제")
+    @Test
+    void houseDelete() {
+        HouseDTO.HouseAggregate houseAggregate = houseAggregate();
+
+        given(rentalRepository.delete(any(Rental.class))).willReturn(Mono.empty());
+        given(houseRepository.delete(any(House.class))).willReturn(Mono.empty());
+
+        Mono<Void> voidMono = houseStore.houseDelete(houseAggregate);
+
+        verify(houseRepository).delete(any(House.class));
 
         StepVerifier.create(voidMono.log())
             .expectNextCount(0)
