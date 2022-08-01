@@ -6,7 +6,7 @@ import reactor.core.publisher.Flux;
 import station3.assignment.house.domain.Rental;
 
 @Repository
-public interface RentalRepository extends ReactiveCrudRepository<Rental, Integer> {
+public interface RentalRepository extends ReactiveCrudRepository<Rental, Integer>, HouseCustomRepository {
 
     Flux<Rental> findAllByHouseId(int houseId);
 }
