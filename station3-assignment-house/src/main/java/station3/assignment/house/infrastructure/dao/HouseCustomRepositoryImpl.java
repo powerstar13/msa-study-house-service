@@ -5,6 +5,7 @@ import org.springframework.data.r2dbc.core.R2dbcEntityTemplate;
 import org.springframework.data.relational.core.query.Criteria;
 import org.springframework.data.relational.core.query.CriteriaDefinition;
 import org.springframework.stereotype.Component;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import station3.assignment.house.application.dto.HouseCommand;
 import station3.assignment.house.domain.House;
@@ -29,23 +30,28 @@ public class HouseCustomRepositoryImpl implements HouseCustomRepository {
 
         return template.select(House.class)
             .matching(query(
-                houseWhereOfHousePagePrepare(command.getHouseType()) // 방 유형 검색
+                this.houseWhereOfHousePagePrepare(command.getHouseType()) // 방 유형 검색
             ))
             .all()
             .flatMap(rental -> Mono.just(rental.getHouseId())) // 방 고유번호만 추출
             .collectList()
             .flatMap(houseIdList ->
-                template.select(Rental.class)
-                    .matching(query(
-                        rentalWhereOfHousePagePrepare(houseIdList, command.getRentalType(), command.getDepositStartRange(), command.getDepositEndRange(), command.getRentStartRange(), command.getRentEndRange())
-                    ))
-                    .all()
+                this.getRentalListOfHousePage(command, houseIdList)
                     .flatMap(rental -> Mono.just(rental.getHouseId())) // 임대료 정보의 방 고유번호만 추출
                     .distinct() // 중복 제외
                     .collectList()
             );
     }
-
+    
+    @Override
+    public Flux<Rental> getRentalListOfHousePage(HouseCommand.HousePage command, List<Integer> houseIdList) {
+        return template.select(Rental.class)
+            .matching(query(
+                this.rentalWhereOfHousePagePrepare(houseIdList, command.getRentalType(), command.getDepositStartRange(), command.getDepositEndRange(), command.getRentStartRange(), command.getRentEndRange())
+            ))
+            .all();
+    }
+    
     /**
      * 전체방 페이지의 방 검색 조건
      * @param houseType: 방 유형
@@ -67,7 +73,7 @@ public class HouseCustomRepositoryImpl implements HouseCustomRepository {
 
         Criteria criteria = empty();
 
-        if (!houseIdList.isEmpty()) criteria = criteria.and("houseId").in(houseIdList); // 방 고유번호 목록 검색
+        if (!houseIdList.isEmpty()) criteria = houseIdList.size() == 1 ? criteria.and("houseId").is(houseIdList.get(0)) : criteria.and("houseId").in(houseIdList); // 방 고유번호 목록 검색
 
         if (rentalType != null) criteria = criteria.and("rentalType").is(rentalType); // 임대 유형 검색
 

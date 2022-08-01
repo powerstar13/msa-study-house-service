@@ -16,6 +16,9 @@ import station3.assignment.house.domain.service.dto.HouseDTOMapper;
 import station3.assignment.house.infrastructure.exception.status.ExceptionMessage;
 import station3.assignment.house.infrastructure.exception.status.NotFoundDataException;
 
+import java.util.Arrays;
+import java.util.List;
+
 @Component
 @RequiredArgsConstructor
 public class HouseReaderImpl implements HouseReader {
@@ -76,7 +79,7 @@ public class HouseReaderImpl implements HouseReader {
             .flatMap(houseIdList ->
                 houseRepository.findAllByHouseIdIn(houseIdList, pageRequest)
                     .flatMap(house ->
-                        rentalRepository.findAllByHouseId(house.getHouseId()) // 임대료 목록 조회
+                        rentalRepository.getRentalListOfHousePage(command, List.of(house.getHouseId())) // 임대료 목록 조회
                             .collectList()
                             .flatMap(rentalList -> Mono.just(houseDTOMapper.of(house, rentalList)))
                     )

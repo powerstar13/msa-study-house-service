@@ -80,7 +80,7 @@ class HouseReaderTest {
 
         given(houseRepository.getHouseIdListOfHousePage(any(HouseCommand.HousePage.class))).willReturn(Mono.just(Arrays.asList(1, 2)));
         given(houseRepository.findAllByHouseIdIn(anyList(), any(PageRequest.class))).willReturn(houseFlux());
-        given(rentalRepository.findAllByHouseId(anyInt())).willReturn(rentalFlux());
+        given(rentalRepository.getRentalListOfHousePage(any(HouseCommand.HousePage.class), anyList())).willReturn(rentalFlux());
         given(houseDTOMapper.of(any(House.class), anyList())).willReturn(houseInfoDTO());
         given(houseDTOMapper.of(any(HouseDTO.pageInfo.class), anyList())).willReturn(housePageDTO());
 
