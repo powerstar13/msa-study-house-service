@@ -105,3 +105,9 @@ Authorization: {{accessToken}}
 GET http://localhost:8080/house/list/492bc213-5c47-422f-9390-1b0c2206bcbe
 Accept: application/json
 Authorization: {{accessToken}}
+
+### 전체방 페이지 조회
+// 회원 가입 API를 통해 얻은 {accessToken} 사용
+GET http://localhost:8080/house/page?page=1&size=10&houseType=ONE&rentalType=MONTHLY&depositStartRange=0&depositEndRange=30000&rentStartRange=0&rentEndRange=100
+Accept: application/json
+Authorization: {{accessToken}}

@@ -1,10 +1,11 @@
 package station3.assignment.house.infrastructure.dao;
 
-import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 import station3.assignment.house.application.dto.HouseCommand;
-import station3.assignment.house.domain.House;
+
+import java.util.List;
 
 public interface HouseCustomRepository {
 
-    Flux<House> housePage(HouseCommand.HousePage command);
+    Mono<List<Integer>> getHouseIdListOfHousePage(HouseCommand.HousePage command);
 }

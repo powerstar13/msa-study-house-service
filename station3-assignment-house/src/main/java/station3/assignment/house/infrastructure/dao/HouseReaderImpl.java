@@ -7,7 +7,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
-import reactor.util.function.Tuple2;
 import station3.assignment.house.application.dto.HouseCommand;
 import station3.assignment.house.domain.House;
 import station3.assignment.house.domain.Rental;
@@ -16,8 +15,6 @@ import station3.assignment.house.domain.service.dto.HouseDTO;
 import station3.assignment.house.domain.service.dto.HouseDTOMapper;
 import station3.assignment.house.infrastructure.exception.status.ExceptionMessage;
 import station3.assignment.house.infrastructure.exception.status.NotFoundDataException;
-
-import java.util.List;
 
 @Component
 @RequiredArgsConstructor
@@ -71,28 +68,31 @@ public class HouseReaderImpl implements HouseReader {
      * @return HousePage: 방 페이지
      */
     @Override
-    public Mono<HouseDTO.HousePage> findAllByPageable(HouseCommand.HousePage command) {
+    public Mono<HouseDTO.HousePage> findAllHousePage(HouseCommand.HousePage command) {
 
-        return houseRepository.housePage(command)
-            .flatMap(house ->
-                rentalRepository.findAllByHouseId(house.getHouseId()) // 임대료 목록 조회
+        PageRequest pageRequest = PageRequest.of(command.getPageForPageable(), command.getSize());
+
+        return houseRepository.getHouseIdListOfHousePage(command)
+            .flatMap(houseIdList ->
+                houseRepository.findAllByHouseIdIn(houseIdList, pageRequest)
+                    .flatMap(house ->
+                        rentalRepository.findAllByHouseId(house.getHouseId()) // 임대료 목록 조회
+                            .collectList()
+                            .flatMap(rentalList -> Mono.just(houseDTOMapper.of(house, rentalList)))
+                    )
                     .collectList()
-                    .flatMap(rentalList -> Mono.just(houseDTOMapper.of(house, rentalList)))
-            )
-            .collectList()
-            .zipWith(houseRepository.count())
-            .flatMap(objects -> {
-                PageRequest pageRequest = PageRequest.of(command.getPageForPageable(), command.getSize());
-                Page<HouseDTO.HouseInfo> housePage = new PageImpl<>(objects.getT1(), pageRequest, objects.getT2());
+                    .flatMap(houseInfoList -> {
+                        Page<HouseDTO.HouseInfo> housePage = new PageImpl<>(houseInfoList, pageRequest, houseIdList.size());
 
-                HouseDTO.pageInfo pageInfo = HouseDTO.pageInfo.builder()
-                    .currentSize(housePage.getNumberOfElements())
-                    .currentPage(command.getPage())
-                    .totalCount(housePage.getTotalElements())
-                    .totalPage(housePage.getTotalPages())
-                    .build();
+                        HouseDTO.pageInfo pageInfo = HouseDTO.pageInfo.builder() // 페이지 정보 구성
+                            .currentSize(housePage.getNumberOfElements())
+                            .currentPage(command.getPage())
+                            .totalCount(housePage.getTotalElements())
+                            .totalPage(housePage.getTotalPages())
+                            .build();
 
-                return Mono.just(houseDTOMapper.of(pageInfo, housePage.getContent()));
-            });
+                        return Mono.just(houseDTOMapper.of(pageInfo, housePage.getContent()));
+                    })
+            );
     }
 }

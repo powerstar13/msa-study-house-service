@@ -86,6 +86,6 @@ public class HouseServiceImpl implements HouseService {
      */
     @Override
     public Mono<HouseDTO.HousePage> housePage(HouseCommand.HousePage command) {
-        return houseReader.findAllByPageable(command); // 전체방 페이지 조회
+        return houseReader.findAllHousePage(command); // 전체방 페이지 조회
     }
 }

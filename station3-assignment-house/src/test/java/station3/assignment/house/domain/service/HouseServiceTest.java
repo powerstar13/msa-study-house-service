@@ -11,11 +11,8 @@ import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 import station3.assignment.house.application.dto.HouseCommand;
 import station3.assignment.house.domain.House;
-import station3.assignment.house.domain.Rental;
 import station3.assignment.house.domain.service.dto.HouseDTO;
 import station3.assignment.house.domain.service.dto.HouseDTOMapper;
-
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -24,6 +21,7 @@ import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 import static station3.assignment.house.infrastructure.factory.HouseTestFactory.*;
+import static station3.assignment.house.infrastructure.factory.HouseTestFactory.housePageDTO;
 
 @SpringBootTest
 class HouseServiceTest {
@@ -118,6 +116,21 @@ class HouseServiceTest {
         verify(houseReader).findAllHouseAggregateByMemberId(any(int.class));
 
         StepVerifier.create(houseListMono.log())
+            .assertNext(houseList -> assertNotNull(houseList.getHouseList()))
+            .verifyComplete();
+    }
+
+    @DisplayName("전체방 페이지 조회")
+    @Test
+    void housePage() {
+
+        given(houseReader.findAllHousePage(any(HouseCommand.HousePage.class))).willReturn(housePageMono());
+
+        Mono<HouseDTO.HousePage> housePageMono = houseService.housePage(housePageCommand());
+
+        verify(houseReader).findAllHousePage(any(HouseCommand.HousePage.class));
+
+        StepVerifier.create(housePageMono.log())
             .assertNext(houseList -> assertNotNull(houseList.getHouseList()))
             .verifyComplete();
     }

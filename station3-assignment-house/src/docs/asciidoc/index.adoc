@@ -70,3 +70,13 @@ include::{snippets}/house/list/{memberToken}/path-parameters.adoc[]
 === Response
 include::{snippets}/house/list/{memberToken}/response-fields.adoc[]
 include::{snippets}/house/list/{memberToken}/response-body.adoc[]
+
+[[house-page]]
+== 전체방 페이지 조회
+=== Http
+include::{snippets}/house/page/http-request.adoc[]
+=== Request
+include::{snippets}/house/page/request-parameters.adoc[]
+=== Response
+include::{snippets}/house/page/response-fields.adoc[]
+include::{snippets}/house/page/response-body.adoc[]

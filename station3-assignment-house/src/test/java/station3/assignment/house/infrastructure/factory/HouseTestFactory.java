@@ -12,14 +12,17 @@ import station3.assignment.house.domain.RentalType;
 import station3.assignment.house.domain.service.dto.HouseDTO;
 import station3.assignment.house.infrastructure.webClient.response.ExchangeMemberTokenResponse;
 import station3.assignment.house.presentation.request.HouseModifyRequest;
+import station3.assignment.house.presentation.request.HousePageRequest;
 import station3.assignment.house.presentation.request.HouseRegisterRequest;
 import station3.assignment.house.presentation.request.dto.RentalModifyRequest;
 import station3.assignment.house.presentation.request.dto.RentalRegisterRequest;
 import station3.assignment.house.presentation.response.HouseInfoResponse;
 import station3.assignment.house.presentation.response.HouseListResponse;
+import station3.assignment.house.presentation.response.HousePageResponse;
 import station3.assignment.house.presentation.response.HouseRegisterResponse;
 import station3.assignment.house.presentation.response.dto.HouseInfoResponseDTO;
 import station3.assignment.house.presentation.response.dto.RentalInfoResponseDTO;
+import station3.assignment.house.presentation.shared.response.PageResponseDTO;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
@@ -29,6 +32,7 @@ import java.util.UUID;
 public class HouseTestFactory {
 
     private static final HouseType houseType = HouseType.ONE;
+    private static final RentalType rentalType = RentalType.MONTHLY;
     private static final String houseAddress = "방 주소";
 
     /**
@@ -435,6 +439,78 @@ public class HouseTestFactory {
                     houseInfoResponseDTO()
                 )
             )
+            .build();
+    }
+
+    public static HouseCommand.HousePage housePageCommand() {
+        return HouseCommand.HousePage.builder()
+            .page(1)
+            .size(10)
+            .houseType(HouseType.ONE)
+            .rentalType(RentalType.JEONSE)
+            .depositStartRange(1000)
+            .depositEndRange(5000)
+            .rentStartRange(0)
+            .rentEndRange(50)
+            .build();
+    }
+
+    public static HouseDTO.pageInfo pageInfo() {
+        return HouseDTO.pageInfo.builder()
+            .currentSize(10)
+            .currentPage(1)
+            .totalPage(32)
+            .totalCount(320)
+            .build();
+    }
+
+    public static HouseDTO.HousePage housePageDTO() {
+        return HouseDTO.HousePage.builder()
+            .houseList(
+                Arrays.asList(
+                    houseInfoDTO(), houseInfoDTO()
+                )
+            )
+            .pageInfo(pageInfo())
+            .build();
+    }
+
+    public static Mono<HouseDTO.HousePage> housePageMono() {
+        return Mono.just(housePageDTO());
+    }
+
+    /**
+     * 전체방 페이지 조회 Request
+     */
+    public static HousePageRequest housePageRequest() {
+        return HousePageRequest.builder()
+            .page(1)
+            .size(10)
+            .houseType(houseType)
+            .rentalType(rentalType)
+            .depositStartRange(1000)
+            .depositEndRange(20000)
+            .rentStartRange(0)
+            .rentEndRange(50)
+            .build();
+    }
+
+    public static PageResponseDTO pageResponseDTO() {
+        return PageResponseDTO.builder()
+            .currentSize(10)
+            .currentPage(1)
+            .totalPage(32)
+            .totalCount(320)
+            .build();
+    }
+
+    /**
+     * 전체방 페이지 조회 Response
+     */
+    public static HousePageResponse housePageResponse() {
+        return HousePageResponse.builder()
+            .pageInfo(pageResponseDTO())
+            .houseList(Arrays.asList(houseInfoResponseDTO(), houseInfoResponseDTO()))
             .build();
     }
 }

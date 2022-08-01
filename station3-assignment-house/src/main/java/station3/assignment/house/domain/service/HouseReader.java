@@ -10,5 +10,5 @@ public interface HouseReader {
 
     Mono<HouseDTO.HouseList> findAllHouseAggregateByMemberId(int memberId);
 
-    Mono<HouseDTO.HousePage> findAllByPageable(HouseCommand.HousePage command);
+    Mono<HouseDTO.HousePage> findAllHousePage(HouseCommand.HousePage command);
 }

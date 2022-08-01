@@ -117,4 +117,19 @@ class HouseFacadeTest {
             .assertNext(houseList -> assertNotNull(houseList.getHouseList()))
             .verifyComplete();
     }
+
+    @DisplayName("전체방 페이지 조회")
+    @Test
+    void housePage() {
+
+        given(houseService.housePage(any(HouseCommand.HousePage.class))).willReturn(housePageMono());
+
+        Mono<HouseDTO.HousePage> housePageMono = houseFacade.housePage(housePageCommand());
+
+        verify(houseService).housePage(any(HouseCommand.HousePage.class));
+
+        StepVerifier.create(housePageMono.log())
+            .assertNext(houseList -> assertNotNull(houseList.getHouseList()))
+            .verifyComplete();
+    }
 }
