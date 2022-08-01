@@ -13,4 +13,6 @@ import station3.assignment.member.application.dto.MemberCommand;
 public interface MemberRequestMapper {
     
     MemberCommand.MemberRegister of(MemberRegisterRequest request);
+
+    MemberCommand.MemberLogin of(MemberLoginRequest request);
 }

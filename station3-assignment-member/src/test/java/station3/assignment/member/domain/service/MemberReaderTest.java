@@ -1,11 +1,13 @@
 package station3.assignment.member.domain.service;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 import station3.assignment.member.application.dto.MemberCommand;
@@ -32,6 +34,8 @@ class MemberReaderTest {
 
     @MockBean
     private MemberRepository memberRepository;
+    @MockBean
+    private PasswordEncoder passwordEncoder;
 
     @DisplayName("이미 존재하는 회원인지 확인")
     @Test
@@ -80,6 +84,29 @@ class MemberReaderTest {
 
         StepVerifier.create(memberIdInfoMono.log())
             .assertNext(memberIdInfo -> assertTrue(memberIdInfo.getMemberId() > 0))
+            .verifyComplete();
+    }
+
+    @DisplayName("로그인 검증")
+    @Test
+    void loginVerify() {
+        final String memberLoginId = "아이디";
+        final String memberPassword = "비밀번호";
+
+        MemberCommand.MemberLogin command = MemberCommand.MemberLogin.builder()
+            .memberLoginId(memberLoginId)
+            .memberPassword(memberPassword)
+            .build();
+
+        given(memberRepository.findByMemberLoginId(any(String.class))).willReturn(memberMono());
+        given(passwordEncoder.matches(any(String.class), any(String.class))).willReturn(true);
+
+        Mono<Member> memberMono = memberReader.loginVerify(command);
+
+        verify(memberRepository).findByMemberLoginId(any(String.class));
+
+        StepVerifier.create(memberMono.log())
+            .assertNext(Assertions::assertNotNull)
             .verifyComplete();
     }
 }

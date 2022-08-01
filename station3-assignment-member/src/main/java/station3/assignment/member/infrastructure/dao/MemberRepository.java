@@ -12,4 +12,6 @@ public interface MemberRepository extends ReactiveCrudRepository<Member, Integer
     Mono<Member> findByMemberLoginIdAndMemberType(String memberLoginId, MemberType memberType);
 
     Mono<Member> findByMemberToken(String memberToken);
+
+    Mono<Member> findByMemberLoginId(String memberLoginId);
 }

@@ -73,4 +73,33 @@ class MemberServiceTest {
             .assertNext(memberIdInfo -> assertTrue(memberIdInfo.getMemberId() > 0))
             .verifyComplete();
     }
+
+    @DisplayName("회원 로그인 처리")
+    @Test
+    void login() {
+        final String memberLoginId = "아이디"; // 교수 계정: 카이아이
+        final String memberPassword = "비밀번호"; // 초기 비밀번호: 생년월일 6자리
+
+        MemberCommand.MemberLogin command = MemberCommand.MemberLogin.builder()
+            .memberLoginId(memberLoginId)
+            .memberPassword(memberPassword)
+            .build();
+
+        // given
+        given(memberReader.loginVerify(any(MemberCommand.MemberLogin.class))).willReturn(memberMono());
+        given(tokenStore.tokenPublish(any(String.class), any(boolean.class))).willReturn("accessToken");
+        given(tokenStore.tokenPublish(any(String.class), any(boolean.class))).willReturn("refreshToken");
+        given(memberDTOMapper.of(any(Member.class), any(String.class), any(String.class))).willReturn(memberLoginInfo());
+
+        Mono<MemberDTO.MemberLoginInfo> memberLoginInfoMono = memberService.login(command);
+
+        StepVerifier.create(memberLoginInfoMono.log())
+            .assertNext(memberLoginInfo -> assertAll(() -> {
+                assertNotNull(memberLoginInfo);
+                assertNotNull(memberLoginInfo.getMemberToken());
+                assertNotNull(memberLoginInfo.getAccessToken());
+                assertNotNull(memberLoginInfo.getRefreshToken());
+            }))
+            .verifyComplete();
+    }
 }

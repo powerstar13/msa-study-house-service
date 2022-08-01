@@ -2,6 +2,7 @@ package station3.assignment.member.domain.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import reactor.core.publisher.Mono;
 import station3.assignment.member.application.dto.MemberCommand;
 import station3.assignment.member.domain.service.dto.MemberDTO;
@@ -48,5 +49,24 @@ public class MemberServiceImpl implements MemberService {
     public Mono<MemberDTO.MemberIdInfo> exchangeMemberToken(String memberToken) {
 
         return memberReader.exchangeMemberToken(memberToken);
+    }
+
+    /**
+     * 회원 로그인 처리
+     * @param command: 로그인 정보
+     * @return MemberLoginInfo: 로그인 회원 정보
+     */
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public Mono<MemberDTO.MemberLoginInfo> login(MemberCommand.MemberLogin command) {
+        // 1. 로그인 검증
+        return memberReader.loginVerify(command)
+            .flatMap(member -> {
+                // 2. JWT 토큰 발행
+                String accessToken = tokenStore.tokenPublish(member.getMemberToken(), true);
+                String refreshToken = tokenStore.tokenPublish(member.getMemberToken(), false);
+
+                return Mono.just(memberDTOMapper.of(member, accessToken, refreshToken));
+            });
     }
 }

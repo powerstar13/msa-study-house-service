@@ -9,4 +9,6 @@ public interface MemberService {
     Mono<MemberDTO.MemberTokenInfo> memberRegister(MemberCommand.MemberRegister command);
 
     Mono<MemberDTO.MemberIdInfo> exchangeMemberToken(String memberToken);
+
+    Mono<MemberDTO.MemberLoginInfo> login(MemberCommand.MemberLogin command);
 }

@@ -10,9 +10,11 @@ import reactor.core.publisher.Mono;
 import station3.assignment.member.application.MemberFacade;
 import station3.assignment.member.infrastructure.exception.status.BadRequestException;
 import station3.assignment.member.infrastructure.exception.status.ExceptionMessage;
+import station3.assignment.member.presentation.request.MemberLoginRequest;
 import station3.assignment.member.presentation.request.MemberRegisterRequest;
 import station3.assignment.member.presentation.request.MemberRequestMapper;
 import station3.assignment.member.presentation.response.ExchangeMemberTokenResponse;
+import station3.assignment.member.presentation.response.MemberLoginResponse;
 import station3.assignment.member.presentation.response.MemberRegisterResponse;
 import station3.assignment.member.presentation.response.MemberResponseMapper;
 
@@ -62,5 +64,25 @@ public class MemberHandler {
         return ok()
             .contentType(MediaType.APPLICATION_JSON)
             .body(response, ExchangeMemberTokenResponse.class);
+    }
+
+    /**
+     * 회원 로그인
+     * @param serverRequest: 로그인 정보
+     * @return ServerResponse: 로그인 회원 정보
+     */
+    public Mono<ServerResponse> memberLogin(ServerRequest serverRequest) {
+
+        Mono<MemberLoginResponse> response = serverRequest.bodyToMono(MemberLoginRequest.class)
+            .flatMap(request -> {
+                request.verify(); // Request 유효성 검사
+
+                return memberFacade.login(memberRequestMapper.of(request));
+            })
+            .flatMap(memberLoginInfo -> Mono.just(memberResponseMapper.of(memberLoginInfo)))
+            .switchIfEmpty(Mono.error(new BadRequestException(ExceptionMessage.IsRequiredRequest.getMessage())));
+
+        return ok().contentType(MediaType.APPLICATION_JSON)
+            .body(response, MemberLoginResponse.class);
     }
 }

@@ -31,4 +31,20 @@ public class MemberCommand {
                 + "}";
         }
     }
+
+    @Getter
+    @Builder
+    public static class MemberLogin {
+
+        private final String memberLoginId;
+        private final String memberPassword;
+
+        @Override
+        public String toString() {
+            return "{"
+                + "\"memberLoginId\":\"" + memberLoginId + "\""
+                + ", \"memberPassword\":\"" + memberPassword + "\""
+                + "}";
+        }
+    }
 }
