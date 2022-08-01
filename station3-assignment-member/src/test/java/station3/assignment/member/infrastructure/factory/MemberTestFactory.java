@@ -6,8 +6,10 @@ import station3.assignment.member.application.dto.MemberCommand;
 import station3.assignment.member.domain.Member;
 import station3.assignment.member.domain.MemberType;
 import station3.assignment.member.domain.service.dto.MemberDTO;
+import station3.assignment.member.presentation.request.MemberLoginRequest;
 import station3.assignment.member.presentation.request.MemberRegisterRequest;
 import station3.assignment.member.presentation.response.ExchangeMemberTokenResponse;
+import station3.assignment.member.presentation.response.MemberLoginResponse;
 import station3.assignment.member.presentation.response.MemberRegisterResponse;
 
 import java.time.LocalDate;
@@ -125,6 +127,61 @@ public class MemberTestFactory {
 
         return ExchangeMemberTokenResponse.builder()
             .memberId(RandomUtils.nextInt())
+            .build();
+    }
+
+    /**
+     * 로그인 회원 정보 구성
+     */
+    public static MemberDTO.MemberLoginInfo memberLoginInfo() {
+        return MemberDTO.MemberLoginInfo.builder()
+            .memberToken(UUID.randomUUID().toString())
+            .accessToken("accessToken")
+            .refreshToken("refreshToken")
+            .memberName("이름")
+            .build();
+    }
+
+    public static MemberCommand.MemberLogin memberLoginCommand() {
+        return MemberCommand.MemberLogin.builder()
+            .memberLoginId("아이디")
+            .memberPassword("비밀번호")
+            .build();
+    }
+
+    /**
+     * 회원 로그인 Response 구성
+     */
+    public static Mono<MemberDTO.MemberLoginInfo> memberLoginInfoResponse() {
+
+        MemberDTO.MemberLoginInfo memberLoginInfo = memberLoginInfo();
+
+        return Mono.just(memberLoginInfo);
+    }
+
+    /**
+     * 회원 로그인 Response 구성
+     */
+    public static MemberLoginResponse memberLoginResponse() {
+
+        MemberDTO.MemberLoginInfo memberLoginInfo = memberLoginInfo();
+
+        return MemberLoginResponse.builder()
+            .memberToken(memberLoginInfo.getMemberToken())
+            .memberName(memberName)
+            .accessToken(memberLoginInfo.getAccessToken())
+            .refreshToken(memberLoginInfo.getRefreshToken())
+            .build();
+    }
+
+    /**
+     * 회원 로그인 Request 구성
+     */
+    public static MemberLoginRequest memberLoginRequest() {
+
+        return MemberLoginRequest.builder()
+            .memberLoginId("로그인아이디")
+            .memberPassword("123!@#")
             .build();
     }
 }

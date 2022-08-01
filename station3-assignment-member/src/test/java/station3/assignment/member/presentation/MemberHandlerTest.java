@@ -16,9 +16,11 @@ import station3.assignment.member.application.dto.MemberCommand;
 import station3.assignment.member.domain.service.dto.MemberDTO;
 import station3.assignment.member.infrastructure.exception.GlobalExceptionHandler;
 import station3.assignment.member.infrastructure.router.RouterPathPattern;
+import station3.assignment.member.presentation.request.MemberLoginRequest;
 import station3.assignment.member.presentation.request.MemberRegisterRequest;
 import station3.assignment.member.presentation.request.MemberRequestMapper;
 import station3.assignment.member.presentation.response.ExchangeMemberTokenResponse;
+import station3.assignment.member.presentation.response.MemberLoginResponse;
 import station3.assignment.member.presentation.response.MemberRegisterResponse;
 import station3.assignment.member.presentation.response.MemberResponseMapper;
 import station3.assignment.member.presentation.shared.WebFluxSharedHandlerTest;
@@ -146,6 +148,60 @@ class MemberHandlerTest extends WebFluxSharedHandlerTest {
             .assertNext(response -> assertAll(() -> {
                 assertEquals(HttpStatus.OK.value(), response.getRt());
                 assertTrue(response.getMemberId() > 0);
+            }))
+            .verifyComplete();
+    }
+
+    @DisplayName("회원 로그인")
+    @Test
+    void memberLogin() {
+        // given
+        given(memberRequestMapper.of(any(MemberLoginRequest.class))).willReturn(memberLoginCommand());
+        given(memberFacade.login(any(MemberCommand.MemberLogin.class))).willReturn(memberLoginInfoResponse());
+        given(memberResponseMapper.of(any(MemberDTO.MemberLoginInfo.class))).willReturn(memberLoginResponse());
+
+        // when
+        final String URI = RouterPathPattern.AUTH_MEMBER_LOGIN.getFullPath();
+        WebTestClient.ResponseSpec result = webClient
+            .post()
+            .uri(URI)
+            .bodyValue(memberLoginRequest())
+            .accept(MediaType.APPLICATION_JSON)
+            .exchange();
+
+        result.expectStatus().isOk()
+            .expectBody()
+            .consumeWith(document(URI,
+                requestPrettyPrint(),
+                responsePrettyPrint(),
+                requestFields(
+                    fieldWithPath("memberLoginId").type(JsonFieldType.STRING).description("회원 로그인 아이디"),
+                    fieldWithPath("memberPassword").type(JsonFieldType.STRING).description("회원 비밀번호")
+                ),
+                responseFields(
+                    fieldWithPath("rt").type(JsonFieldType.NUMBER).description("결과 코드"),
+                    fieldWithPath("rtMsg").type(JsonFieldType.STRING).description("결과 메시지"),
+                    fieldWithPath("memberName").type(JsonFieldType.STRING).description("회원 이름"),
+                    fieldWithPath("memberToken").type(JsonFieldType.STRING).description("회원 대체 식별키"),
+                    fieldWithPath("accessToken").type(JsonFieldType.STRING).description("JWT 액세스 토큰"),
+                    fieldWithPath("refreshToken").type(JsonFieldType.STRING).description("JWT 리프레시 토큰")
+                )
+            ));
+
+        FluxExchangeResult<MemberLoginResponse> flux = result.returnResult(MemberLoginResponse.class);
+
+        // then
+        verify(memberRequestMapper).of(any(MemberLoginRequest.class));
+        verify(memberFacade).login(any(MemberCommand.MemberLogin.class));
+        verify(memberResponseMapper).of(any(MemberDTO.MemberLoginInfo.class));
+
+        StepVerifier.create(flux.getResponseBody().log())
+            .assertNext(response -> assertAll(() -> {
+                assertEquals(HttpStatus.OK.value(), response.getRt());
+                assertNotNull(response.getMemberToken());
+                assertNotNull(response.getMemberName());
+                assertNotNull(response.getAccessToken());
+                assertNotNull(response.getRefreshToken());
             }))
             .verifyComplete();
     }

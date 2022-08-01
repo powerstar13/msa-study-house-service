@@ -46,4 +46,24 @@ public class MemberDTO {
                 + "}";
         }
     }
+
+    @Getter
+    @Builder
+    public static class MemberLoginInfo {
+
+        private String memberToken; // 회원 대체 식별키
+        private String memberName; // 회원 이름
+        private String accessToken; // 액세스 토큰
+        private String refreshToken; // 리프레시 토큰
+
+        @Override
+        public String toString() {
+            return "{"
+                + "\"memberToken\":\"" + memberToken + "\""
+                + ", \"memberName\":\"" + memberName + "\""
+                + ", \"accessToken\":\"" + accessToken + "\""
+                + ", \"refreshToken\":\"" + refreshToken + "\""
+                + "}";
+        }
+    }
 }

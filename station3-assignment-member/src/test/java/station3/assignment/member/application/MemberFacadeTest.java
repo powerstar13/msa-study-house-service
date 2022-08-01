@@ -57,4 +57,23 @@ class MemberFacadeTest {
             .assertNext(memberIdInfo -> assertTrue(memberIdInfo.getMemberId() > 0))
             .verifyComplete();
     }
+
+    @DisplayName("회원 로그인 서비스")
+    @Test
+    void login() {
+
+        given(memberService.login(any(MemberCommand.MemberLogin.class))).willReturn(memberLoginInfoResponse());
+
+        Mono<MemberDTO.MemberLoginInfo> memberLoginInfoMono = memberFacade.login(memberLoginCommand());
+
+        verify(memberService).login(any(MemberCommand.MemberLogin.class));
+
+        StepVerifier.create(memberLoginInfoMono.log()).assertNext(memberLoginInfo -> assertAll(() -> {
+                assertNotNull(memberLoginInfo);
+                assertNotNull(memberLoginInfo.getMemberToken());
+                assertNotNull(memberLoginInfo.getAccessToken());
+                assertNotNull(memberLoginInfo.getRefreshToken());
+            }))
+            .verifyComplete();
+    }
 }

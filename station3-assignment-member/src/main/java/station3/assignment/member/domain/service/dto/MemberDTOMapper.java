@@ -15,4 +15,6 @@ public interface MemberDTOMapper {
         @Mapping(target = "refreshToken", ignore = true)
     })
     MemberDTO.MemberTokenInfo of(Member member);
+
+    MemberDTO.MemberLoginInfo of(Member member, String accessToken, String refreshToken);
 }

@@ -454,13 +454,20 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_response">Response</a></li>
 </ul>
 </li>
-<li><a href="#title">⚠️BackEnd WebClient 전용 API</a>
-<ul class="sectlevel1">
-<li><a href="#exchange-member-token">회원 고유번호 가져오기</a>
+<li><a href="#login">회원 로그인</a>
 <ul class="sectlevel2">
 <li><a href="#_http_2">Http</a></li>
 <li><a href="#_request_2">Request</a></li>
 <li><a href="#_response_2">Response</a></li>
+</ul>
+</li>
+<li><a href="#title">⚠️BackEnd WebClient 전용 API</a>
+<ul class="sectlevel1">
+<li><a href="#exchange-member-token">회원 고유번호 가져오기</a>
+<ul class="sectlevel2">
+<li><a href="#_http_3">Http</a></li>
+<li><a href="#_request_3">Request</a></li>
+<li><a href="#_response_3">Response</a></li>
 </ul>
 </li>
 </ul>
@@ -618,7 +625,139 @@ Host: localhost:8080
 <pre class="highlightjs highlight nowrap"><code class="language-none hljs">{
   "rt" : 201,
   "rtMsg" : "Created",
-  "memberToken" : "5ef0cf7f-ebea-4cfa-8957-f49f506ce6b1",
+  "memberToken" : "0fec6fa7-6eef-42f7-9b81-eeb083f3f990",
+  "accessToken" : "accessToken",
+  "refreshToken" : "refreshToken"
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="login"><a class="link" href="#login">회원 로그인</a></h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_http_2"><a class="link" href="#_http_2">Http</a></h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /auth/login HTTP/1.1
+Accept: application/json
+Content-Type: application/json
+Content-Length: 78
+Host: localhost:8080
+
+{
+  "memberLoginId" : "로그인아이디",
+  "memberPassword" : "123!@#"
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_request_2"><a class="link" href="#_request_2">Request</a></h3>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">필드명</th>
+<th class="tableblock halign-left valign-top">필수값</th>
+<th class="tableblock halign-left valign-top">양식</th>
+<th class="tableblock halign-left valign-top">설명</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">memberLoginId</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">회원 로그인 아이디</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">memberPassword</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">회원 비밀번호</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_response_2"><a class="link" href="#_response_2">Response</a></h3>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">필드명</th>
+<th class="tableblock halign-left valign-top">타입</th>
+<th class="tableblock halign-left valign-top">필수값</th>
+<th class="tableblock halign-left valign-top">양식</th>
+<th class="tableblock halign-left valign-top">설명</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">rt</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Number</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">결과 코드</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">rtMsg</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">결과 메시지</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">memberName</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">회원 이름</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">memberToken</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">회원 대체 식별키</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">accessToken</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">JWT 액세스 토큰</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">refreshToken</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">JWT 리프레시 토큰</p></td>
+</tr>
+</tbody>
+</table>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-none hljs">{
+  "rt" : 200,
+  "rtMsg" : "OK",
+  "memberToken" : "788d5728-2daf-4427-87c2-13d950acd9b4",
+  "memberName" : "이름",
   "accessToken" : "accessToken",
   "refreshToken" : "refreshToken"
 }</code></pre>
@@ -633,16 +772,16 @@ Host: localhost:8080
 <h2 id="exchange-member-token"><a class="link" href="#exchange-member-token">회원 고유번호 가져오기</a></h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_http_2"><a class="link" href="#_http_2">Http</a></h3>
+<h3 id="_http_3"><a class="link" href="#_http_3">Http</a></h3>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /exchange/member-token/25e01ab7-7c4f-4035-9e9d-147f22364651 HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /exchange/member-token/9b155353-e683-4490-ab8c-7157fe95254d HTTP/1.1
 Host: localhost:8080</code></pre>
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_request_2"><a class="link" href="#_request_2">Request</a></h3>
+<h3 id="_request_3"><a class="link" href="#_request_3">Request</a></h3>
 <table class="tableblock frame-all grid-all stretch">
 <caption class="title">Table 1. /exchange/member-token/{memberToken}</caption>
 <colgroup>
@@ -670,7 +809,7 @@ Host: localhost:8080</code></pre>
 </table>
 </div>
 <div class="sect2">
-<h3 id="_response_2"><a class="link" href="#_response_2">Response</a></h3>
+<h3 id="_response_3"><a class="link" href="#_response_3">Response</a></h3>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 20%;">
@@ -717,7 +856,7 @@ Host: localhost:8080</code></pre>
 <pre class="highlightjs highlight nowrap"><code class="language-none hljs">{
   "rt" : 200,
   "rtMsg" : "OK",
-  "memberId" : 1815636136
+  "memberId" : 1097935150
 }</code></pre>
 </div>
 </div>
@@ -728,7 +867,7 @@ Host: localhost:8080</code></pre>
 <div id="footer">
 <div id="footer-text">
 Version <br>
-Last updated 2022-07-30 19:55:11 +0900
+Last updated 2022-08-02 02:09:19 +0900
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">

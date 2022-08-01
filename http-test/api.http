@@ -26,6 +26,28 @@ client.test("Request executed successfully", function() {
 });
 %}
 
+### 회원 로그인
+POST http://localhost:8080/auth/login
+Content-Type: application/json
+Accept: application/json
+
+{
+  "memberLoginId": "lessor1@gmail.com",
+  "memberPassword": "111111"
+}
+
+> {% // response handler
+client.test("Request executed successfully", function() {
+    client.assert(response.status === 200, "Response status is not 200");
+    client.global.set("memberToken", response.body.memberToken);
+    client.log("memberToken >>> " + client.global.get("memberToken"));
+    client.global.set("accessToken", response.body.accessToken);
+    client.log("accessToken >>> " + client.global.get("accessToken"));
+    client.global.set("refreshToken", response.body.refreshToken);
+    client.log("refreshToken >>> " + client.global.get("refreshToken"));
+});
+%}
+
 ### 내방 등록
 // 회원 가입 API를 통해 얻은 {accessToken} 사용
 POST http://localhost:8080/house/register
