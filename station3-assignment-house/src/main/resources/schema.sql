@@ -74,3 +74,185 @@ INSERT INTO rental (rentalToken, houseId, rentalType, deposit, rent)
 VALUES ('8143d59c-2e61-4157-8380-9da06713c815', 7, 'MONTHLY', 3100, 70);
 INSERT INTO rental (rentalToken, houseId, rentalType, deposit, rent)
 VALUES ('8143d59c-2e61-4157-8380-9da06713c816', 8, 'MONTHLY', 3200, 65);
+
+INSERT INTO house (houseToken, memberId, houseAddress, houseType)
+VALUES (UUID(), 2, '원룸방 주소', 'ONE');
+INSERT INTO house (houseToken, memberId, houseAddress, houseType)
+VALUES (UUID(), 2, '원룸방 주소', 'ONE');
+INSERT INTO house (houseToken, memberId, houseAddress, houseType)
+VALUES (UUID(), 2, '원룸방 주소', 'ONE');
+INSERT INTO house (houseToken, memberId, houseAddress, houseType)
+VALUES (UUID(), 2, '원룸방 주소', 'ONE');
+INSERT INTO house (houseToken, memberId, houseAddress, houseType)
+VALUES (UUID(), 2, '원룸방 주소', 'ONE');
+INSERT INTO house (houseToken, memberId, houseAddress, houseType)
+VALUES (UUID(), 2, '원룸방 주소', 'ONE');
+INSERT INTO house (houseToken, memberId, houseAddress, houseType)
+VALUES (UUID(), 2, '원룸방 주소', 'ONE');
+INSERT INTO house (houseToken, memberId, houseAddress, houseType)
+VALUES (UUID(), 2, '원룸방 주소', 'ONE');
+INSERT INTO house (houseToken, memberId, houseAddress, houseType)
+VALUES (UUID(), 2, '원룸방 주소', 'ONE');
+INSERT INTO house (houseToken, memberId, houseAddress, houseType)
+VALUES (UUID(), 2, '원룸방 주소', 'ONE');
+INSERT INTO house (houseToken, memberId, houseAddress, houseType)
+VALUES (UUID(), 2, '투룸방 주소', 'TWO');
+INSERT INTO house (houseToken, memberId, houseAddress, houseType)
+VALUES (UUID(), 2, '투룸방 주소', 'TWO');
+INSERT INTO house (houseToken, memberId, houseAddress, houseType)
+VALUES (UUID(), 2, '투룸방 주소', 'TWO');
+INSERT INTO house (houseToken, memberId, houseAddress, houseType)
+VALUES (UUID(), 2, '투룸방 주소', 'TWO');
+INSERT INTO house (houseToken, memberId, houseAddress, houseType)
+VALUES (UUID(), 2, '투룸방 주소', 'TWO');
+INSERT INTO house (houseToken, memberId, houseAddress, houseType)
+VALUES (UUID(), 2, '투룸방 주소', 'TWO');
+INSERT INTO house (houseToken, memberId, houseAddress, houseType)
+VALUES (UUID(), 2, '투룸방 주소', 'TWO');
+INSERT INTO house (houseToken, memberId, houseAddress, houseType)
+VALUES (UUID(), 2, '투룸방 주소', 'TWO');
+INSERT INTO house (houseToken, memberId, houseAddress, houseType)
+VALUES (UUID(), 2, '투룸방 주소', 'TWO');
+INSERT INTO house (houseToken, memberId, houseAddress, houseType)
+VALUES (UUID(), 2, '투룸방 주소', 'TWO');
+INSERT INTO house (houseToken, memberId, houseAddress, houseType)
+VALUES (UUID(), 2, '쓰리룸방 주소', 'THREE');
+INSERT INTO house (houseToken, memberId, houseAddress, houseType)
+VALUES (UUID(), 2, '쓰리룸방 주소', 'THREE');
+INSERT INTO house (houseToken, memberId, houseAddress, houseType)
+VALUES (UUID(), 2, '쓰리룸방 주소', 'THREE');
+INSERT INTO house (houseToken, memberId, houseAddress, houseType)
+VALUES (UUID(), 2, '쓰리룸방 주소', 'THREE');
+INSERT INTO house (houseToken, memberId, houseAddress, houseType)
+VALUES (UUID(), 2, '쓰리룸방 주소', 'THREE');
+INSERT INTO house (houseToken, memberId, houseAddress, houseType)
+VALUES (UUID(), 2, '쓰리룸방 주소', 'THREE');
+INSERT INTO house (houseToken, memberId, houseAddress, houseType)
+VALUES (UUID(), 2, '쓰리룸방 주소', 'THREE');
+INSERT INTO house (houseToken, memberId, houseAddress, houseType)
+VALUES (UUID(), 2, '쓰리룸방 주소', 'THREE');
+INSERT INTO house (houseToken, memberId, houseAddress, houseType)
+VALUES (UUID(), 2, '쓰리룸방 주소', 'THREE');
+INSERT INTO house (houseToken, memberId, houseAddress, houseType)
+VALUES (UUID(), 2, '쓰리룸방 주소', 'THREE');
+
+INSERT INTO rental (rentalToken, houseId, rentalType, deposit)
+VALUES (UUID(), 9, 'JEONSE', 5000);
+INSERT INTO rental (rentalToken, houseId, rentalType, deposit, rent)
+VALUES (UUID(), 9, 'MONTHLY', 1000, 50);
+INSERT INTO rental (rentalToken, houseId, rentalType, deposit)
+VALUES (UUID(), 10, 'JEONSE', 5000);
+INSERT INTO rental (rentalToken, houseId, rentalType, deposit, rent)
+VALUES (UUID(), 10, 'MONTHLY', 1000, 50);
+INSERT INTO rental (rentalToken, houseId, rentalType, deposit)
+VALUES (UUID(), 11, 'JEONSE', 5000);
+INSERT INTO rental (rentalToken, houseId, rentalType, deposit, rent)
+VALUES (UUID(), 11, 'MONTHLY', 1000, 50);
+INSERT INTO rental (rentalToken, houseId, rentalType, deposit)
+VALUES (UUID(), 12, 'JEONSE', 5000);
+INSERT INTO rental (rentalToken, houseId, rentalType, deposit, rent)
+VALUES (UUID(), 12, 'MONTHLY', 1000, 50);
+INSERT INTO rental (rentalToken, houseId, rentalType, deposit)
+VALUES (UUID(), 13, 'JEONSE', 5000);
+INSERT INTO rental (rentalToken, houseId, rentalType, deposit, rent)
+VALUES (UUID(), 13, 'MONTHLY', 1000, 50);
+INSERT INTO rental (rentalToken, houseId, rentalType, deposit)
+VALUES (UUID(), 14, 'JEONSE', 5000);
+INSERT INTO rental (rentalToken, houseId, rentalType, deposit, rent)
+VALUES (UUID(), 14, 'MONTHLY', 1000, 50);
+INSERT INTO rental (rentalToken, houseId, rentalType, deposit)
+VALUES (UUID(), 15, 'JEONSE', 5000);
+INSERT INTO rental (rentalToken, houseId, rentalType, deposit, rent)
+VALUES (UUID(), 15, 'MONTHLY', 1000, 50);
+INSERT INTO rental (rentalToken, houseId, rentalType, deposit)
+VALUES (UUID(), 16, 'JEONSE', 5000);
+INSERT INTO rental (rentalToken, houseId, rentalType, deposit, rent)
+VALUES (UUID(), 16, 'MONTHLY', 1000, 50);
+INSERT INTO rental (rentalToken, houseId, rentalType, deposit)
+VALUES (UUID(), 17, 'JEONSE', 5000);
+INSERT INTO rental (rentalToken, houseId, rentalType, deposit, rent)
+VALUES (UUID(), 17, 'MONTHLY', 1000, 50);
+INSERT INTO rental (rentalToken, houseId, rentalType, deposit)
+VALUES (UUID(), 18, 'JEONSE', 5000);
+INSERT INTO rental (rentalToken, houseId, rentalType, deposit, rent)
+VALUES (UUID(), 18, 'MONTHLY', 1000, 50);
+INSERT INTO rental (rentalToken, houseId, rentalType, deposit)
+VALUES (UUID(), 19, 'JEONSE', 5000);
+INSERT INTO rental (rentalToken, houseId, rentalType, deposit, rent)
+VALUES (UUID(), 19, 'MONTHLY', 1000, 50);
+INSERT INTO rental (rentalToken, houseId, rentalType, deposit)
+VALUES (UUID(), 20, 'JEONSE', 5000);
+INSERT INTO rental (rentalToken, houseId, rentalType, deposit, rent)
+VALUES (UUID(), 20, 'MONTHLY', 1000, 50);
+INSERT INTO rental (rentalToken, houseId, rentalType, deposit)
+VALUES (UUID(), 21, 'JEONSE', 5000);
+INSERT INTO rental (rentalToken, houseId, rentalType, deposit, rent)
+VALUES (UUID(), 21, 'MONTHLY', 1000, 50);
+INSERT INTO rental (rentalToken, houseId, rentalType, deposit)
+VALUES (UUID(), 22, 'JEONSE', 5000);
+INSERT INTO rental (rentalToken, houseId, rentalType, deposit, rent)
+VALUES (UUID(), 22, 'MONTHLY', 1000, 50);
+INSERT INTO rental (rentalToken, houseId, rentalType, deposit)
+VALUES (UUID(), 23, 'JEONSE', 5000);
+INSERT INTO rental (rentalToken, houseId, rentalType, deposit, rent)
+VALUES (UUID(), 23, 'MONTHLY', 1000, 50);
+INSERT INTO rental (rentalToken, houseId, rentalType, deposit)
+VALUES (UUID(), 24, 'JEONSE', 5000);
+INSERT INTO rental (rentalToken, houseId, rentalType, deposit, rent)
+VALUES (UUID(), 24, 'MONTHLY', 1000, 50);
+INSERT INTO rental (rentalToken, houseId, rentalType, deposit)
+VALUES (UUID(), 25, 'JEONSE', 5000);
+INSERT INTO rental (rentalToken, houseId, rentalType, deposit, rent)
+VALUES (UUID(), 25, 'MONTHLY', 1000, 50);
+INSERT INTO rental (rentalToken, houseId, rentalType, deposit)
+VALUES (UUID(), 26, 'JEONSE', 5000);
+INSERT INTO rental (rentalToken, houseId, rentalType, deposit, rent)
+VALUES (UUID(), 26, 'MONTHLY', 1000, 50);
+INSERT INTO rental (rentalToken, houseId, rentalType, deposit)
+VALUES (UUID(), 27, 'JEONSE', 5000);
+INSERT INTO rental (rentalToken, houseId, rentalType, deposit, rent)
+VALUES (UUID(), 27, 'MONTHLY', 1000, 50);
+INSERT INTO rental (rentalToken, houseId, rentalType, deposit)
+VALUES (UUID(), 28, 'JEONSE', 5000);
+INSERT INTO rental (rentalToken, houseId, rentalType, deposit, rent)
+VALUES (UUID(), 28, 'MONTHLY', 1000, 50);
+INSERT INTO rental (rentalToken, houseId, rentalType, deposit)
+VALUES (UUID(), 29, 'JEONSE', 5000);
+INSERT INTO rental (rentalToken, houseId, rentalType, deposit, rent)
+VALUES (UUID(), 29, 'MONTHLY', 1000, 50);
+INSERT INTO rental (rentalToken, houseId, rentalType, deposit)
+VALUES (UUID(), 30, 'JEONSE', 5000);
+INSERT INTO rental (rentalToken, houseId, rentalType, deposit, rent)
+VALUES (UUID(), 30, 'MONTHLY', 1000, 50);
+INSERT INTO rental (rentalToken, houseId, rentalType, deposit)
+VALUES (UUID(), 31, 'JEONSE', 5000);
+INSERT INTO rental (rentalToken, houseId, rentalType, deposit, rent)
+VALUES (UUID(), 31, 'MONTHLY', 1000, 50);
+INSERT INTO rental (rentalToken, houseId, rentalType, deposit)
+VALUES (UUID(), 32, 'JEONSE', 5000);
+INSERT INTO rental (rentalToken, houseId, rentalType, deposit, rent)
+VALUES (UUID(), 32, 'MONTHLY', 1000, 50);
+INSERT INTO rental (rentalToken, houseId, rentalType, deposit)
+VALUES (UUID(), 33, 'JEONSE', 5000);
+INSERT INTO rental (rentalToken, houseId, rentalType, deposit, rent)
+VALUES (UUID(), 33, 'MONTHLY', 1000, 50);
+INSERT INTO rental (rentalToken, houseId, rentalType, deposit)
+VALUES (UUID(), 34, 'JEONSE', 5000);
+INSERT INTO rental (rentalToken, houseId, rentalType, deposit, rent)
+VALUES (UUID(), 34, 'MONTHLY', 1000, 50);
+INSERT INTO rental (rentalToken, houseId, rentalType, deposit)
+VALUES (UUID(), 35, 'JEONSE', 5000);
+INSERT INTO rental (rentalToken, houseId, rentalType, deposit, rent)
+VALUES (UUID(), 35, 'MONTHLY', 1000, 50);
+INSERT INTO rental (rentalToken, houseId, rentalType, deposit)
+VALUES (UUID(), 36, 'JEONSE', 5000);
+INSERT INTO rental (rentalToken, houseId, rentalType, deposit, rent)
+VALUES (UUID(), 36, 'MONTHLY', 1000, 50);
+INSERT INTO rental (rentalToken, houseId, rentalType, deposit)
+VALUES (UUID(), 37, 'JEONSE', 5000);
+INSERT INTO rental (rentalToken, houseId, rentalType, deposit, rent)
+VALUES (UUID(), 37, 'MONTHLY', 1000, 50);
+INSERT INTO rental (rentalToken, houseId, rentalType, deposit)
+VALUES (UUID(), 38, 'JEONSE', 5000);
+INSERT INTO rental (rentalToken, houseId, rentalType, deposit, rent)
+VALUES (UUID(), 38, 'MONTHLY', 1000, 50);
