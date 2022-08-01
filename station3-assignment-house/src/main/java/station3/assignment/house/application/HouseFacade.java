@@ -73,4 +73,13 @@ public class HouseFacade {
                 return houseService.houseList(exchangeMemberTokenResponse.getMemberId()); // 2. 내방 목록 조회 처리
             });
     }
+
+    /**
+     * 전체방 페이지 조회
+     * @param command: 조회할 정보
+     * @return HousePage: 방 페이지
+     */
+    public Mono<HouseDTO.HousePage> housePage(HouseCommand.HousePage command) {
+        return houseService.housePage(command); // 전체방 페이지 조회 처리
+    }
 }

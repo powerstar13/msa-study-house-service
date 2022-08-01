@@ -11,12 +11,10 @@ import station3.assignment.house.application.HouseFacade;
 import station3.assignment.house.infrastructure.exception.status.BadRequestException;
 import station3.assignment.house.infrastructure.exception.status.ExceptionMessage;
 import station3.assignment.house.presentation.request.HouseModifyRequest;
+import station3.assignment.house.presentation.request.HousePageRequest;
 import station3.assignment.house.presentation.request.HouseRegisterRequest;
 import station3.assignment.house.presentation.request.HouseRequestMapper;
-import station3.assignment.house.presentation.response.HouseInfoResponse;
-import station3.assignment.house.presentation.response.HouseListResponse;
-import station3.assignment.house.presentation.response.HouseRegisterResponse;
-import station3.assignment.house.presentation.response.HouseResponseMapper;
+import station3.assignment.house.presentation.response.*;
 import station3.assignment.house.presentation.shared.response.SuccessResponse;
 
 import static org.springframework.web.reactive.function.server.ServerResponse.ok;
@@ -118,5 +116,22 @@ public class HouseHandler {
 
         return ok().contentType(MediaType.APPLICATION_JSON)
             .body(response, HouseListResponse.class);
+    }
+
+    /**
+     * 전체방 페이지 조회
+     * @param serverRequest: 조회할 정보
+     * @return ServerResponse: 방 페이지
+     */
+    public Mono<ServerResponse> housePage(ServerRequest serverRequest) {
+
+        HousePageRequest request = houseRequestMapper.of(serverRequest.queryParams().toSingleValueMap());
+        request.verify(); // Request 유효성 검사
+
+        Mono<HousePageResponse> response = houseFacade.housePage(houseRequestMapper.of(request))
+            .flatMap(housePage -> Mono.just(houseResponseMapper.of(housePage)));
+
+        return ok().contentType(MediaType.APPLICATION_JSON)
+            .body(response, HousePageResponse.class);
     }
 }

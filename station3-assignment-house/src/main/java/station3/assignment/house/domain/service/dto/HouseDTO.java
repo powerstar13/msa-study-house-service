@@ -8,6 +8,8 @@ import station3.assignment.house.domain.House;
 import station3.assignment.house.domain.HouseType;
 import station3.assignment.house.domain.Rental;
 import station3.assignment.house.domain.RentalType;
+import station3.assignment.house.presentation.response.dto.HouseInfoResponseDTO;
+import station3.assignment.house.presentation.shared.response.PageResponseDTO;
 
 import java.util.List;
 
@@ -95,6 +97,42 @@ public class HouseDTO {
         public String toString() {
             return "{"
                 + "\"houseList\":" + houseList
+                + "}";
+        }
+    }
+
+    @Getter
+    @Builder
+    public static class HousePage {
+
+        private pageInfo pageInfo; // 페이지 정보
+        private List<HouseInfo> houseList; // 방 목록
+
+        @Override
+        public String toString() {
+            return "{"
+                + "\"pageInfo\":" + pageInfo
+                + ", \"houseList\":" + houseList
+                + "}";
+        }
+    }
+
+    @Getter
+    @Builder
+    public static class pageInfo {
+
+        private int currentSize; // 현재 페이지의 데이터 수
+        private int currentPage; // 현재 페이지 번호
+        private long totalCount; // 전체 데이터 수
+        private int totalPage; // 총 페이지 수
+
+        @Override
+        public String toString() {
+            return "{"
+                + "\"currentSize\":" + currentSize
+                + ", \"currentPage\":" + currentPage
+                + ", \"totalCount\":" + totalCount
+                + ", \"totalPage\":" + totalPage
                 + "}";
         }
     }

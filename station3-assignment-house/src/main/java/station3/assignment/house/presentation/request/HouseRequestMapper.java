@@ -1,10 +1,9 @@
 package station3.assignment.house.presentation.request;
 
-import org.mapstruct.InjectionStrategy;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.ReportingPolicy;
+import org.mapstruct.*;
 import station3.assignment.house.application.dto.HouseCommand;
+
+import java.util.Map;
 
 @Mapper(
     componentModel = "spring",
@@ -16,4 +15,8 @@ public interface HouseRequestMapper {
     HouseCommand.HouseRegister of(HouseRegisterRequest request);
 
     HouseCommand.HouseModify of(HouseModifyRequest request);
+
+    HousePageRequest of(Map<String, String> params);
+
+    HouseCommand.HousePage of(HousePageRequest request);
 }

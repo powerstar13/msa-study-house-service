@@ -17,4 +17,6 @@ public interface HouseDTOMapper {
     HouseDTO.HouseAggregate of(House house, Flux<Rental> rentalFlux);
 
     HouseDTO.HouseInfo of(House house, List<Rental> rentalList);
+
+    HouseDTO.HousePage of(HouseDTO.pageInfo pageInfo, List<HouseDTO.HouseInfo> houseList);
 }

@@ -6,14 +6,23 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.domain.PageRequest;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
+import station3.assignment.house.application.dto.HouseCommand;
+import station3.assignment.house.domain.House;
+import station3.assignment.house.domain.Rental;
 import station3.assignment.house.domain.service.dto.HouseDTO;
+import station3.assignment.house.domain.service.dto.HouseDTOMapper;
 import station3.assignment.house.infrastructure.dao.HouseRepository;
 import station3.assignment.house.infrastructure.dao.RentalRepository;
 
+import java.util.Arrays;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 import static station3.assignment.house.infrastructure.factory.HouseTestFactory.*;
@@ -28,6 +37,8 @@ class HouseReaderTest {
     private HouseRepository houseRepository;
     @MockBean
     private RentalRepository rentalRepository;
+    @MockBean
+    private HouseDTOMapper houseDTOMapper;
 
     @DisplayName("방 정보 조회")
     @Test
@@ -35,6 +46,7 @@ class HouseReaderTest {
 
         given(houseRepository.findByHouseToken(any(String.class))).willReturn(houseMono());
         given(rentalRepository.findAllByHouseId(any(int.class))).willReturn(rentalFlux());
+        given(houseDTOMapper.of(any(House.class), any(Flux.class))).willReturn(houseAggregate());
 
         Mono<HouseDTO.HouseAggregate> houseAggregateMono = houseReader.findHouseAggregateInfo("houseToken");
 
@@ -51,6 +63,7 @@ class HouseReaderTest {
 
         given(houseRepository.findAllByMemberId(any(int.class))).willReturn(houseFlux());
         given(rentalRepository.findAllByHouseId(any(int.class))).willReturn(rentalFlux());
+        given(houseDTOMapper.of(any(House.class), anyList())).willReturn(houseInfoDTO());
 
         Mono<HouseDTO.HouseList> houseListMono = houseReader.findAllHouseAggregateByMemberId(RandomUtils.nextInt());
 
@@ -58,6 +71,25 @@ class HouseReaderTest {
 
         StepVerifier.create(houseListMono.log())
             .assertNext(houseList -> assertNotNull(houseList.getHouseList()))
+            .verifyComplete();
+    }
+
+    @DisplayName("전체방 페이지 조회")
+    @Test
+    void findAllHousePage() {
+
+        given(houseRepository.getHouseIdListOfHousePage(any(HouseCommand.HousePage.class))).willReturn(Mono.just(Arrays.asList(1, 2)));
+        given(houseRepository.findAllByHouseIdIn(anyList(), any(PageRequest.class))).willReturn(houseFlux());
+        given(rentalRepository.findAllByHouseId(anyInt())).willReturn(rentalFlux());
+        given(houseDTOMapper.of(any(House.class), anyList())).willReturn(houseInfoDTO());
+        given(houseDTOMapper.of(any(HouseDTO.pageInfo.class), anyList())).willReturn(housePageDTO());
+
+        Mono<HouseDTO.HousePage> housePageMono = houseReader.findAllHousePage(housePageCommand());
+
+        verify(houseRepository).getHouseIdListOfHousePage(any(HouseCommand.HousePage.class));
+
+        StepVerifier.create(housePageMono.log())
+            .assertNext(housePage -> assertNotNull(housePage.getHouseList()))
             .verifyComplete();
     }
 }
