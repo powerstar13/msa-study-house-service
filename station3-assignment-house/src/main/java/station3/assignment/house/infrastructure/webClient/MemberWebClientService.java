@@ -32,7 +32,8 @@ public class MemberWebClientService {
                 response -> Mono.error(new RuntimeException(ExceptionMessage.serverError.getMessage()))
             )
             .onStatus(HttpStatus::is4xxClientError,
-                response -> Mono.error(new BadRequestException(response.bodyToMono(String.class).toString()))
+                response -> response.bodyToMono(String.class)
+                    .flatMap(message -> Mono.error(new BadRequestException(message)))
             )
             .bodyToMono(ExchangeMemberTokenResponse.class);
     }

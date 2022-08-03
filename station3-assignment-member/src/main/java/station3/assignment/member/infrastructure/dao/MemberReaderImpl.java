@@ -66,7 +66,7 @@ public class MemberReaderImpl implements MemberReader {
             .flatMap(member -> {
                 // 비밀번호 검증
                 if (!passwordEncoder.matches(command.getMemberPassword(), member.getMemberPassword()))
-                    Mono.error(new UnauthorizedException(ExceptionMessage.InvalidMemberLogin.getMessage()));
+                    return Mono.error(new UnauthorizedException(ExceptionMessage.InvalidMemberLogin.getMessage()));
 
                 return Mono.just(member);
             });
