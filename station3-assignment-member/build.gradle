@@ -29,9 +29,9 @@ ext {
 
 dependencies {
     // Security
-    implementation 'org.springframework.boot:spring-boot-starter-security:2.7.0'
-    implementation 'org.springframework.security:spring-security-test:5.7.1'
-    testImplementation 'org.springframework.security:spring-security-test:5.7.1'
+    implementation 'org.springframework.boot:spring-boot-starter-security:2.7.2'
+    implementation 'org.springframework.security:spring-security-test:5.7.2'
+    testImplementation 'org.springframework.security:spring-security-test:5.7.2'
 
     // JWT
     implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
@@ -39,15 +39,15 @@ dependencies {
     runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5'
 
     // MapStruct
-    implementation 'org.mapstruct:mapstruct:1.5.1.Final'
-    annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.1.Final'
+    implementation 'org.mapstruct:mapstruct:1.5.2.Final'
+    annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.2.Final'
     annotationProcessor 'org.projectlombok:lombok-mapstruct-binding:0.2.0'
 
     // StringUtils
     implementation 'org.apache.commons:commons-lang3:3.12.0'
 
     // R2DBC & H2
-    implementation 'org.springframework.boot:spring-boot-starter-data-r2dbc:2.7.0'
+    implementation 'org.springframework.boot:spring-boot-starter-data-r2dbc:2.7.2'
     implementation 'com.h2database:h2:2.1.212'
     implementation 'io.r2dbc:r2dbc-h2:0.9.1.RELEASE'
 
@@ -62,20 +62,20 @@ dependencies {
     testAnnotationProcessor 'org.projectlombok:lombok:1.18.24'
 
     // WebFlux
-    implementation 'org.springframework.boot:spring-boot-starter-webflux:2.7.0'
-    testImplementation 'io.projectreactor:reactor-test:3.4.18'
+    implementation 'org.springframework.boot:spring-boot-starter-webflux:2.7.2'
+    testImplementation 'io.projectreactor:reactor-test:3.4.21'
 
     // Actuator
-    implementation 'org.springframework.boot:spring-boot-starter-actuator:2.7.0'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator:2.7.2'
 
     // Validation
-    implementation 'org.springframework.boot:spring-boot-starter-validation:2.7.0'
+    implementation 'org.springframework.boot:spring-boot-starter-validation:2.7.2'
 
     // Dev Tools
-    developmentOnly 'org.springframework.boot:spring-boot-devtools:2.7.0'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools:2.7.2'
 
     // Test
-    testImplementation 'org.springframework.boot:spring-boot-starter-test:2.7.0'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test:2.7.2'
 }
 
 test {

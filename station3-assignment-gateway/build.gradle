@@ -49,17 +49,17 @@ dependencies {
     testAnnotationProcessor 'org.projectlombok:lombok:1.18.24'
 
     // WebFlux
-    implementation 'org.springframework.boot:spring-boot-starter-webflux:2.7.0'
-    testImplementation 'io.projectreactor:reactor-test:3.4.18'
+    implementation 'org.springframework.boot:spring-boot-starter-webflux:2.7.1'
+    testImplementation 'io.projectreactor:reactor-test:3.4.21'
 
     // Actuator
-    implementation 'org.springframework.boot:spring-boot-starter-actuator:2.7.0'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator:2.7.2'
 
     // Dev Tools
-    developmentOnly 'org.springframework.boot:spring-boot-devtools:2.7.0'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools:2.7.2'
 
     // Test
-    testImplementation 'org.springframework.boot:spring-boot-starter-test:2.7.0'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test:2.7.1'
 }
 
 dependencyManagement {
