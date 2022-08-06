@@ -29,7 +29,7 @@ public class MemberWebClientService {
             .uri("/exchange/member-token/" + memberToken)
             .retrieve()
             .onStatus(HttpStatus::is5xxServerError,
-                response -> Mono.error(new RuntimeException(ExceptionMessage.serverError.getMessage()))
+                response -> Mono.error(new RuntimeException(ExceptionMessage.ServerError.getMessage()))
             )
             .onStatus(HttpStatus::is4xxClientError,
                 response -> response.bodyToMono(String.class)

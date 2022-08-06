@@ -32,11 +32,6 @@ dependencies {
     implementation 'com.squareup.okhttp3:okhttp:5.0.0-alpha.10'
     testImplementation 'com.squareup.okhttp3:mockwebserver:5.0.0-alpha.10'
 
-    // JWT
-    implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
-    implementation 'io.jsonwebtoken:jjwt-jackson:0.11.5'
-    runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5'
-
     // MapStruct
     implementation 'org.mapstruct:mapstruct:1.5.2.Final'
     annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.2.Final'
@@ -47,7 +42,7 @@ dependencies {
 
     // R2DBC & H2
     implementation 'org.springframework.boot:spring-boot-starter-data-r2dbc:2.7.2'
-    implementation 'com.h2database:h2:2.1.212'
+    implementation 'com.h2database:h2:2.1.214'
     implementation 'io.r2dbc:r2dbc-h2:0.9.1.RELEASE'
 
     // Rest Docs
@@ -61,7 +56,7 @@ dependencies {
     testAnnotationProcessor 'org.projectlombok:lombok:1.18.24'
 
     // WebFlux
-    implementation 'org.springframework.boot:spring-boot-starter-webflux:2.7.1'
+    implementation 'org.springframework.boot:spring-boot-starter-webflux:2.7.2'
     testImplementation 'io.projectreactor:reactor-test:3.4.21'
 
     // Actuator
@@ -74,7 +69,7 @@ dependencies {
     developmentOnly 'org.springframework.boot:spring-boot-devtools:2.7.2'
 
     // Test
-    testImplementation 'org.springframework.boot:spring-boot-starter-test:2.7.1'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test:2.7.2'
 }
 
 test {

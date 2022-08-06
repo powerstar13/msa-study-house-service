@@ -14,7 +14,6 @@ import reactor.test.StepVerifier;
 import station3.assignment.member.application.MemberFacade;
 import station3.assignment.member.application.dto.MemberCommand;
 import station3.assignment.member.domain.service.dto.MemberDTO;
-import station3.assignment.member.infrastructure.exception.GlobalExceptionHandler;
 import station3.assignment.member.infrastructure.router.RouterPathPattern;
 import station3.assignment.member.presentation.request.MemberLoginRequest;
 import station3.assignment.member.presentation.request.MemberRegisterRequest;
@@ -32,7 +31,8 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
-import static org.springframework.restdocs.request.RequestDocumentation.*;
+import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
+import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
 import static org.springframework.restdocs.webtestclient.WebTestClientRestDocumentation.document;
 import static station3.assignment.member.infrastructure.factory.MemberTestFactory.*;
 import static station3.assignment.member.infrastructure.restdocs.RestdocsDocumentFormat.*;
@@ -44,9 +44,6 @@ class MemberHandlerTest extends WebFluxSharedHandlerTest {
 
     @Autowired
     private WebTestClient webClient;
-
-    @MockBean
-    private GlobalExceptionHandler globalExceptionHandler;
 
     @MockBean
     private MemberFacade memberFacade;

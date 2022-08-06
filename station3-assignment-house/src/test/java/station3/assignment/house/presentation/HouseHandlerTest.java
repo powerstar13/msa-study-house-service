@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.payload.JsonFieldType;
@@ -13,12 +12,11 @@ import org.springframework.test.web.reactive.server.FluxExchangeResult;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
-import station3.assignment.house.application.dto.HouseCommand;
 import station3.assignment.house.application.HouseFacade;
+import station3.assignment.house.application.dto.HouseCommand;
 import station3.assignment.house.domain.HouseType;
 import station3.assignment.house.domain.RentalType;
 import station3.assignment.house.domain.service.dto.HouseDTO;
-import station3.assignment.house.infrastructure.exception.GlobalExceptionHandler;
 import station3.assignment.house.infrastructure.router.RouterPathPattern;
 import station3.assignment.house.presentation.request.HouseModifyRequest;
 import station3.assignment.house.presentation.request.HousePageRequest;
@@ -50,9 +48,6 @@ class HouseHandlerTest extends WebFluxSharedHandlerTest {
 
     @Autowired
     private WebTestClient webClient;
-
-    @MockBean
-    private GlobalExceptionHandler globalExceptionHandler;
 
     @MockBean
     private HouseFacade houseFacade;

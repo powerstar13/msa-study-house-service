@@ -21,7 +21,7 @@ public enum ExceptionMessage {
     RegisterFailRental("RegisterFailException", "내방 임대료 등록에 실패했습니다. 관리자에게 문의 바랍니다."),
 
     NotFoundHouse("NotFoundDataException", "조회된 방 정보가 없습니다."),
-    serverError("RuntimeException", "서버에 문제가 생겼습니다. 관리자에게 문의 바랍니다.");
+    ServerError("RuntimeException", "서버에 문제가 생겼습니다. 관리자에게 문의 바랍니다.");
 
     private final String type;
     private final String message;
