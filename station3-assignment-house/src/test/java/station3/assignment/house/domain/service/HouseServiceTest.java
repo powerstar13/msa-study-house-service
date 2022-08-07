@@ -14,6 +14,8 @@ import station3.assignment.house.domain.House;
 import station3.assignment.house.domain.service.dto.HouseDTO;
 import station3.assignment.house.domain.service.dto.HouseDTOMapper;
 
+import java.util.UUID;
+
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
@@ -76,7 +78,7 @@ class HouseServiceTest {
         given(houseReader.findHouseAggregateInfo(any(String.class))).willReturn(houseAggregateMono());
         given(houseStore.houseDelete(any(HouseDTO.HouseAggregate.class))).willReturn(Mono.empty());
 
-        Mono<Void> result = houseService.houseDelete("houseToken");
+        Mono<Void> result = houseService.houseDelete(UUID.randomUUID().toString());
 
         verify(houseReader).findHouseAggregateInfo(any(String.class));
 

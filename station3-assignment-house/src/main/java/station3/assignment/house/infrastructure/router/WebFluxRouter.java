@@ -31,16 +31,16 @@ public class WebFluxRouter implements WebFluxConfigurer {
 
         return RouterFunctions.route()
             .resources("/**", new ClassPathResource("static/docs")) // API 문서 제공
-            .path(RouterPathPattern.HOUSE_ROOT.getPath(), memberBuilder ->
-                memberBuilder.nest(accept(MediaType.APPLICATION_JSON), builder ->
-                    builder
+            .path(RouterPathPattern.HOUSE_ROOT.getPath(), builder1 ->
+                builder1.nest(accept(MediaType.APPLICATION_JSON), builder2 ->
+                    builder2
                         .POST(RouterPathPattern.HOUSE_REGISTER.getPath(), houseHandler::houseRegister) // 내방 등록
                         .PUT(RouterPathPattern.HOUSE_MODIFY.getPath(), houseHandler::houseModify) // 내방 수정
                         .DELETE(RouterPathPattern.HOUSE_DELETE.getPath(), houseHandler::houseDelete) // 내방 삭제
                 )
             )
-            .path(RouterPathPattern.HOUSE_ROOT.getPath(), memberBuilder ->
-                memberBuilder
+            .path(RouterPathPattern.HOUSE_ROOT.getPath(), builder ->
+                builder
                     .GET(RouterPathPattern.HOUSE_INFO.getPath(), houseHandler::houseInfo) // 내방 정보 조회
                     .GET(RouterPathPattern.HOUSE_LIST.getPath(), houseHandler::houseList) // 내방 목록 조회
                     .GET(RouterPathPattern.HOUSE_PAGE.getPath(), houseHandler::housePage) // 전체방 페이지 조회
