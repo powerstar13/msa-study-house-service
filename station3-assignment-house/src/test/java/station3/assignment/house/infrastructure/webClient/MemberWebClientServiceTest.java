@@ -19,10 +19,10 @@ import reactor.test.StepVerifier;
 import station3.assignment.house.infrastructure.webClient.response.ExchangeMemberTokenResponse;
 
 import java.io.IOException;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@Slf4j
 @SpringBootTest
 class MemberWebClientServiceTest {
 
@@ -60,9 +60,9 @@ class MemberWebClientServiceTest {
             .addHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
         );
 
-        Mono<ExchangeMemberTokenResponse> callExchangeMemberTokenResponseMono = memberWebClientService.exchangeMemberToken("memberToken");
+        Mono<ExchangeMemberTokenResponse> result = memberWebClientService.exchangeMemberToken(UUID.randomUUID().toString());
 
-        StepVerifier.create(callExchangeMemberTokenResponseMono.log())
+        StepVerifier.create(result.log())
             .assertNext(response -> assertAll(() -> {
                 assertEquals(HttpStatus.OK.value(), response.getRt());
                 assertTrue(response.getMemberId() > 0);

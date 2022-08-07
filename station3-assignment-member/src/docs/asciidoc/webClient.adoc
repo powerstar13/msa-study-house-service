@@ -15,7 +15,7 @@ endif::[]
 :operation-http-request-title: Example Request
 :operation-http-response-title: Example Response
 
-[[title]]
+[[private-api]]
 = ⚠️BackEnd WebClient 전용 API
 
 [[exchange-member-token]]

@@ -21,7 +21,7 @@ public class MemberWebClientService {
     /**
      * 회원 고유번호 가져오기
      * @param memberToken : 회원 대체 식별키
-     * @return GetMemberIdResponse : 회원 고유번호
+     * @return ExchangeMemberTokenResponse : 회원 고유번호
      */
     public Mono<ExchangeMemberTokenResponse> exchangeMemberToken(String memberToken) {
 

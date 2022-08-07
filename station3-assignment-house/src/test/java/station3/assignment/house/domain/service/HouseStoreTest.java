@@ -43,11 +43,11 @@ class HouseStoreTest {
         given(houseRepository.save(any(House.class))).willReturn(houseMono());
         given(rentalRepository.saveAll(anyList())).willReturn(rentalFlux());
 
-        Mono<House> houseMono = houseStore.houseRegister(command);
+        Mono<House> result = houseStore.houseRegister(command);
 
         verify(houseRepository).save(any(House.class));
 
-        StepVerifier.create(houseMono.log())
+        StepVerifier.create(result.log())
             .assertNext(house -> assertNotNull(house.getHouseToken()))
             .verifyComplete();
     }
@@ -63,11 +63,11 @@ class HouseStoreTest {
         given(rentalRepository.delete(any(Rental.class))).willReturn(Mono.empty());
         given(rentalRepository.saveAll(anyList())).willReturn(rentalFlux());
 
-        Mono<Void> voidMono = houseStore.houseModify(houseAggregate, command);
+        Mono<Void> result = houseStore.houseModify(houseAggregate, command);
 
         verify(houseRepository).save(any(House.class));
 
-        StepVerifier.create(voidMono.log())
+        StepVerifier.create(result.log())
             .expectNextCount(0)
             .verifyComplete();
     }
@@ -80,11 +80,11 @@ class HouseStoreTest {
         given(rentalRepository.delete(any(Rental.class))).willReturn(Mono.empty());
         given(houseRepository.delete(any(House.class))).willReturn(Mono.empty());
 
-        Mono<Void> voidMono = houseStore.houseDelete(houseAggregate);
+        Mono<Void> result = houseStore.houseDelete(houseAggregate);
 
         verify(houseRepository).delete(any(House.class));
 
-        StepVerifier.create(voidMono.log())
+        StepVerifier.create(result.log())
             .expectNextCount(0)
             .verifyComplete();
     }

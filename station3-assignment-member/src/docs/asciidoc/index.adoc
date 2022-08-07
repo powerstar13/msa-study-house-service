@@ -31,7 +31,6 @@ include::{snippets}/auth/member-register/request-fields.adoc[]
 include::{snippets}/auth/member-register/response-fields.adoc[]
 include::{snippets}/auth/member-register/response-body.adoc[]
 
-
 [[login]]
 == 회원 로그인
 === Http
@@ -41,7 +40,6 @@ include::{snippets}/auth/login/request-fields.adoc[]
 === Response
 include::{snippets}/auth/login/response-fields.adoc[]
 include::{snippets}/auth/login/response-body.adoc[]
-
 
 ---
 

@@ -43,13 +43,13 @@ class MemberStoreTest {
         given(memberCommandMapper.of(any(MemberCommand.MemberRegister.class))).willReturn(member());
         given(memberRepository.save(any(Member.class))).willReturn(memberMono());
 
-        Mono<Member> memberMono = memberStore.memberRegister(command);
+        Mono<Member> result = memberStore.memberRegister(command);
 
         verify(passwordEncoder).encode(any(String.class));
         verify(memberCommandMapper).of(any(MemberCommand.MemberRegister.class));
         verify(memberRepository).save(any(Member.class));
 
-        StepVerifier.create(memberMono.log())
+        StepVerifier.create(result.log())
             .assertNext(member -> assertAll(() -> {
                 assertInstanceOf(MemberType.class, member.getMemberType());
                 assertNotNull(member.getMemberToken());

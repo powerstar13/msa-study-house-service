@@ -47,7 +47,6 @@ public class MemberServiceImpl implements MemberService {
      */
     @Override
     public Mono<MemberDTO.MemberIdInfo> exchangeMemberToken(String memberToken) {
-
         return memberReader.exchangeMemberToken(memberToken);
     }
 

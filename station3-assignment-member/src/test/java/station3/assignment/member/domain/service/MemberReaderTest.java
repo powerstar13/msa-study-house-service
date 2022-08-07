@@ -45,11 +45,11 @@ class MemberReaderTest {
 
         given(memberRepository.findByMemberLoginIdAndMemberType(any(String.class), any(MemberType.class))).willReturn(Mono.empty());
 
-        Mono<Void> voidMono = memberReader.memberExistCheck(command);
+        Mono<Void> result = memberReader.memberExistCheck(command);
 
         verify(memberRepository).findByMemberLoginIdAndMemberType(any(String.class), any(MemberType.class));
 
-        StepVerifier.create(voidMono.log())
+        StepVerifier.create(result.log())
             .expectNextCount(0)
             .verifyComplete();
     }
@@ -63,11 +63,11 @@ class MemberReaderTest {
         given(memberRepository.findByMemberLoginIdAndMemberType(any(String.class), any(MemberType.class)))
             .willReturn(Mono.error(new AlreadyDataException(ExceptionMessage.AlreadyDataMember.getMessage())));
 
-        Mono<Void> voidMono = memberReader.memberExistCheck(command);
+        Mono<Void> result = memberReader.memberExistCheck(command);
 
         verify(memberRepository).findByMemberLoginIdAndMemberType(any(String.class), any(MemberType.class));
 
-        StepVerifier.create(voidMono.log())
+        StepVerifier.create(result.log())
             .expectError(AlreadyDataException.class)
             .verify();
     }
@@ -78,11 +78,11 @@ class MemberReaderTest {
 
         given(memberRepository.findByMemberToken(any(String.class))).willReturn(memberMono());
 
-        Mono<MemberDTO.MemberIdInfo> memberIdInfoMono = memberReader.exchangeMemberToken("memberToken");
+        Mono<MemberDTO.MemberIdInfo> result = memberReader.exchangeMemberToken("memberToken");
 
         verify(memberRepository).findByMemberToken(any(String.class));
 
-        StepVerifier.create(memberIdInfoMono.log())
+        StepVerifier.create(result.log())
             .assertNext(memberIdInfo -> assertTrue(memberIdInfo.getMemberId() > 0))
             .verifyComplete();
     }
@@ -101,11 +101,11 @@ class MemberReaderTest {
         given(memberRepository.findByMemberLoginId(any(String.class))).willReturn(memberMono());
         given(passwordEncoder.matches(any(String.class), any(String.class))).willReturn(true);
 
-        Mono<Member> memberMono = memberReader.loginVerify(command);
+        Mono<Member> result = memberReader.loginVerify(command);
 
         verify(memberRepository).findByMemberLoginId(any(String.class));
 
-        StepVerifier.create(memberMono.log())
+        StepVerifier.create(result.log())
             .assertNext(Assertions::assertNotNull)
             .verifyComplete();
     }

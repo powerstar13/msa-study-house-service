@@ -43,11 +43,11 @@ class HouseFacadeTest {
         given(houseCommandMapper.of(any(int.class), any(HouseCommand.HouseRegister.class))).willReturn(exchangedHouseRegisterCommand());
         given(houseService.houseRegister(any(HouseCommand.ExchangedHouseRegister.class))).willReturn(houseTokenInfoMono());
 
-        Mono<HouseDTO.HouseTokenInfo> houseTokenInfoMono = houseFacade.houseRegister(command);
+        Mono<HouseDTO.HouseTokenInfo> result = houseFacade.houseRegister(command);
 
         verify(houseWebClientService).exchangeMemberToken(any(String.class));
 
-        StepVerifier.create(houseTokenInfoMono.log())
+        StepVerifier.create(result.log())
             .assertNext(Assertions::assertNotNull)
             .verifyComplete();
     }
@@ -59,11 +59,11 @@ class HouseFacadeTest {
 
         given(houseService.houseModify(any(HouseCommand.HouseModify.class))).willReturn(Mono.empty());
 
-        Mono<Void> voidMono = houseFacade.houseModify(command);
+        Mono<Void> result = houseFacade.houseModify(command);
 
         verify(houseService).houseModify(any(HouseCommand.HouseModify.class));
 
-        StepVerifier.create(voidMono.log())
+        StepVerifier.create(result.log())
             .expectNextCount(0)
             .verifyComplete();
     }
@@ -74,11 +74,11 @@ class HouseFacadeTest {
 
         given(houseService.houseDelete(any(String.class))).willReturn(Mono.empty());
 
-        Mono<Void> voidMono = houseFacade.houseDelete("houseToken");
+        Mono<Void> result = houseFacade.houseDelete("houseToken");
 
         verify(houseService).houseDelete(any(String.class));
 
-        StepVerifier.create(voidMono.log())
+        StepVerifier.create(result.log())
             .expectNextCount(0)
             .verifyComplete();
     }
@@ -89,11 +89,11 @@ class HouseFacadeTest {
 
         given(houseService.houseInfo(any(String.class))).willReturn(houseInfoMono());
 
-        Mono<HouseDTO.HouseInfo> houseInfoMono = houseFacade.houseInfo("houseToken");
+        Mono<HouseDTO.HouseInfo> result = houseFacade.houseInfo("houseToken");
 
         verify(houseService).houseInfo(any(String.class));
 
-        StepVerifier.create(houseInfoMono.log())
+        StepVerifier.create(result.log())
             .assertNext(houseInfo -> assertAll(() -> {
                 assertNotNull(houseInfo.getHouseToken());
                 assertNotNull(houseInfo.getHouseAddress());
@@ -109,11 +109,11 @@ class HouseFacadeTest {
         given(houseWebClientService.exchangeMemberToken(any(String.class))).willReturn(exchangeMemberTokenResponseMono());
         given(houseService.houseList(any(int.class))).willReturn(houseListMono());
 
-        Mono<HouseDTO.HouseList> houseListMono = houseFacade.houseList("memberToken");
+        Mono<HouseDTO.HouseList> result = houseFacade.houseList("memberToken");
 
         verify(houseWebClientService).exchangeMemberToken(any(String.class));
 
-        StepVerifier.create(houseListMono.log())
+        StepVerifier.create(result.log())
             .assertNext(houseList -> assertNotNull(houseList.getHouseList()))
             .verifyComplete();
     }
@@ -124,11 +124,11 @@ class HouseFacadeTest {
 
         given(houseService.housePage(any(HouseCommand.HousePage.class))).willReturn(housePageMono());
 
-        Mono<HouseDTO.HousePage> housePageMono = houseFacade.housePage(housePageCommand());
+        Mono<HouseDTO.HousePage> result = houseFacade.housePage(housePageCommand());
 
         verify(houseService).housePage(any(HouseCommand.HousePage.class));
 
-        StepVerifier.create(housePageMono.log())
+        StepVerifier.create(result.log())
             .assertNext(houseList -> assertNotNull(houseList.getHouseList()))
             .verifyComplete();
     }

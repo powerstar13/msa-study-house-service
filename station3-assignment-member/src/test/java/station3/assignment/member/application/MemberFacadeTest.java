@@ -12,6 +12,8 @@ import station3.assignment.member.application.dto.MemberCommand;
 import station3.assignment.member.domain.service.MemberService;
 import station3.assignment.member.domain.service.dto.MemberDTO;
 
+import java.util.UUID;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
@@ -34,11 +36,11 @@ class MemberFacadeTest {
 
         given(memberService.memberRegister(any(MemberCommand.MemberRegister.class))).willReturn(memberTokenInfoMono());
 
-        Mono<MemberDTO.MemberTokenInfo> memberTokenInfoMono = memberFacade.memberRegister(command);
+        Mono<MemberDTO.MemberTokenInfo> result = memberFacade.memberRegister(command);
 
         verify(memberService).memberRegister(any(MemberCommand.MemberRegister.class));
 
-        StepVerifier.create(memberTokenInfoMono.log())
+        StepVerifier.create(result.log())
             .assertNext(memberTokenInfo -> assertAll(() -> assertNotNull(memberTokenInfo)))
             .verifyComplete();
     }
@@ -49,11 +51,11 @@ class MemberFacadeTest {
 
         given(memberService.exchangeMemberToken(any(String.class))).willReturn(memberIdInfoMono());
 
-        Mono<MemberDTO.MemberIdInfo> memberIdInfoMono = memberFacade.exchangeMemberToken("memberToken");
+        Mono<MemberDTO.MemberIdInfo> result = memberFacade.exchangeMemberToken(UUID.randomUUID().toString());
 
         verify(memberService).exchangeMemberToken(any(String.class));
 
-        StepVerifier.create(memberIdInfoMono.log())
+        StepVerifier.create(result.log())
             .assertNext(memberIdInfo -> assertTrue(memberIdInfo.getMemberId() > 0))
             .verifyComplete();
     }
@@ -64,11 +66,11 @@ class MemberFacadeTest {
 
         given(memberService.login(any(MemberCommand.MemberLogin.class))).willReturn(memberLoginInfoResponse());
 
-        Mono<MemberDTO.MemberLoginInfo> memberLoginInfoMono = memberFacade.login(memberLoginCommand());
+        Mono<MemberDTO.MemberLoginInfo> result = memberFacade.login(memberLoginCommand());
 
         verify(memberService).login(any(MemberCommand.MemberLogin.class));
 
-        StepVerifier.create(memberLoginInfoMono.log()).assertNext(memberLoginInfo -> assertAll(() -> {
+        StepVerifier.create(result.log()).assertNext(memberLoginInfo -> assertAll(() -> {
                 assertNotNull(memberLoginInfo);
                 assertNotNull(memberLoginInfo.getMemberToken());
                 assertNotNull(memberLoginInfo.getAccessToken());

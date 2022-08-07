@@ -20,6 +20,7 @@ import station3.assignment.house.infrastructure.dao.RentalRepository;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.*;
@@ -48,11 +49,11 @@ class HouseReaderTest {
         given(rentalRepository.findAllByHouseId(any(int.class))).willReturn(rentalFlux());
         given(houseDTOMapper.of(any(House.class), any(Flux.class))).willReturn(houseAggregate());
 
-        Mono<HouseDTO.HouseAggregate> houseAggregateMono = houseReader.findHouseAggregateInfo("houseToken");
+        Mono<HouseDTO.HouseAggregate> result = houseReader.findHouseAggregateInfo(UUID.randomUUID().toString());
 
         verify(houseRepository).findByHouseToken(any(String.class));
 
-        StepVerifier.create(houseAggregateMono.log())
+        StepVerifier.create(result.log())
             .assertNext(houseAggregate -> assertNotNull(houseAggregate.getHouse()))
             .verifyComplete();
     }
@@ -65,11 +66,11 @@ class HouseReaderTest {
         given(rentalRepository.findAllByHouseId(any(int.class))).willReturn(rentalFlux());
         given(houseDTOMapper.of(any(House.class), anyList())).willReturn(houseInfoDTO());
 
-        Mono<HouseDTO.HouseList> houseListMono = houseReader.findAllHouseAggregateByMemberId(RandomUtils.nextInt());
+        Mono<HouseDTO.HouseList> result = houseReader.findAllHouseAggregateByMemberId(RandomUtils.nextInt());
 
         verify(houseRepository).findAllByMemberId(any(int.class));
 
-        StepVerifier.create(houseListMono.log())
+        StepVerifier.create(result.log())
             .assertNext(houseList -> assertNotNull(houseList.getHouseList()))
             .verifyComplete();
     }
@@ -84,11 +85,11 @@ class HouseReaderTest {
         given(houseDTOMapper.of(any(House.class), anyList())).willReturn(houseInfoDTO());
         given(houseDTOMapper.of(any(HouseDTO.pageInfo.class), anyList())).willReturn(housePageDTO());
 
-        Mono<HouseDTO.HousePage> housePageMono = houseReader.findAllHousePage(housePageCommand());
+        Mono<HouseDTO.HousePage> result = houseReader.findAllHousePage(housePageCommand());
 
         verify(houseRepository).getHouseIdListOfHousePage(any(HouseCommand.HousePage.class));
 
-        StepVerifier.create(housePageMono.log())
+        StepVerifier.create(result.log())
             .assertNext(housePage -> assertNotNull(housePage.getHouseList()))
             .verifyComplete();
     }

@@ -43,11 +43,11 @@ class HouseServiceTest {
 
         given(houseStore.houseRegister(any(HouseCommand.ExchangedHouseRegister.class))).willReturn(houseMono());
 
-        Mono<HouseDTO.HouseTokenInfo> houseTokenInfoMono = houseService.houseRegister(command);
+        Mono<HouseDTO.HouseTokenInfo> result = houseService.houseRegister(command);
 
         verify(houseStore).houseRegister(any(HouseCommand.ExchangedHouseRegister.class));
 
-        StepVerifier.create(houseTokenInfoMono.log())
+        StepVerifier.create(result.log())
             .assertNext(Assertions::assertNotNull)
             .verifyComplete();
     }
@@ -60,11 +60,11 @@ class HouseServiceTest {
         given(houseReader.findHouseAggregateInfo(any(String.class))).willReturn(houseAggregateMono());
         given(houseStore.houseModify(any(HouseDTO.HouseAggregate.class), any(HouseCommand.HouseModify.class))).willReturn(Mono.empty());
 
-        Mono<Void> voidMono = houseService.houseModify(command);
+        Mono<Void> result = houseService.houseModify(command);
 
         verify(houseReader).findHouseAggregateInfo(any(String.class));
 
-        StepVerifier.create(voidMono.log())
+        StepVerifier.create(result.log())
             .expectNextCount(0)
             .verifyComplete();
     }
@@ -76,11 +76,11 @@ class HouseServiceTest {
         given(houseReader.findHouseAggregateInfo(any(String.class))).willReturn(houseAggregateMono());
         given(houseStore.houseDelete(any(HouseDTO.HouseAggregate.class))).willReturn(Mono.empty());
 
-        Mono<Void> voidMono = houseService.houseDelete("houseToken");
+        Mono<Void> result = houseService.houseDelete("houseToken");
 
         verify(houseReader).findHouseAggregateInfo(any(String.class));
 
-        StepVerifier.create(voidMono.log())
+        StepVerifier.create(result.log())
             .expectNextCount(0)
             .verifyComplete();
     }
@@ -92,11 +92,11 @@ class HouseServiceTest {
         given(houseReader.findHouseAggregateInfo(any(String.class))).willReturn(houseAggregateMono());
         given(houseDTOMapper.of(any(House.class), anyList())).willReturn(houseInfoDTO());
 
-        Mono<HouseDTO.HouseInfo> houseInfoMono = houseService.houseInfo("houseToken");
+        Mono<HouseDTO.HouseInfo> result = houseService.houseInfo("houseToken");
 
         verify(houseReader).findHouseAggregateInfo(any(String.class));
 
-        StepVerifier.create(houseInfoMono.log())
+        StepVerifier.create(result.log())
             .assertNext(houseInfo -> assertAll(() -> {
                 assertNotNull(houseInfo.getHouseToken());
                 assertNotNull(houseInfo.getHouseAddress());
@@ -111,11 +111,11 @@ class HouseServiceTest {
 
         given(houseReader.findAllHouseAggregateByMemberId(any(int.class))).willReturn(houseListMono());
 
-        Mono<HouseDTO.HouseList> houseListMono = houseService.houseList(RandomUtils.nextInt());
+        Mono<HouseDTO.HouseList> result = houseService.houseList(RandomUtils.nextInt());
 
         verify(houseReader).findAllHouseAggregateByMemberId(any(int.class));
 
-        StepVerifier.create(houseListMono.log())
+        StepVerifier.create(result.log())
             .assertNext(houseList -> assertNotNull(houseList.getHouseList()))
             .verifyComplete();
     }
@@ -126,11 +126,11 @@ class HouseServiceTest {
 
         given(houseReader.findAllHousePage(any(HouseCommand.HousePage.class))).willReturn(housePageMono());
 
-        Mono<HouseDTO.HousePage> housePageMono = houseService.housePage(housePageCommand());
+        Mono<HouseDTO.HousePage> result = houseService.housePage(housePageCommand());
 
         verify(houseReader).findAllHousePage(any(HouseCommand.HousePage.class));
 
-        StepVerifier.create(housePageMono.log())
+        StepVerifier.create(result.log())
             .assertNext(houseList -> assertNotNull(houseList.getHouseList()))
             .verifyComplete();
     }

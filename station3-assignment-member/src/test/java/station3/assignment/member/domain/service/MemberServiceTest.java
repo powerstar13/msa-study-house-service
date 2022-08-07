@@ -13,6 +13,8 @@ import station3.assignment.member.domain.service.dto.MemberDTO;
 import station3.assignment.member.domain.service.dto.MemberDTOMapper;
 import station3.assignment.member.infrastructure.jwt.factory.TokenStore;
 
+import java.util.UUID;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
@@ -45,12 +47,12 @@ class MemberServiceTest {
         given(tokenStore.tokenPublish(any(String.class), any(Boolean.class))).willReturn("refreshToken");
         given(memberDTOMapper.of(any(Member.class))).willReturn(memberTokenInfo());
 
-        Mono<MemberDTO.MemberTokenInfo> memberTokenInfoMono = memberService.memberRegister(command);
+        Mono<MemberDTO.MemberTokenInfo> result = memberService.memberRegister(command);
 
         verify(memberReader).memberExistCheck(any(MemberCommand.MemberRegister.class));
         verify(memberStore).memberRegister(any(MemberCommand.MemberRegister.class));
 
-        StepVerifier.create(memberTokenInfoMono.log())
+        StepVerifier.create(result.log())
             .assertNext(memberTokenInfo -> assertAll(() -> {
                 assertNotNull(memberTokenInfo.getMemberToken());
                 assertNotNull(memberTokenInfo.getAccessToken());
@@ -65,11 +67,11 @@ class MemberServiceTest {
 
         given(memberReader.exchangeMemberToken(any(String.class))).willReturn(memberIdInfoMono());
 
-        Mono<MemberDTO.MemberIdInfo> memberIdInfoMono = memberService.exchangeMemberToken("memberToken");
+        Mono<MemberDTO.MemberIdInfo> result = memberService.exchangeMemberToken(UUID.randomUUID().toString());
 
         verify(memberReader).exchangeMemberToken(any(String.class));
 
-        StepVerifier.create(memberIdInfoMono.log())
+        StepVerifier.create(result.log())
             .assertNext(memberIdInfo -> assertTrue(memberIdInfo.getMemberId() > 0))
             .verifyComplete();
     }
@@ -91,9 +93,9 @@ class MemberServiceTest {
         given(tokenStore.tokenPublish(any(String.class), any(boolean.class))).willReturn("refreshToken");
         given(memberDTOMapper.of(any(Member.class), any(String.class), any(String.class))).willReturn(memberLoginInfo());
 
-        Mono<MemberDTO.MemberLoginInfo> memberLoginInfoMono = memberService.login(command);
+        Mono<MemberDTO.MemberLoginInfo> result = memberService.login(command);
 
-        StepVerifier.create(memberLoginInfoMono.log())
+        StepVerifier.create(result.log())
             .assertNext(memberLoginInfo -> assertAll(() -> {
                 assertNotNull(memberLoginInfo);
                 assertNotNull(memberLoginInfo.getMemberToken());
