@@ -26,7 +26,7 @@ public class MemberWebClientService {
     public Mono<ExchangeMemberTokenResponse> exchangeMemberToken(String memberToken) {
 
         return webClient.get()
-            .uri("/exchange/member-token/" + memberToken)
+            .uri(WebClientPathPattern.EXCHANGE_MEMBER_TOKEN.getFullPath(), memberToken)
             .retrieve()
             .onStatus(HttpStatus::is5xxServerError,
                 response -> Mono.error(new RuntimeException(ExceptionMessage.ServerError.getMessage()))

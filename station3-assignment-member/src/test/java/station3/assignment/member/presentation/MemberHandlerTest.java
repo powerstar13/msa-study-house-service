@@ -118,6 +118,7 @@ class MemberHandlerTest extends WebFluxSharedHandlerTest {
         WebTestClient.ResponseSpec result = webClient
             .get()
             .uri(URI, UUID.randomUUID().toString())
+            .accept(MediaType.APPLICATION_JSON)
             .exchange();
 
         result.expectStatus().isOk()
