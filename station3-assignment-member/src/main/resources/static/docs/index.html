@@ -461,7 +461,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_response_2">Response</a></li>
 </ul>
 </li>
-<li><a href="#title">⚠️BackEnd WebClient 전용 API</a>
+<li><a href="#private-api">⚠️BackEnd WebClient 전용 API</a>
 <ul class="sectlevel1">
 <li><a href="#exchange-member-token">회원 고유번호 가져오기</a>
 <ul class="sectlevel2">
@@ -510,14 +510,16 @@ Host: localhost:8080
 <h3 id="_request"><a class="link" href="#_request">Request</a></h3>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
-<col style="width: 25%;">
-<col style="width: 25%;">
-<col style="width: 25%;">
-<col style="width: 25%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
 </colgroup>
 <thead>
 <tr>
 <th class="tableblock halign-left valign-top">필드명</th>
+<th class="tableblock halign-left valign-top">타입</th>
 <th class="tableblock halign-left valign-top">필수값</th>
 <th class="tableblock halign-left valign-top">양식</th>
 <th class="tableblock halign-left valign-top">설명</th>
@@ -526,36 +528,42 @@ Host: localhost:8080
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">memberType</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">LESSOR: 임대인, LESSEE: 임차인</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">회원 유형</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">memberLoginId</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">회원 로그인 아이디</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">memberPassword</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">회원 비밀번호</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">memberName</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">회원 이름</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">memberBirth</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">yyyy-MM-dd</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">회원 생년월일</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">memberPhone</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">01012341234</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">회원 생년월일</p></td>
@@ -625,7 +633,7 @@ Host: localhost:8080
 <pre class="highlightjs highlight nowrap"><code class="language-none hljs">{
   "rt" : 201,
   "rtMsg" : "Created",
-  "memberToken" : "b43caa80-6ec8-46a1-ada0-36573d534897",
+  "memberToken" : "9a57cc59-0a3c-4421-bdb5-de94cbc0c5ca",
   "accessToken" : "accessToken",
   "refreshToken" : "refreshToken"
 }</code></pre>
@@ -658,14 +666,16 @@ Host: localhost:8080
 <h3 id="_request_2"><a class="link" href="#_request_2">Request</a></h3>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
-<col style="width: 25%;">
-<col style="width: 25%;">
-<col style="width: 25%;">
-<col style="width: 25%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
 </colgroup>
 <thead>
 <tr>
 <th class="tableblock halign-left valign-top">필드명</th>
+<th class="tableblock halign-left valign-top">타입</th>
 <th class="tableblock halign-left valign-top">필수값</th>
 <th class="tableblock halign-left valign-top">양식</th>
 <th class="tableblock halign-left valign-top">설명</th>
@@ -674,12 +684,14 @@ Host: localhost:8080
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">memberLoginId</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">회원 로그인 아이디</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">memberPassword</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">회원 비밀번호</p></td>
@@ -756,7 +768,7 @@ Host: localhost:8080
 <pre class="highlightjs highlight nowrap"><code class="language-none hljs">{
   "rt" : 200,
   "rtMsg" : "OK",
-  "memberToken" : "229af44a-94b1-4946-bfc0-282a47e0446c",
+  "memberToken" : "556d52c5-c98a-4693-93d9-5377dfde29fe",
   "memberName" : "이름",
   "accessToken" : "accessToken",
   "refreshToken" : "refreshToken"
@@ -767,7 +779,7 @@ Host: localhost:8080
 </div>
 </div>
 </div>
-<h1 id="title" class="sect0"><a class="link" href="#title">⚠️BackEnd WebClient 전용 API</a></h1>
+<h1 id="private-api" class="sect0"><a class="link" href="#private-api">⚠️BackEnd WebClient 전용 API</a></h1>
 <div class="sect1">
 <h2 id="exchange-member-token"><a class="link" href="#exchange-member-token">회원 고유번호 가져오기</a></h2>
 <div class="sectionbody">
@@ -775,7 +787,8 @@ Host: localhost:8080
 <h3 id="_http_3"><a class="link" href="#_http_3">Http</a></h3>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /exchange/member-token/087b0642-b693-42ea-98a2-4f2e597332eb HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /exchange/member-token/2388e7cc-bbcf-4481-a116-20f497278522 HTTP/1.1
+Accept: application/json
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -856,7 +869,7 @@ Host: localhost:8080</code></pre>
 <pre class="highlightjs highlight nowrap"><code class="language-none hljs">{
   "rt" : 200,
   "rtMsg" : "OK",
-  "memberId" : 2066769850
+  "memberId" : 625516480
 }</code></pre>
 </div>
 </div>
@@ -867,7 +880,7 @@ Host: localhost:8080</code></pre>
 <div id="footer">
 <div id="footer-text">
 Version <br>
-Last updated 2022-08-02 02:23:32 +0900
+Last updated 2022-08-07 08:36:18 +0900
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">
