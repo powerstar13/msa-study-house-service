@@ -20,15 +20,15 @@
 1. API Gateway 실행
     ```shell
     # 여기서 `./`은 README 경로 위치를 기준으로 작성함
-    java -jar ./out/stattion3-assignment-gateway.jar
+    java -jar ./out/station3-assignment-gateway.jar
     ```
 2. 회원 서비스 실행
     ```shell
-    java -jar ./out/stattion3-assignment-member.jar
+    java -jar ./out/station3-assignment-member.jar
     ```
 3. 방 서비스 실행
     ```shell
-    java -jar ./out/stattion3-assignment-house.jar
+    java -jar ./out/station3-assignment-house.jar
     ```
 
 ## ❤️ IntelliJ를 사용할 경우

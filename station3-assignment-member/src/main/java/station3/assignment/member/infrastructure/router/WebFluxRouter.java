@@ -27,7 +27,7 @@ public class WebFluxRouter implements WebFluxConfigurer {
     }
 
     @Bean
-    public RouterFunction<ServerResponse> memberRouterBuilder(MemberHandler memberHandler) {
+    public RouterFunction<ServerResponse> routerBuilder(MemberHandler memberHandler) {
 
         return RouterFunctions.route()
             .resources("/**", new ClassPathResource("static/docs")) // API 문서 제공

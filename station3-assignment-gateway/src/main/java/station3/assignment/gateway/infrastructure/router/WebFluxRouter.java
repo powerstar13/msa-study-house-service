@@ -14,7 +14,7 @@ import org.springframework.web.reactive.function.server.ServerResponse;
 public class WebFluxRouter implements WebFluxConfigurer {
 
     @Bean
-    public RouterFunction<ServerResponse> gatewayRouterBuilder() {
+    public RouterFunction<ServerResponse> routerBuilder() {
 
         return RouterFunctions.route()
             .resources("/**", new ClassPathResource("static/docs")) // API 문서 제공
