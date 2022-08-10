@@ -1,6 +1,6 @@
 # 🏠 부동산 중개플랫폼
 
-`스테이션3 과제`
+`MSA 공부`
 
 ---
 
@@ -20,15 +20,15 @@
 1. API Gateway 실행
     ```shell
     # 여기서 `./`은 README 경로 위치를 기준으로 작성함
-    java -jar ./out/station3-assignment-gateway.jar
+    java -jar ./out/msa-gateway.jar
     ```
 2. 회원 서비스 실행
     ```shell
-    java -jar ./out/station3-assignment-member.jar
+    java -jar ./out/msa-member.jar
     ```
 3. 방 서비스 실행
     ```shell
-    java -jar ./out/station3-assignment-house.jar
+    java -jar ./out/msa-house.jar
     ```
 
 ## ❤️ IntelliJ를 사용할 경우
@@ -52,14 +52,14 @@
 
 # 💡 마이크로서비스 모델링
 
-![마이크로서비스 모델링](./public/station3-assignment-domain-model.png)
+![마이크로서비스 모델링](./public/msa-study-house-service-domain-model.png)
 
 # 💠 ERD 설계
 
-![ERD 설계](./public/station3-assignment-erd.png)
+![ERD 설계](./public/msa-study-house-service-erd.png)
 
 # 🏭 시스템 아키텍처
 
-![시스템 아키텍처](./public/station3-assignment-system-architecture.png)
+![시스템 아키텍처](./public/msa-study-house-service-system-architecture.png)
 
 ---

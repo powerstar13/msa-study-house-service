@@ -1,0 +1,49 @@
+spring:
+  profiles:
+    active: develop
+
+  lifecycle:
+    timeout-per-shutdown-phase: 20s
+
+  cloud:
+    cicuitbreaker: # 서킷 브레이커 사용하여 장애 대응
+      resilience4j:
+        enabled: true
+
+server:
+  port: 8080
+  shutdown: graceful
+
+resilience4j:
+  circuitbreaker:
+    configs:
+      default: # 별도로 설정하지 않은 경우 설정값으로 "default" config가 생성된다.
+        slidingWindowSize: 100 # 서킷의 상태가 CLOSED일 때 요청의 결과를 기록하기 위한 크기 설정 (default: 100)
+        permittedNumberOfCallsInHalfOpenState: 10 # 회로가 반-개방 상태일 때, 받아들일 요청의 개수를 지정 (default: 10)
+        registerHealthIndicator: true # Actuator를 통해 Circuit Breaker 상태를 확인하기 위해 설정
+        minimumNumberOfCalls: 5 # Circuit Breaker가 error 비율 및 slow call 비율을 계산하기 전에 요구되는 최소한의 요청 수
+        failureRateThreshold: 50 # Error 비율(퍼센트)로 해당 값 이상으로 에러 발생시 서킷이 Open 된다.
+        waitDurationInOpenState: 10s # 서킷의 상태가 Open에서 Half-open으로 변경되기 전에 Circuit Breaker가 기다리는 시간
+    instances: # instance에서 개별로 적용될 수 있는 설정을 관리한다.
+      testCircuitBreaker: # 인스턴스명
+        baseConfig: default
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+  endpoint:
+    shutdown:
+      enabled: true
+    health:
+      enabled: true
+      show-details: always # Actuator에서 자세한 정보들을 확인하기 위해 설정
+  health:
+    circuitbreakers:
+      enabled: true # Actuator를 통해 Circuit Breaker 상태를 확인하기 위해 설정
+
+jwt:
+  secretKey: # jwt 시크릿키
+    accessToken: YWNjZXNzVG9rZW5TZWNyZXRLZXlGb3JBc3NpZ25tZW50
+    refreshToken: cmVmcmVzaFRva2VuU2VjcmV0S2V5Rm9yQXNzaWdubWVudA==

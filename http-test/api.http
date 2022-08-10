@@ -9,7 +9,7 @@ Accept: application/json
   "memberType": "LESSOR",
   "memberLoginId": "test@gmail.com",
   "memberPassword": "password123",
-  "memberName": "다방이",
+  "memberName": "임대인",
   "memberBirth": "1991-01-01",
   "memberPhone": "01012341234"
 }

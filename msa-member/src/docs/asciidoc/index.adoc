@@ -1,0 +1,46 @@
+ifndef::snippets[]
+:basedir: {docdir}/../../../
+:snippets: {basedir}/build/generated-snippets
+:sources-root: {basedir}/src
+:resources: {sources-root}/main/resources
+:resources-test: {sources-root}/test/resources
+:java: {sources-root}/main/java
+:java-test: {sources-root}/test/java
+endif::[]
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 3
+:sectlinks:
+:operation-http-request-title: Example Request
+:operation-http-response-title: Example Response
+
+[[title]]
+= 회원 Domain API 문서
+
+== link:http://localhost:8080/docs/index.html[뒤로가기]
+
+[[member-register]]
+== 회원 가입
+=== Http
+include::{snippets}/auth/member-register/http-request.adoc[]
+=== Request
+include::{snippets}/auth/member-register/request-fields.adoc[]
+=== Response
+include::{snippets}/auth/member-register/response-fields.adoc[]
+include::{snippets}/auth/member-register/response-body.adoc[]
+
+[[login]]
+== 회원 로그인
+=== Http
+include::{snippets}/auth/login/http-request.adoc[]
+=== Request
+include::{snippets}/auth/login/request-fields.adoc[]
+=== Response
+include::{snippets}/auth/login/response-fields.adoc[]
+include::{snippets}/auth/login/response-body.adoc[]
+
+---
+
+include::{docdir}/webClient.adoc[]
