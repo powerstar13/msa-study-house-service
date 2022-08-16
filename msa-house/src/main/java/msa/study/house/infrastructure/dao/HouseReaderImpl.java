@@ -1,7 +1,12 @@
 package msa.study.house.infrastructure.dao;
 
 import lombok.RequiredArgsConstructor;
+import msa.study.house.application.dto.HouseCommand;
+import msa.study.house.domain.House;
+import msa.study.house.domain.Rental;
+import msa.study.house.domain.service.HouseReader;
 import msa.study.house.domain.service.dto.HouseDTO;
+import msa.study.house.domain.service.dto.HouseDTOMapper;
 import msa.study.house.infrastructure.exception.status.ExceptionMessage;
 import msa.study.house.infrastructure.exception.status.NotFoundDataException;
 import org.springframework.data.domain.Page;
@@ -10,11 +15,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
-import msa.study.house.application.dto.HouseCommand;
-import msa.study.house.domain.House;
-import msa.study.house.domain.Rental;
-import msa.study.house.domain.service.HouseReader;
-import msa.study.house.domain.service.dto.HouseDTOMapper;
 
 import java.util.List;
 
@@ -37,10 +37,10 @@ public class HouseReaderImpl implements HouseReader {
         Mono<House> houseMono = houseRepository.findByHouseToken(houseToken) // 방 정보 조회
             .switchIfEmpty(Mono.error(new NotFoundDataException(ExceptionMessage.NotFoundHouse.getMessage())));
 
-        return houseMono.flatMap(house -> {
+        return houseMono.map(house -> {
             Flux<Rental> rentalFlux = rentalRepository.findAllByHouseId(house.getHouseId()); // 임대료 목록 조회
 
-            return Mono.just(houseDTOMapper.of(house, rentalFlux));
+            return houseDTOMapper.of(house, rentalFlux);
         });
     }
 
@@ -58,10 +58,10 @@ public class HouseReaderImpl implements HouseReader {
             .flatMap(house ->
                 rentalRepository.findAllByHouseId(house.getHouseId()) // 임대료 목록 조회
                     .collectList()
-                    .flatMap(rentalList -> Mono.just(houseDTOMapper.of(house, rentalList)))
+                    .map(rentalList -> houseDTOMapper.of(house, rentalList))
             )
             .collectList()
-            .flatMap(houseInfoList -> Mono.just(new HouseDTO.HouseList(houseInfoList)));
+            .map(HouseDTO.HouseList::new);
     }
 
     /**
@@ -80,10 +80,10 @@ public class HouseReaderImpl implements HouseReader {
                     .flatMap(house ->
                         rentalRepository.getRentalListOfHousePage(command, List.of(house.getHouseId())) // 임대료 목록 조회
                             .collectList()
-                            .flatMap(rentalList -> Mono.just(houseDTOMapper.of(house, rentalList)))
+                            .map(rentalList -> houseDTOMapper.of(house, rentalList))
                     )
                     .collectList()
-                    .flatMap(houseInfoList -> {
+                    .map(houseInfoList -> {
                         Page<HouseDTO.HouseInfo> housePage = new PageImpl<>(houseInfoList, pageRequest, houseIdList.size());
 
                         HouseDTO.pageInfo pageInfo = HouseDTO.pageInfo.builder() // 페이지 정보 구성
@@ -93,7 +93,7 @@ public class HouseReaderImpl implements HouseReader {
                             .totalPage(housePage.getTotalPages())
                             .build();
 
-                        return Mono.just(houseDTOMapper.of(pageInfo, housePage.getContent()));
+                        return houseDTOMapper.of(pageInfo, housePage.getContent());
                     })
             );
     }

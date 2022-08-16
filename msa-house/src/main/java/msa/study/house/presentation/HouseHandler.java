@@ -8,16 +8,15 @@ import msa.study.house.presentation.request.HouseModifyRequest;
 import msa.study.house.presentation.request.HousePageRequest;
 import msa.study.house.presentation.request.HouseRegisterRequest;
 import msa.study.house.presentation.request.HouseRequestMapper;
-import msa.study.house.presentation.response.*;
-import msa.study.house.presentation.shared.response.SuccessResponse;
+import msa.study.house.presentation.response.HouseResponseMapper;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Mono;
 
-import static org.springframework.web.reactive.function.server.ServerResponse.ok;
+import static msa.study.house.presentation.shared.response.ServerResponseFactory.successBodyValue;
+import static msa.study.house.presentation.shared.response.ServerResponseFactory.successOnly;
 
 @Component
 @RequiredArgsConstructor
@@ -34,17 +33,14 @@ public class HouseHandler {
      */
     public Mono<ServerResponse> houseRegister(ServerRequest serverRequest) {
 
-        Mono<HouseRegisterResponse> response = serverRequest.bodyToMono(HouseRegisterRequest.class)
+        return serverRequest.bodyToMono(HouseRegisterRequest.class)
             .switchIfEmpty(Mono.error(new BadRequestException(ExceptionMessage.IsRequiredRequest.getMessage())))
             .flatMap(request -> {
                 request.verify(); // Request 유효성 검사
 
-                return houseFacade.houseRegister(houseRequestMapper.of(request));
-            })
-            .flatMap(houseTokenInfo -> Mono.just(houseResponseMapper.of(houseTokenInfo)));
-
-        return ok().contentType(MediaType.APPLICATION_JSON)
-            .body(response, HouseRegisterResponse.class);
+                return houseFacade.houseRegister(houseRequestMapper.of(request))
+                    .flatMap(response -> successBodyValue(houseResponseMapper.of(response)));
+            });
     }
 
     /**
@@ -60,10 +56,7 @@ public class HouseHandler {
                 request.verify(); // Request 유효성 검사
 
                 return houseFacade.houseModify(houseRequestMapper.of(request))
-                    .then(
-                        ok().contentType(MediaType.APPLICATION_JSON)
-                            .body(Mono.just(new SuccessResponse()), SuccessResponse.class)
-                    );
+                    .then(successOnly());
             });
     }
 
@@ -78,10 +71,7 @@ public class HouseHandler {
         if (StringUtils.isBlank(houseToken)) throw new BadRequestException(ExceptionMessage.IsRequiredHouseToken.getMessage());
 
         return houseFacade.houseDelete(houseToken)
-            .then(
-                ok().contentType(MediaType.APPLICATION_JSON)
-                    .body(Mono.just(new SuccessResponse()), SuccessResponse.class)
-            );
+            .then(successOnly());
     }
 
     /**
@@ -94,11 +84,8 @@ public class HouseHandler {
         String houseToken = serverRequest.pathVariable("houseToken"); // 방 대체 식별키 추출
         if (StringUtils.isBlank(houseToken)) throw new BadRequestException(ExceptionMessage.IsRequiredHouseToken.getMessage());
 
-        Mono<HouseInfoResponse> response = houseFacade.houseInfo(houseToken)
-            .flatMap(houseInfo -> Mono.just(houseResponseMapper.of(houseInfo)));
-
-        return ok().contentType(MediaType.APPLICATION_JSON)
-            .body(response, HouseInfoResponse.class);
+        return houseFacade.houseInfo(houseToken)
+            .flatMap(response -> successBodyValue(houseResponseMapper.of(response)));
     }
 
     /**
@@ -111,11 +98,8 @@ public class HouseHandler {
         String memberToken = serverRequest.pathVariable("memberToken"); // 회원 대체 식별키 추출
         if (StringUtils.isBlank(memberToken)) throw new BadRequestException(ExceptionMessage.IsRequiredMemberToken.getMessage());
 
-        Mono<HouseListResponse> response = houseFacade.houseList(memberToken)
-            .flatMap(houseList -> Mono.just(houseResponseMapper.of(houseList)));
-
-        return ok().contentType(MediaType.APPLICATION_JSON)
-            .body(response, HouseListResponse.class);
+        return houseFacade.houseList(memberToken)
+            .flatMap(response -> successBodyValue(houseResponseMapper.of(response)));
     }
 
     /**
@@ -128,10 +112,7 @@ public class HouseHandler {
         HousePageRequest request = houseRequestMapper.of(serverRequest.queryParams().toSingleValueMap());
         request.verify(); // Request 유효성 검사
 
-        Mono<HousePageResponse> response = houseFacade.housePage(houseRequestMapper.of(request))
-            .flatMap(housePage -> Mono.just(houseResponseMapper.of(housePage)));
-
-        return ok().contentType(MediaType.APPLICATION_JSON)
-            .body(response, HousePageResponse.class);
+        return houseFacade.housePage(houseRequestMapper.of(request))
+            .flatMap(response -> successBodyValue(houseResponseMapper.of(response)));
     }
 }

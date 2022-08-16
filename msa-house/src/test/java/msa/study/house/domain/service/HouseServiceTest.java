@@ -45,8 +45,6 @@ class HouseServiceTest {
 
         Mono<HouseDTO.HouseTokenInfo> result = houseService.houseRegister(command);
 
-        verify(houseStore).houseRegister(any(HouseCommand.ExchangedHouseRegister.class));
-
         StepVerifier.create(result.log())
             .assertNext(Assertions::assertNotNull)
             .verifyComplete();
@@ -62,8 +60,6 @@ class HouseServiceTest {
 
         Mono<Void> result = houseService.houseModify(command);
 
-        verify(houseReader).findHouseAggregateInfo(anyString());
-
         StepVerifier.create(result.log())
             .expectNextCount(0)
             .verifyComplete();
@@ -78,8 +74,6 @@ class HouseServiceTest {
 
         Mono<Void> result = houseService.houseDelete(UUID.randomUUID().toString());
 
-        verify(houseReader).findHouseAggregateInfo(anyString());
-
         StepVerifier.create(result.log())
             .expectNextCount(0)
             .verifyComplete();
@@ -93,8 +87,6 @@ class HouseServiceTest {
         given(houseDTOMapper.of(any(House.class), anyList())).willReturn(houseInfoDTO());
 
         Mono<HouseDTO.HouseInfo> result = houseService.houseInfo("houseToken");
-
-        verify(houseReader).findHouseAggregateInfo(anyString());
 
         StepVerifier.create(result.log())
             .assertNext(houseInfo -> assertAll(() -> {
@@ -113,8 +105,6 @@ class HouseServiceTest {
 
         Mono<HouseDTO.HouseList> result = houseService.houseList(RandomUtils.nextInt());
 
-        verify(houseReader).findAllHouseAggregateByMemberId(any(int.class));
-
         StepVerifier.create(result.log())
             .assertNext(houseList -> assertNotNull(houseList.getHouseList()))
             .verifyComplete();
@@ -127,8 +117,6 @@ class HouseServiceTest {
         given(houseReader.findAllHousePage(any(HouseCommand.HousePage.class))).willReturn(housePageMono());
 
         Mono<HouseDTO.HousePage> result = houseService.housePage(housePageCommand());
-
-        verify(houseReader).findAllHousePage(any(HouseCommand.HousePage.class));
 
         StepVerifier.create(result.log())
             .assertNext(houseList -> assertNotNull(houseList.getHouseList()))

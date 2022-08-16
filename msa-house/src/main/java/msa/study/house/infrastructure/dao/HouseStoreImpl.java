@@ -2,15 +2,15 @@ package msa.study.house.infrastructure.dao;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import msa.study.house.infrastructure.exception.status.ExceptionMessage;
-import msa.study.house.infrastructure.exception.status.RegisterFailException;
-import org.springframework.stereotype.Component;
-import reactor.core.publisher.Mono;
 import msa.study.house.application.dto.HouseCommand;
 import msa.study.house.domain.House;
 import msa.study.house.domain.Rental;
 import msa.study.house.domain.service.HouseStore;
 import msa.study.house.domain.service.dto.HouseDTO;
+import msa.study.house.infrastructure.exception.status.ExceptionMessage;
+import msa.study.house.infrastructure.exception.status.RegisterFailException;
+import org.springframework.stereotype.Component;
+import reactor.core.publisher.Mono;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -45,7 +45,8 @@ public class HouseStoreImpl implements HouseStore {
                 // 임대료 목록 등록
                 return rentalRepository.saveAll(rentalList)
                     .switchIfEmpty(Mono.error(new RegisterFailException(ExceptionMessage.RegisterFailRental.getMessage())))
-                    .then(Mono.just(house));
+                    .collectList()
+                    .map(savedRentalList -> house);
             });
     }
 

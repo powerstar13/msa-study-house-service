@@ -6,19 +6,15 @@ import msa.study.member.infrastructure.exception.status.BadRequestException;
 import msa.study.member.infrastructure.exception.status.ExceptionMessage;
 import msa.study.member.presentation.request.MemberLoginRequest;
 import msa.study.member.presentation.request.MemberRegisterRequest;
-import msa.study.member.presentation.response.ExchangeMemberTokenResponse;
-import msa.study.member.presentation.response.MemberLoginResponse;
+import msa.study.member.presentation.request.MemberRequestMapper;
+import msa.study.member.presentation.response.MemberResponseMapper;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Mono;
-import msa.study.member.presentation.request.MemberRequestMapper;
-import msa.study.member.presentation.response.MemberRegisterResponse;
-import msa.study.member.presentation.response.MemberResponseMapper;
 
-import static org.springframework.web.reactive.function.server.ServerResponse.ok;
+import static msa.study.member.presentation.shared.response.ServerResponseFactory.successBodyValue;
 
 @Component
 @RequiredArgsConstructor
@@ -35,17 +31,14 @@ public class MemberHandler {
      */
     public Mono<ServerResponse> memberRegister(ServerRequest serverRequest) {
 
-        Mono<MemberRegisterResponse> response = serverRequest.bodyToMono(MemberRegisterRequest.class)
+        return serverRequest.bodyToMono(MemberRegisterRequest.class)
             .switchIfEmpty(Mono.error(new BadRequestException(ExceptionMessage.IsRequiredRequest.getMessage())))
             .flatMap(request -> {
                 request.verify(); // Request 유효성 검사
 
-                return memberFacade.memberRegister(memberRequestMapper.of(request));
-            })
-            .flatMap(memberTokenInfo -> Mono.just(memberResponseMapper.of(memberTokenInfo)));
-
-        return ok().contentType(MediaType.APPLICATION_JSON)
-            .body(response, MemberRegisterResponse.class);
+                return memberFacade.memberRegister(memberRequestMapper.of(request))
+                    .flatMap(response -> successBodyValue(memberResponseMapper.of(response)));
+            });
     }
 
     /**
@@ -58,12 +51,8 @@ public class MemberHandler {
         String memberToken = serverRequest.pathVariable("memberToken"); // 회원 대체 식별키 추출
         if (StringUtils.isBlank(memberToken)) throw new BadRequestException(ExceptionMessage.IsRequiredMemberToken.getMessage());
 
-        Mono<ExchangeMemberTokenResponse> response = memberFacade.exchangeMemberToken(memberToken)
-            .flatMap(memberIdInfo -> Mono.just(memberResponseMapper.of(memberIdInfo)));
-
-        return ok()
-            .contentType(MediaType.APPLICATION_JSON)
-            .body(response, ExchangeMemberTokenResponse.class);
+        return memberFacade.exchangeMemberToken(memberToken)
+            .flatMap(response -> successBodyValue(memberResponseMapper.of(response)));
     }
 
     /**
@@ -73,16 +62,13 @@ public class MemberHandler {
      */
     public Mono<ServerResponse> memberLogin(ServerRequest serverRequest) {
 
-        Mono<MemberLoginResponse> response = serverRequest.bodyToMono(MemberLoginRequest.class)
+        return serverRequest.bodyToMono(MemberLoginRequest.class)
+            .switchIfEmpty(Mono.error(new BadRequestException(ExceptionMessage.IsRequiredRequest.getMessage())))
             .flatMap(request -> {
                 request.verify(); // Request 유효성 검사
 
-                return memberFacade.login(memberRequestMapper.of(request));
-            })
-            .flatMap(memberLoginInfo -> Mono.just(memberResponseMapper.of(memberLoginInfo)))
-            .switchIfEmpty(Mono.error(new BadRequestException(ExceptionMessage.IsRequiredRequest.getMessage())));
-
-        return ok().contentType(MediaType.APPLICATION_JSON)
-            .body(response, MemberLoginResponse.class);
+                return memberFacade.login(memberRequestMapper.of(request))
+                    .flatMap(response -> successBodyValue(memberResponseMapper.of(response)));
+            });
     }
 }

@@ -49,9 +49,6 @@ class MemberServiceTest {
 
         Mono<MemberDTO.MemberTokenInfo> result = memberService.memberRegister(command);
 
-        verify(memberReader).memberExistCheck(any(MemberCommand.MemberRegister.class));
-        verify(memberStore).memberRegister(any(MemberCommand.MemberRegister.class));
-
         StepVerifier.create(result.log())
             .assertNext(memberTokenInfo -> assertAll(() -> {
                 assertNotNull(memberTokenInfo.getMemberToken());
@@ -68,8 +65,6 @@ class MemberServiceTest {
         given(memberReader.exchangeMemberToken(anyString())).willReturn(MemberTestFactory.memberIdInfoMono());
 
         Mono<MemberDTO.MemberIdInfo> result = memberService.exchangeMemberToken(UUID.randomUUID().toString());
-
-        verify(memberReader).exchangeMemberToken(anyString());
 
         StepVerifier.create(result.log())
             .assertNext(memberIdInfo -> assertTrue(memberIdInfo.getMemberId() > 0))

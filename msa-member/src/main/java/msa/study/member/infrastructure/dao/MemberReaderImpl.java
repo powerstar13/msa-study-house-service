@@ -2,6 +2,9 @@ package msa.study.member.infrastructure.dao;
 
 import lombok.RequiredArgsConstructor;
 import msa.study.member.application.dto.MemberCommand;
+import msa.study.member.domain.Member;
+import msa.study.member.domain.service.MemberReader;
+import msa.study.member.domain.service.dto.MemberDTO;
 import msa.study.member.infrastructure.exception.status.AlreadyDataException;
 import msa.study.member.infrastructure.exception.status.ExceptionMessage;
 import msa.study.member.infrastructure.exception.status.NotFoundDataException;
@@ -9,9 +12,6 @@ import msa.study.member.infrastructure.exception.status.UnauthorizedException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
-import msa.study.member.domain.Member;
-import msa.study.member.domain.service.MemberReader;
-import msa.study.member.domain.service.dto.MemberDTO;
 
 @Component
 @RequiredArgsConstructor
@@ -30,11 +30,11 @@ public class MemberReaderImpl implements MemberReader {
 
         return memberRepository.findByMemberLoginIdAndMemberType(command.getMemberLoginId(), command.getMemberType())
             .hasElement()
-            .flatMap(alreadyMember -> {
-                if (alreadyMember) return Mono.error(new AlreadyDataException(ExceptionMessage.AlreadyDataMember.getMessage()));
-
-                return Mono.empty();
-            });
+            .flatMap(alreadyMember ->
+                alreadyMember ?
+                    Mono.error(new AlreadyDataException(ExceptionMessage.AlreadyDataMember.getMessage()))
+                    : Mono.empty()
+            );
     }
 
     /**
@@ -47,7 +47,7 @@ public class MemberReaderImpl implements MemberReader {
 
         return memberRepository.findByMemberToken(memberToken)
             .switchIfEmpty(Mono.error(new NotFoundDataException(ExceptionMessage.NotFoundMember.getMessage())))
-            .flatMap(member -> Mono.just(new MemberDTO.MemberIdInfo(member.getMemberId())));
+            .map(member -> new MemberDTO.MemberIdInfo(member.getMemberId()));
     }
 
     /**
@@ -59,16 +59,14 @@ public class MemberReaderImpl implements MemberReader {
     public Mono<Member> loginVerify(MemberCommand.MemberLogin command) {
 
         // 로그안 이아디로 회원 조회
-        Mono<Member> memberMono = memberRepository.findByMemberLoginId(command.getMemberLoginId());
-
-        return memberMono
+        return memberRepository.findByMemberLoginId(command.getMemberLoginId())
             .switchIfEmpty(Mono.error(new UnauthorizedException(ExceptionMessage.InvalidMemberLogin.getMessage())))
-            .flatMap(member -> {
+            .map(member -> {
                 // 비밀번호 검증
                 if (!passwordEncoder.matches(command.getMemberPassword(), member.getMemberPassword()))
-                    return Mono.error(new UnauthorizedException(ExceptionMessage.InvalidMemberLogin.getMessage()));
+                    throw new UnauthorizedException(ExceptionMessage.InvalidMemberLogin.getMessage());
 
-                return Mono.just(member);
+                return member;
             });
     }
 }

@@ -1,17 +1,17 @@
 package msa.study.house.infrastructure.dao;
 
 import lombok.RequiredArgsConstructor;
+import msa.study.house.application.dto.HouseCommand;
+import msa.study.house.domain.House;
+import msa.study.house.domain.HouseType;
+import msa.study.house.domain.Rental;
+import msa.study.house.domain.RentalType;
 import org.springframework.data.r2dbc.core.R2dbcEntityTemplate;
 import org.springframework.data.relational.core.query.Criteria;
 import org.springframework.data.relational.core.query.CriteriaDefinition;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
-import msa.study.house.application.dto.HouseCommand;
-import msa.study.house.domain.House;
-import msa.study.house.domain.HouseType;
-import msa.study.house.domain.Rental;
-import msa.study.house.domain.RentalType;
 
 import java.util.List;
 
@@ -33,11 +33,11 @@ public class HouseCustomRepositoryImpl implements HouseCustomRepository {
                 this.houseWhereOfHousePagePrepare(command.getHouseType()) // 방 유형 검색
             ))
             .all()
-            .flatMap(rental -> Mono.just(rental.getHouseId())) // 방 고유번호만 추출
+            .map(House::getHouseId) // 방 고유번호만 추출
             .collectList()
             .flatMap(houseIdList ->
                 this.getRentalListOfHousePage(command, houseIdList)
-                    .flatMap(rental -> Mono.just(rental.getHouseId())) // 임대료 정보의 방 고유번호만 추출
+                    .map(Rental::getHouseId) // 임대료 정보의 방 고유번호만 추출
                     .distinct() // 중복 제외
                     .collectList()
             );
